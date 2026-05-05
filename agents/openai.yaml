@@ -1,0 +1,4 @@
+interface:
+  display_name: "Agentic Knowledge Setup"
+  short_description: "Install GitNexus, graphify, and Obsidian project memory"
+  default_prompt: "Use $agentic-knowledge-setup to add GitNexus, graphify, and Obsidian memory hooks to this repository."
