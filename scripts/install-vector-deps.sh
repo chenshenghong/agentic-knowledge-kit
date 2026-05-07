@@ -11,7 +11,14 @@ if [[ "${AGENTIC_KNOWLEDGE_SKIP_VECTOR_DEPS:-0}" == "1" ]]; then
 fi
 
 if command -v node >/dev/null 2>&1; then
-  if node --input-type=module -e "import('@lancedb/lancedb')" >/dev/null 2>&1; then
+  if node - "$SCRIPT_DIR" <<'NODE' >/dev/null 2>&1
+const { createRequire } = require('node:module');
+const { join } = require('node:path');
+const scriptDir = process.argv[2];
+const requireFromScripts = createRequire(join(scriptDir, 'semantic-vector-lib.mjs'));
+requireFromScripts.resolve('@lancedb/lancedb');
+NODE
+  then
     echo "LanceDB dependency already available"
     exit 0
   fi
