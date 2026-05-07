@@ -1,0 +1,24 @@
+{
+  "name": "agentic-knowledge-kit",
+  "version": "1.0.0",
+  "description": "Reusable Codex/agent skill and installer for adding a project knowledge layer to a git repository.",
+  "private": true,
+  "scripts": {
+    "test": "node scripts/test-semantic-vector-index.mjs",
+    "check": "node --check scripts/semantic-vector-lib.mjs && node --check scripts/build-semantic-vector-index.mjs && node --check scripts/query-semantic-vector-index.mjs && node --check scripts/test-semantic-vector-index.mjs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chenshenghong/agentic-knowledge-kit.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/chenshenghong/agentic-knowledge-kit/issues"
+  },
+  "homepage": "https://github.com/chenshenghong/agentic-knowledge-kit#readme",
+  "dependencies": {
+    "@lancedb/lancedb": "0.27.2"
+  }
+}

@@ -2,6 +2,8 @@
 
 set -euo pipefail
 
+INSTALLER_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+
 usage() {
   cat <<'USAGE'
 Usage:
@@ -13,6 +15,8 @@ Options:
   --vault-root PATH           Obsidian vault root. Default: $HOME/Documents/Obsidian Vault.
   --obsidian-project-dir PATH Direct Obsidian project directory override.
   --skip-initial-run          Install files/hooks only; do not run GitNexus/graphify.
+  --enable-embeddings         Opt in to GitNexus embeddings in install and post-commit hook.
+  --skip-vector-deps          Do not install isolated LanceDB dependencies under scripts/node_modules.
   --no-claude                 Do not create Claude graphify hook/settings.
   --no-codex                  Do not create Codex graphify hook/settings.
   --no-gitnexus-skills        Run GitNexus without --skills.
@@ -28,6 +32,8 @@ SKIP_INITIAL_RUN=0
 INSTALL_CLAUDE=1
 INSTALL_CODEX=1
 GITNEXUS_SKILLS=1
+ENABLE_EMBEDDINGS=0
+SKIP_VECTOR_DEPS=0
 
 while [[ $# -gt 0 ]]; do
   case "$1" in
@@ -49,6 +55,14 @@ while [[ $# -gt 0 ]]; do
       ;;
     --skip-initial-run)
       SKIP_INITIAL_RUN=1
+      shift
+      ;;
+    --enable-embeddings)
+      ENABLE_EMBEDDINGS=1
+      shift
+      ;;
+    --skip-vector-deps)
+      SKIP_VECTOR_DEPS=1
       shift
       ;;
     --no-claude)
@@ -93,6 +107,19 @@ if [[ -z "$PROJECT_NAME" ]]; then
 fi
 
 mkdir -p scripts
+
+copy_helper_script() {
+  local name="$1"
+  local src="$INSTALLER_ROOT/scripts/$name"
+  local dst="scripts/$name"
+  if [[ ! -f "$src" ]]; then
+    echo "Missing helper script in installer: $src" >&2
+    exit 1
+  fi
+  if [[ ! -f "$dst" ]] || ! cmp -s "$src" "$dst"; then
+    cp "$src" "$dst"
+  fi
+}
 
 write_text_file() {
   local path="$1"
@@ -146,6 +173,17 @@ ensure_gitignore_line() {
   grep -Fxq "$line" .gitignore || printf '%s\n' "$line" >> .gitignore
 }
 
+copy_helper_script semantic-vector-lib.mjs
+copy_helper_script build-semantic-vector-index.mjs
+copy_helper_script query-semantic-vector-index.mjs
+copy_helper_script test-semantic-vector-index.mjs
+copy_helper_script install-vector-deps.sh
+chmod +x scripts/build-semantic-vector-index.mjs scripts/query-semantic-vector-index.mjs scripts/test-semantic-vector-index.mjs scripts/install-vector-deps.sh
+
+if [[ "$SKIP_VECTOR_DEPS" == "0" ]]; then
+  scripts/install-vector-deps.sh || echo "LanceDB dependency install failed; semantic vector build will log a skip/failure until dependencies are installed." >&2
+fi
+
 write_text_file scripts/post-commit-hook.sh <<'HOOK'
 #!/usr/bin/env bash
 
@@ -161,6 +199,11 @@ cd "$REPO_ROOT" || exit 0
 PROJECT_NAME="${AGENTIC_KNOWLEDGE_PROJECT_NAME:-__PROJECT_NAME__}"
 ASYNC_MODE="${AGENTIC_KNOWLEDGE_HOOK_ASYNC:-1}"
 HOOK_LOG_DIR="${AGENTIC_KNOWLEDGE_HOOK_LOG_DIR:-/tmp}"
+ENABLE_EMBEDDINGS="${AGENTIC_KNOWLEDGE_ENABLE_EMBEDDINGS:-__ENABLE_EMBEDDINGS__}"
+LOCK_TIMEOUT_SECS="${AGENTIC_KNOWLEDGE_LOCK_TIMEOUT_SECS:-600}"
+VECTOR_INDEX_ENABLED="${AGENTIC_KNOWLEDGE_VECTOR_INDEX:-1}"
+VECTOR_PROVIDER="${AGENTIC_KNOWLEDGE_VECTOR_PROVIDER:-gitnexus}"
+VECTOR_MODEL="${AGENTIC_KNOWLEDGE_VECTOR_MODEL:-Snowflake/snowflake-arctic-embed-xs}"
 mkdir -p "$HOOK_LOG_DIR" 2>/dev/null || HOOK_LOG_DIR="/tmp"
 
 COMMIT_HASH="$(git rev-parse --short HEAD 2>/dev/null || echo unknown)"
@@ -186,11 +229,55 @@ run_gitnexus() {
     echo "[post-commit] GitNexus skipped: .gitnexus is not initialized"
     return 0
   fi
-  if run_gitnexus_command analyze --embeddings --skip-agents-md; then
+  if ! run_gitnexus_command analyze --force --skip-agents-md; then
+    echo "[post-commit] GitNexus non-embedding rebuild failed"
     return 0
   fi
-  echo "[post-commit] GitNexus embeddings failed; rebuilding without embeddings to keep the index usable"
-  run_gitnexus_command analyze --force --skip-agents-md || true
+  if [[ "$ENABLE_EMBEDDINGS" != "1" && "$ENABLE_EMBEDDINGS" != "true" ]]; then
+    echo "[post-commit] GitNexus embeddings skipped: set AGENTIC_KNOWLEDGE_ENABLE_EMBEDDINGS=1 to opt in"
+    return 0
+  fi
+  if ! run_gitnexus_command analyze --embeddings --force --skip-agents-md; then
+    echo "[post-commit] GitNexus embeddings failed; rebuilding without embeddings to keep the index usable"
+    run_gitnexus_command analyze --force --skip-agents-md || true
+  fi
+}
+
+acquire_gitnexus_lock() {
+  local lock_dir=".gitnexus/post-commit.lock"
+  local waited=0
+  while ! mkdir "$lock_dir" 2>/dev/null; do
+    if [[ -f "$lock_dir/pid" ]]; then
+      local lock_pid
+      lock_pid="$(cat "$lock_dir/pid" 2>/dev/null || true)"
+      if [[ -n "$lock_pid" ]] && ! kill -0 "$lock_pid" 2>/dev/null; then
+        echo "[post-commit] Removing stale GitNexus lock held by pid $lock_pid"
+        rm -rf "$lock_dir"
+        continue
+      fi
+    fi
+    if (( waited >= LOCK_TIMEOUT_SECS )); then
+      echo "[post-commit] GitNexus skipped: lock wait timed out after ${LOCK_TIMEOUT_SECS}s"
+      return 1
+    fi
+    sleep 1
+    waited=$((waited + 1))
+  done
+  printf '%s\n' "$$" > "$lock_dir/pid"
+}
+
+release_gitnexus_lock() {
+  rm -rf .gitnexus/post-commit.lock
+}
+
+run_gitnexus_locked() {
+  if [[ ! -d .gitnexus ]]; then
+    echo "[post-commit] GitNexus skipped: .gitnexus is not initialized"
+    return 0
+  fi
+  acquire_gitnexus_lock || return 0
+  run_gitnexus
+  release_gitnexus_lock
 }
 
 run_graphify() {
@@ -203,6 +290,28 @@ run_graphify() {
     return 0
   fi
   graphify update .
+}
+
+run_semantic_vector_index() {
+  if [[ "$VECTOR_INDEX_ENABLED" == "0" || "$VECTOR_INDEX_ENABLED" == "false" ]]; then
+    echo "[post-commit] Semantic vector index skipped: AGENTIC_KNOWLEDGE_VECTOR_INDEX=0"
+    return 0
+  fi
+  if [[ ! -f graphify-out/graph.json ]]; then
+    echo "[post-commit] Semantic vector index skipped: graphify-out/graph.json not found"
+    return 0
+  fi
+  if [[ ! -f scripts/build-semantic-vector-index.mjs ]]; then
+    echo "[post-commit] Semantic vector index skipped: builder script not found"
+    return 0
+  fi
+  if ! command -v node >/dev/null 2>&1; then
+    echo "[post-commit] Semantic vector index skipped: node not found"
+    return 0
+  fi
+  node scripts/build-semantic-vector-index.mjs \
+    --provider "$VECTOR_PROVIDER" \
+    --model "$VECTOR_MODEL"
 }
 
 write_obsidian_log() {
@@ -254,17 +363,24 @@ EOF
 }
 
 if [[ "$ASYNC_MODE" == "0" || "$ASYNC_MODE" == "false" ]]; then
-  run_gitnexus > "$HOOK_LOG_DIR/gitnexus-post-commit.log" 2>&1 || true
+  run_gitnexus_locked > "$HOOK_LOG_DIR/gitnexus-post-commit.log" 2>&1 || true
 else
-  (run_gitnexus > "$HOOK_LOG_DIR/gitnexus-post-commit.log" 2>&1 &)
-  echo "[post-commit] GitNexus analyze --embeddings running in background"
+  (run_gitnexus_locked > "$HOOK_LOG_DIR/gitnexus-post-commit.log" 2>&1 &)
+  echo "[post-commit] GitNexus analyze running in background"
 fi
 
 run_graphify > "$HOOK_LOG_DIR/graphify-post-commit.log" 2>&1 || true
+if [[ "$ASYNC_MODE" == "0" || "$ASYNC_MODE" == "false" ]]; then
+  run_semantic_vector_index > "$HOOK_LOG_DIR/semantic-vector-index-post-commit.log" 2>&1 || true
+else
+  (run_semantic_vector_index > "$HOOK_LOG_DIR/semantic-vector-index-post-commit.log" 2>&1 &)
+  echo "[post-commit] Semantic vector index running in background"
+fi
 write_obsidian_log || true
 HOOK
 
 replace_token scripts/post-commit-hook.sh "__PROJECT_NAME__" "$PROJECT_NAME"
+replace_token scripts/post-commit-hook.sh "__ENABLE_EMBEDDINGS__" "$ENABLE_EMBEDDINGS"
 chmod +x scripts/post-commit-hook.sh
 
 write_text_file scripts/install-knowledge-hook.sh <<'HOOK'
@@ -312,6 +428,11 @@ VAULT_DIR="$TMP_DIR/vault"
 
 mkdir -p "$WORK_DIR/scripts" "$BIN_DIR" "$LOG_DIR" "$VAULT_DIR"
 cp "$SCRIPT_UNDER_TEST" "$WORK_DIR/scripts/post-commit-hook.sh"
+cp "$REPO_ROOT/scripts/semantic-vector-lib.mjs" "$WORK_DIR/scripts/semantic-vector-lib.mjs"
+cp "$REPO_ROOT/scripts/build-semantic-vector-index.mjs" "$WORK_DIR/scripts/build-semantic-vector-index.mjs"
+cp "$REPO_ROOT/scripts/query-semantic-vector-index.mjs" "$WORK_DIR/scripts/query-semantic-vector-index.mjs"
+cp "$REPO_ROOT/scripts/install-vector-deps.sh" "$WORK_DIR/scripts/install-vector-deps.sh"
+chmod +x "$WORK_DIR/scripts/install-vector-deps.sh"
 
 cat > "$BIN_DIR/gitnexus" <<'STUB'
 #!/usr/bin/env bash
@@ -339,15 +460,50 @@ git init -q
 git config user.email "hook-test@example.com"
 git config user.name "Hook Test"
 echo "hook test" > README.md
+mkdir -p src graphify-out
+cat > src/audio.js <<'JS'
+export function mixVirtualAudio(systemAudio, microphone) {
+  return [systemAudio, microphone].filter(Boolean).join(" + ");
+}
+JS
+cat > graphify-out/graph.json <<'JSON'
+{
+  "directed": true,
+  "graph": {},
+  "nodes": [
+    {
+      "id": "mixVirtualAudio",
+      "label": "mixVirtualAudio",
+      "source_file": "src/audio.js",
+      "source_location": "src/audio.js:1",
+      "community": 1,
+      "file_type": "javascript"
+    }
+  ],
+  "links": []
+}
+JSON
 git add README.md
 git commit -q -m "Hook test commit"
-mkdir -p graphify-out .gitnexus
+mkdir -p .gitnexus
+"$WORK_DIR/scripts/install-vector-deps.sh" >/dev/null
 
-PATH="$BIN_DIR:$PATH" STUB_LOG_DIR="$LOG_DIR" OBSIDIAN_VAULT="$VAULT_DIR" AGENTIC_KNOWLEDGE_HOOK_ASYNC=0 AGENTIC_KNOWLEDGE_HOOK_LOG_DIR="$LOG_DIR" \
+PATH="$BIN_DIR:$PATH" STUB_LOG_DIR="$LOG_DIR" OBSIDIAN_VAULT="$VAULT_DIR" AGENTIC_KNOWLEDGE_VECTOR_PROVIDER=test AGENTIC_KNOWLEDGE_HOOK_ASYNC=0 AGENTIC_KNOWLEDGE_HOOK_LOG_DIR="$LOG_DIR" \
   "$WORK_DIR/scripts/post-commit-hook.sh"
 
-grep -F "analyze --embeddings --skip-agents-md" "$LOG_DIR/gitnexus.log" >/dev/null
+grep -F "analyze --force --skip-agents-md" "$LOG_DIR/gitnexus.log" >/dev/null
+if [[ "ENABLE_EMBEDDINGS_PLACEHOLDER" == "1" ]]; then
+  grep -F "analyze --embeddings --force --skip-agents-md" "$LOG_DIR/gitnexus.log" >/dev/null
+else
+  if grep -F -- "--embeddings" "$LOG_DIR/gitnexus.log" >/dev/null; then
+    echo "embeddings should be opt-in by default" >&2
+    exit 1
+  fi
+fi
 grep -F "update ." "$LOG_DIR/graphify.log" >/dev/null
+test -f "$WORK_DIR/semantic-vector-index/manifest.json"
+test -d "$WORK_DIR/semantic-vector-index/lancedb"
+node -e 'const fs=require("fs"); const p=process.argv[1]; const idx=JSON.parse(fs.readFileSync(p,"utf8")); if (idx.provider.name !== "test" || idx.store.kind !== "lancedb" || idx.source.indexedItemCount !== 1) process.exit(1);' "$WORK_DIR/semantic-vector-index/manifest.json"
 
 MONTH_TAG="$(date +'%Y-%m')"
 OBSIDIAN_LOG="$VAULT_DIR/PROJECT_NAME_PLACEHOLDER/Development Logs/${MONTH_TAG} commit log.md"
@@ -355,7 +511,7 @@ OBSIDIAN_LOG="$VAULT_DIR/PROJECT_NAME_PLACEHOLDER/Development Logs/${MONTH_TAG} 
 grep -F "Hook test commit" "$OBSIDIAN_LOG" >/dev/null
 grep -E -- '- `[0-9a-f]{7,}` \([0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}\) - Hook test commit' "$OBSIDIAN_LOG" >/dev/null
 
-PATH="$BIN_DIR:$PATH" STUB_LOG_DIR="$LOG_DIR" OBSIDIAN_VAULT="$VAULT_DIR" AGENTIC_KNOWLEDGE_HOOK_ASYNC=0 AGENTIC_KNOWLEDGE_HOOK_LOG_DIR="$LOG_DIR" \
+PATH="$BIN_DIR:$PATH" STUB_LOG_DIR="$LOG_DIR" OBSIDIAN_VAULT="$VAULT_DIR" AGENTIC_KNOWLEDGE_VECTOR_PROVIDER=test AGENTIC_KNOWLEDGE_HOOK_ASYNC=0 AGENTIC_KNOWLEDGE_HOOK_LOG_DIR="$LOG_DIR" \
   "$WORK_DIR/scripts/post-commit-hook.sh"
 
 COUNT="$(grep -c "Hook test commit" "$OBSIDIAN_LOG")"
@@ -365,15 +521,29 @@ if [[ "$COUNT" != "1" ]]; then
 fi
 
 : > "$LOG_DIR/gitnexus.log"
-PATH="$BIN_DIR:$PATH" STUB_LOG_DIR="$LOG_DIR" STUB_GITNEXUS_FAIL_EMBEDDINGS=1 OBSIDIAN_VAULT="$VAULT_DIR" AGENTIC_KNOWLEDGE_HOOK_ASYNC=0 AGENTIC_KNOWLEDGE_HOOK_LOG_DIR="$LOG_DIR" \
+PATH="$BIN_DIR:$PATH" STUB_LOG_DIR="$LOG_DIR" STUB_GITNEXUS_FAIL_EMBEDDINGS=1 OBSIDIAN_VAULT="$VAULT_DIR" AGENTIC_KNOWLEDGE_VECTOR_PROVIDER=test AGENTIC_KNOWLEDGE_HOOK_ASYNC=0 AGENTIC_KNOWLEDGE_HOOK_LOG_DIR="$LOG_DIR" \
   "$WORK_DIR/scripts/post-commit-hook.sh"
 
-grep -F "analyze --embeddings --skip-agents-md" "$LOG_DIR/gitnexus.log" >/dev/null
+grep -F "analyze --force --skip-agents-md" "$LOG_DIR/gitnexus.log" >/dev/null
+
+: > "$LOG_DIR/gitnexus.log"
+PATH="$BIN_DIR:$PATH" STUB_LOG_DIR="$LOG_DIR" STUB_GITNEXUS_FAIL_EMBEDDINGS=1 OBSIDIAN_VAULT="$VAULT_DIR" AGENTIC_KNOWLEDGE_VECTOR_PROVIDER=test AGENTIC_KNOWLEDGE_ENABLE_EMBEDDINGS=1 AGENTIC_KNOWLEDGE_HOOK_ASYNC=0 AGENTIC_KNOWLEDGE_HOOK_LOG_DIR="$LOG_DIR" \
+  "$WORK_DIR/scripts/post-commit-hook.sh"
+
+grep -F "analyze --embeddings --force --skip-agents-md" "$LOG_DIR/gitnexus.log" >/dev/null
+grep -F "analyze --force --skip-agents-md" "$LOG_DIR/gitnexus.log" >/dev/null
+
+mkdir -p "$WORK_DIR/.gitnexus/post-commit.lock"
+printf '999999\n' > "$WORK_DIR/.gitnexus/post-commit.lock/pid"
+: > "$LOG_DIR/gitnexus.log"
+PATH="$BIN_DIR:$PATH" STUB_LOG_DIR="$LOG_DIR" OBSIDIAN_VAULT="$VAULT_DIR" AGENTIC_KNOWLEDGE_VECTOR_PROVIDER=test AGENTIC_KNOWLEDGE_HOOK_ASYNC=0 AGENTIC_KNOWLEDGE_HOOK_LOG_DIR="$LOG_DIR" \
+  "$WORK_DIR/scripts/post-commit-hook.sh"
 grep -F "analyze --force --skip-agents-md" "$LOG_DIR/gitnexus.log" >/dev/null
 
 echo "post-commit hook smoke test passed"
 HOOK
 replace_token scripts/test-post-commit-hook.sh "PROJECT_NAME_PLACEHOLDER" "$PROJECT_NAME"
+replace_token scripts/test-post-commit-hook.sh "ENABLE_EMBEDDINGS_PLACEHOLDER" "$ENABLE_EMBEDDINGS"
 chmod +x scripts/test-post-commit-hook.sh
 
 write_text_file .gitnexusignore <<'IGNORE'
@@ -417,6 +587,8 @@ ensure_gitignore_line ""
 ensure_gitignore_line "# Local code intelligence artifacts"
 ensure_gitignore_line ".gitnexus/"
 ensure_gitignore_line "graphify-out/"
+ensure_gitignore_line "semantic-vector-index/"
+ensure_gitignore_line "scripts/node_modules/"
 
 mkdir -p .codex .claude
 if [[ "$INSTALL_CODEX" == "1" ]]; then
@@ -469,10 +641,11 @@ This repo is wired for GitNexus, graphify, and Obsidian project memory.
 
 - GitNexus MCP repo name: \`${PROJECT_NAME}\`
 - graphify graph: \`graphify-out/\`
+- semantic vector index: \`semantic-vector-index/lancedb\` and \`semantic-vector-index/manifest.json\`
 - Obsidian project logs: \`${OBSIDIAN_PROJECT_DIR:-${VAULT_ROOT}/${PROJECT_NAME}}/Development Logs/\`
 - post-commit hook: \`scripts/post-commit-hook.sh\`
 
-After commits, the hook runs GitNexus \`analyze --embeddings --skip-agents-md\`, updates graphify, and appends the monthly Obsidian commit log. If embeddings fail, it force-rebuilds the non-embedding GitNexus index so MCP remains usable.
+After commits, the hook serializes GitNexus with a repo-local lock, force-rebuilds the non-embedding GitNexus index, updates graphify, rebuilds the independent LanceDB semantic vector index, and appends the monthly Obsidian commit log. GitNexus LadybugDB embeddings are opt-in via \`AGENTIC_KNOWLEDGE_ENABLE_EMBEDDINGS=1\` because some vector-index combinations can fail in native code; if embeddings fail, the hook force-rebuilds the non-embedding index so MCP remains usable. The semantic vector index uses GitNexus bundled transformers by default and writes vectors to LanceDB outside LadybugDB.
 EOF
 update_block AGENTS.md "<!-- agentic-knowledge:start -->" "<!-- agentic-knowledge:end -->" "$tmp_block"
 update_block CLAUDE.md "<!-- agentic-knowledge:start -->" "<!-- agentic-knowledge:end -->" "$tmp_block"
@@ -490,13 +663,21 @@ if [[ "$SKIP_INITIAL_RUN" == "0" ]]; then
     else
       "${GITNEXUS_CMD[@]}" analyze
     fi
-    "${GITNEXUS_CMD[@]}" analyze --embeddings --skip-agents-md || "${GITNEXUS_CMD[@]}" analyze --force --skip-agents-md || true
+    "${GITNEXUS_CMD[@]}" analyze --force --skip-agents-md || true
+    if [[ "$ENABLE_EMBEDDINGS" == "1" ]]; then
+      "${GITNEXUS_CMD[@]}" analyze --embeddings --force --skip-agents-md || "${GITNEXUS_CMD[@]}" analyze --force --skip-agents-md || true
+    fi
   else
     echo "GitNexus not found; install gitnexus or use npx before first indexing." >&2
   fi
 
   if command -v graphify >/dev/null 2>&1; then
     graphify update . || true
+    if command -v node >/dev/null 2>&1; then
+      node scripts/build-semantic-vector-index.mjs || true
+    else
+      echo "node not found; semantic vector index will be built by the hook when node is available." >&2
+    fi
     [[ "$INSTALL_CODEX" == "1" ]] && graphify codex install || true
     [[ "$INSTALL_CLAUDE" == "1" ]] && graphify claude install || true
   else
@@ -508,4 +689,4 @@ bash -n scripts/post-commit-hook.sh scripts/install-knowledge-hook.sh scripts/te
 
 echo "Agentic knowledge setup installed for ${PROJECT_NAME}"
 echo "Target: ${REPO_ROOT}"
-echo "Next verification: bash scripts/test-post-commit-hook.sh && gitnexus status && graphify update ."
+echo "Next verification: bash scripts/test-post-commit-hook.sh && node scripts/test-semantic-vector-index.mjs && gitnexus status && graphify update ."
