@@ -16,6 +16,7 @@ Options:
   --obsidian-project-dir PATH Direct Obsidian project directory override.
   --skip-initial-run          Install files/hooks only; do not run GitNexus/graphify.
   --enable-embeddings         Opt in to GitNexus embeddings in install and post-commit hook.
+  --skip-vector-deps          Do not install isolated LanceDB dependencies under scripts/node_modules.
   --no-claude                 Do not create Claude graphify hook/settings.
   --no-codex                  Do not create Codex graphify hook/settings.
   --no-gitnexus-skills        Run GitNexus without --skills.
@@ -32,6 +33,7 @@ INSTALL_CLAUDE=1
 INSTALL_CODEX=1
 GITNEXUS_SKILLS=1
 ENABLE_EMBEDDINGS=0
+SKIP_VECTOR_DEPS=0
 
 while [[ $# -gt 0 ]]; do
   case "$1" in
@@ -57,6 +59,10 @@ while [[ $# -gt 0 ]]; do
       ;;
     --enable-embeddings)
       ENABLE_EMBEDDINGS=1
+      shift
+      ;;
+    --skip-vector-deps)
+      SKIP_VECTOR_DEPS=1
       shift
       ;;
     --no-claude)
@@ -171,7 +177,12 @@ copy_helper_script semantic-vector-lib.mjs
 copy_helper_script build-semantic-vector-index.mjs
 copy_helper_script query-semantic-vector-index.mjs
 copy_helper_script test-semantic-vector-index.mjs
-chmod +x scripts/build-semantic-vector-index.mjs scripts/query-semantic-vector-index.mjs scripts/test-semantic-vector-index.mjs
+copy_helper_script install-vector-deps.sh
+chmod +x scripts/build-semantic-vector-index.mjs scripts/query-semantic-vector-index.mjs scripts/test-semantic-vector-index.mjs scripts/install-vector-deps.sh
+
+if [[ "$SKIP_VECTOR_DEPS" == "0" ]]; then
+  scripts/install-vector-deps.sh || echo "LanceDB dependency install failed; semantic vector build will log a skip/failure until dependencies are installed." >&2
+fi
 
 write_text_file scripts/post-commit-hook.sh <<'HOOK'
 #!/usr/bin/env bash
@@ -420,6 +431,8 @@ cp "$SCRIPT_UNDER_TEST" "$WORK_DIR/scripts/post-commit-hook.sh"
 cp "$REPO_ROOT/scripts/semantic-vector-lib.mjs" "$WORK_DIR/scripts/semantic-vector-lib.mjs"
 cp "$REPO_ROOT/scripts/build-semantic-vector-index.mjs" "$WORK_DIR/scripts/build-semantic-vector-index.mjs"
 cp "$REPO_ROOT/scripts/query-semantic-vector-index.mjs" "$WORK_DIR/scripts/query-semantic-vector-index.mjs"
+cp "$REPO_ROOT/scripts/install-vector-deps.sh" "$WORK_DIR/scripts/install-vector-deps.sh"
+chmod +x "$WORK_DIR/scripts/install-vector-deps.sh"
 
 cat > "$BIN_DIR/gitnexus" <<'STUB'
 #!/usr/bin/env bash
@@ -473,6 +486,7 @@ JSON
 git add README.md
 git commit -q -m "Hook test commit"
 mkdir -p .gitnexus
+"$WORK_DIR/scripts/install-vector-deps.sh" >/dev/null
 
 PATH="$BIN_DIR:$PATH" STUB_LOG_DIR="$LOG_DIR" OBSIDIAN_VAULT="$VAULT_DIR" AGENTIC_KNOWLEDGE_VECTOR_PROVIDER=test AGENTIC_KNOWLEDGE_HOOK_ASYNC=0 AGENTIC_KNOWLEDGE_HOOK_LOG_DIR="$LOG_DIR" \
   "$WORK_DIR/scripts/post-commit-hook.sh"
@@ -487,8 +501,9 @@ else
   fi
 fi
 grep -F "update ." "$LOG_DIR/graphify.log" >/dev/null
-test -f "$WORK_DIR/semantic-vector-index/index.json"
-node -e 'const fs=require("fs"); const p=process.argv[1]; const idx=JSON.parse(fs.readFileSync(p,"utf8")); if (idx.provider.name !== "test" || idx.items.length !== 1 || !Array.isArray(idx.items[0].embedding)) process.exit(1);' "$WORK_DIR/semantic-vector-index/index.json"
+test -f "$WORK_DIR/semantic-vector-index/manifest.json"
+test -d "$WORK_DIR/semantic-vector-index/lancedb"
+node -e 'const fs=require("fs"); const p=process.argv[1]; const idx=JSON.parse(fs.readFileSync(p,"utf8")); if (idx.provider.name !== "test" || idx.store.kind !== "lancedb" || idx.source.indexedItemCount !== 1) process.exit(1);' "$WORK_DIR/semantic-vector-index/manifest.json"
 
 MONTH_TAG="$(date +'%Y-%m')"
 OBSIDIAN_LOG="$VAULT_DIR/PROJECT_NAME_PLACEHOLDER/Development Logs/${MONTH_TAG} commit log.md"
@@ -573,6 +588,7 @@ ensure_gitignore_line "# Local code intelligence artifacts"
 ensure_gitignore_line ".gitnexus/"
 ensure_gitignore_line "graphify-out/"
 ensure_gitignore_line "semantic-vector-index/"
+ensure_gitignore_line "scripts/node_modules/"
 
 mkdir -p .codex .claude
 if [[ "$INSTALL_CODEX" == "1" ]]; then
@@ -625,11 +641,11 @@ This repo is wired for GitNexus, graphify, and Obsidian project memory.
 
 - GitNexus MCP repo name: \`${PROJECT_NAME}\`
 - graphify graph: \`graphify-out/\`
-- semantic vector index: \`semantic-vector-index/index.json\`
+- semantic vector index: \`semantic-vector-index/lancedb\` and \`semantic-vector-index/manifest.json\`
 - Obsidian project logs: \`${OBSIDIAN_PROJECT_DIR:-${VAULT_ROOT}/${PROJECT_NAME}}/Development Logs/\`
 - post-commit hook: \`scripts/post-commit-hook.sh\`
 
-After commits, the hook serializes GitNexus with a repo-local lock, force-rebuilds the non-embedding GitNexus index, updates graphify, rebuilds the independent semantic vector index, and appends the monthly Obsidian commit log. GitNexus LadybugDB embeddings are opt-in via \`AGENTIC_KNOWLEDGE_ENABLE_EMBEDDINGS=1\` because some vector-index combinations can fail in native code; if embeddings fail, the hook force-rebuilds the non-embedding index so MCP remains usable. The semantic vector index uses GitNexus bundled transformers by default and writes JSON outside LadybugDB.
+After commits, the hook serializes GitNexus with a repo-local lock, force-rebuilds the non-embedding GitNexus index, updates graphify, rebuilds the independent LanceDB semantic vector index, and appends the monthly Obsidian commit log. GitNexus LadybugDB embeddings are opt-in via \`AGENTIC_KNOWLEDGE_ENABLE_EMBEDDINGS=1\` because some vector-index combinations can fail in native code; if embeddings fail, the hook force-rebuilds the non-embedding index so MCP remains usable. The semantic vector index uses GitNexus bundled transformers by default and writes vectors to LanceDB outside LadybugDB.
 EOF
 update_block AGENTS.md "<!-- agentic-knowledge:start -->" "<!-- agentic-knowledge:end -->" "$tmp_block"
 update_block CLAUDE.md "<!-- agentic-knowledge:start -->" "<!-- agentic-knowledge:end -->" "$tmp_block"

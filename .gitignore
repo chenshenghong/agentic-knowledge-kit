@@ -7,3 +7,4 @@ __pycache__/
 *.pyc
 .gitnexus/
 semantic-vector-index/
+scripts/node_modules/

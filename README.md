@@ -6,7 +6,7 @@ It wires together:
 
 - GitNexus code intelligence and MCP configuration
 - graphify semantic knowledge graph
-- independent semantic vector index in JSON
+- independent LanceDB semantic vector index
 - Obsidian project commit logs
 - Codex and Claude graph-aware hook configuration
 - a post-commit hook that refreshes local knowledge artifacts
@@ -55,6 +55,7 @@ After installing into a target repo:
 bash scripts/test-post-commit-hook.sh
 gitnexus status
 graphify update .
+scripts/install-vector-deps.sh
 node scripts/build-semantic-vector-index.mjs
 node scripts/query-semantic-vector-index.mjs "authentication flow"
 git diff --check
@@ -64,10 +65,11 @@ git diff --check
 
 GitNexus embeddings can fail in the LadybugDB vector index step on some versions/platforms. The generated hook defaults to the reliable non-embedding index and serializes GitNexus work with a repo-local lock. Set `AGENTIC_KNOWLEDGE_ENABLE_EMBEDDINGS=1` or pass `--enable-embeddings` during install to opt in to LadybugDB embeddings. If embeddings fail, the hook force-rebuilds without embeddings so MCP access remains usable.
 
-For semantic vector search, the kit builds an independent `semantic-vector-index/index.json` from `graphify-out/graph.json`. It uses GitNexus bundled transformers by default, with the same `Snowflake/snowflake-arctic-embed-xs` model, but stores vectors outside LadybugDB.
+For semantic vector search, the kit builds an independent LanceDB store at `semantic-vector-index/lancedb` with metadata in `semantic-vector-index/manifest.json`. It uses GitNexus bundled transformers by default, with the same `Snowflake/snowflake-arctic-embed-xs` model, but stores vectors outside LadybugDB.
 
 Vector index knobs:
 
 - `AGENTIC_KNOWLEDGE_VECTOR_INDEX=0` disables hook-time vector rebuilds.
 - `AGENTIC_KNOWLEDGE_VECTOR_MODEL=Snowflake/snowflake-arctic-embed-xs` overrides the local embedding model.
 - `AGENTIC_KNOWLEDGE_VECTOR_PROVIDER=test` is only for smoke tests; it is deterministic, not semantic.
+- `AGENTIC_KNOWLEDGE_SKIP_VECTOR_DEPS=1` skips isolated `@lancedb/lancedb` installation under `scripts/node_modules`.

@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 import assert from 'node:assert/strict';
-import { mkdtempSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
+import { existsSync, mkdtempSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join, resolve } from 'node:path';
 import { execFileSync } from 'node:child_process';
@@ -69,19 +69,37 @@ const buildOut = execFileSync(
 
 assert.match(buildOut, /Semantic vector index written/);
 
-const indexPath = join(tmp, 'semantic-vector-index', 'index.json');
-const index = JSON.parse(readFileSync(indexPath, 'utf8'));
+const manifestPath = join(tmp, 'semantic-vector-index', 'manifest.json');
+const index = JSON.parse(readFileSync(manifestPath, 'utf8'));
 
 assert.equal(index.schemaVersion, 1);
+assert.equal(index.store.kind, 'lancedb');
+assert.equal(index.store.table, 'nodes');
+assert.equal(existsSync(join(tmp, 'semantic-vector-index', 'lancedb')), true);
 assert.equal(index.provider.name, 'test');
 assert.equal(index.provider.semantic, false);
 assert.equal(index.provider.dimensions, 12);
 assert.equal(index.source.graphPath, 'graphify-out/graph.json');
 assert.equal(index.source.nodeCount, 2);
-assert.equal(index.items.length, 2);
-assert.equal(index.items[0].embedding.length, 12);
-assert.match(index.items[0].text, /mixVirtualAudio/);
-assert.match(index.items[0].text, /systemAudio/);
+assert.equal(index.source.indexedItemCount, 2);
+assert.equal(typeof index.source.graphHash, 'string');
+
+mkdirSync(join(tmp, 'semantic-vector-index', '.build.lock'), { recursive: true });
+writeFileSync(join(tmp, 'semantic-vector-index', '.build.lock', 'pid'), '999999\n');
+execFileSync(
+  'node',
+  [
+    join(repoRoot, 'scripts', 'build-semantic-vector-index.mjs'),
+    '--repo',
+    tmp,
+    '--provider',
+    'test',
+    '--dimensions',
+    '12',
+  ],
+  { encoding: 'utf8' },
+);
+assert.equal(existsSync(join(tmp, 'semantic-vector-index', '.build.lock')), false);
 
 const queryOut = execFileSync(
   'node',
@@ -101,6 +119,7 @@ const query = JSON.parse(queryOut);
 assert.equal(query.query, 'virtual microphone mixer');
 assert.equal(query.results.length, 2);
 assert.equal('embedding' in query.results[0], false);
-assert.equal(typeof query.results[0].score, 'number');
+assert.equal(typeof query.results[0].distance, 'number');
+assert.match(query.results.map((result) => result.text).join('\n'), /mixVirtualAudio/);
 
 console.log('semantic vector index smoke test passed');

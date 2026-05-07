@@ -1,12 +1,13 @@
 #!/usr/bin/env node
 
-import { readFileSync } from 'node:fs';
-import { resolve } from 'node:path';
+import { existsSync, readFileSync } from 'node:fs';
+import { dirname, resolve } from 'node:path';
 import {
   DEFAULT_MODEL,
-  cosineSimilarity,
   createEmbeddingProvider,
   parseArgs,
+  searchLanceTable,
+  sha256File,
 } from './semantic-vector-lib.mjs';
 
 const options = parseArgs(process.argv.slice(2));
@@ -16,8 +17,21 @@ if (!query) {
 }
 
 const repoRoot = resolve(String(options.repo ?? process.cwd()));
-const indexPath = resolve(repoRoot, String(options.index ?? 'semantic-vector-index/index.json'));
-const index = JSON.parse(readFileSync(indexPath, 'utf8'));
+const requestedIndex = String(options.index ?? options.manifest ?? 'semantic-vector-index/manifest.json');
+const manifestPath = resolve(repoRoot, requestedIndex);
+const index = JSON.parse(readFileSync(manifestPath, 'utf8'));
+if (index.store?.kind !== 'lancedb') {
+  throw new Error(`Unsupported vector store in manifest: ${index.store?.kind ?? 'unknown'}`);
+}
+const graphPath = resolve(repoRoot, String(index.source?.graphPath ?? 'graphify-out/graph.json'));
+if (index.source?.graphHash && existsSync(graphPath)) {
+  const currentGraphHash = sha256File(graphPath);
+  if (currentGraphHash !== index.source.graphHash) {
+    console.error(
+      `Semantic vector index is stale: ${index.source.graphPath} changed after ${manifestPath}. Rebuild with scripts/build-semantic-vector-index.mjs.`,
+    );
+  }
+}
 const providerName = String(
   options.provider ??
     process.env.AGENTIC_KNOWLEDGE_VECTOR_PROVIDER ??
@@ -36,6 +50,8 @@ const dimensions = Number.parseInt(
 );
 const device = String(options.device ?? process.env.AGENTIC_KNOWLEDGE_VECTOR_DEVICE ?? 'cpu');
 const limit = Number.parseInt(String(options.limit ?? '5'), 10);
+const dbPath = resolve(repoRoot, String(options.db ?? index.store?.uri ?? `${dirname(requestedIndex)}/lancedb`));
+const tableName = String(options.table ?? index.store?.table ?? 'nodes');
 
 const provider = await createEmbeddingProvider({
   provider: providerName,
@@ -46,17 +62,20 @@ const provider = await createEmbeddingProvider({
 
 try {
   const [queryVector] = await provider.embed([query]);
-  const results = index.items
-    .map((item) => ({
-      id: item.id,
-      label: item.label,
-      score: cosineSimilarity(queryVector, item.embedding),
-      sourceFile: item.sourceFile,
-      sourceLocation: item.sourceLocation,
-      text: item.text,
-    }))
-    .sort((a, b) => b.score - a.score)
-    .slice(0, limit);
+  const rows = await searchLanceTable({
+    dbPath,
+    tableName,
+    vector: queryVector,
+    limit,
+  });
+  const results = rows.map((row) => ({
+    id: row.id,
+    label: row.label,
+    distance: row._distance,
+    sourceFile: row.sourceFile,
+    sourceLocation: row.sourceLocation,
+    text: row.text,
+  }));
 
   if (options.json) {
     console.log(
@@ -68,6 +87,11 @@ try {
             model: provider.model,
             semantic: provider.semantic,
           },
+          store: {
+            kind: 'lancedb',
+            uri: index.store.uri,
+            table: tableName,
+          },
           results,
         },
         null,
@@ -77,7 +101,7 @@ try {
   } else {
     for (const [index, result] of results.entries()) {
       const location = result.sourceLocation || result.sourceFile || 'unknown';
-      console.log(`${index + 1}. ${result.label} (${result.score.toFixed(4)}) ${location}`);
+      console.log(`${index + 1}. ${result.label} (distance=${Number(result.distance).toFixed(4)}) ${location}`);
     }
   }
 } finally {

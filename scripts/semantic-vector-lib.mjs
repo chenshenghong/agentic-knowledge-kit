@@ -3,6 +3,7 @@ import { execFileSync } from 'node:child_process';
 import {
   existsSync,
   mkdirSync,
+  rmSync,
   readFileSync,
   realpathSync,
   renameSync,
@@ -53,10 +54,15 @@ export function readJson(path) {
   return JSON.parse(readFileSync(path, 'utf8'));
 }
 
+export function sha256File(path) {
+  return createHash('sha256').update(readFileSync(path)).digest('hex');
+}
+
 export function writeJson(path, value) {
   mkdirSync(dirname(path), { recursive: true });
-  writeFileSync(`${path}.tmp`, `${JSON.stringify(value, null, 2)}\n`);
-  renameSync(`${path}.tmp`, path);
+  const tmpPath = `${path}.${process.pid}.tmp`;
+  writeFileSync(tmpPath, `${JSON.stringify(value, null, 2)}\n`);
+  renameSync(tmpPath, path);
 }
 
 export function getCurrentCommit(repoRoot) {
@@ -280,6 +286,81 @@ export function cosineSimilarity(a, b) {
 
 export function roundVector(vector) {
   return vector.map((value) => Number(value.toFixed(8)));
+}
+
+export async function openLanceDb(dbPath) {
+  const lancedb = await import('@lancedb/lancedb');
+  mkdirSync(dbPath, { recursive: true });
+  return lancedb.connect(dbPath);
+}
+
+export async function writeLanceTable({ dbPath, tableName = 'nodes', rows }) {
+  if (rows.length === 0) {
+    throw new Error('Cannot write an empty LanceDB table');
+  }
+  const db = await openLanceDb(dbPath);
+  try {
+    let table;
+    try {
+      table = await db.createTable(tableName, rows, { mode: 'overwrite' });
+    } catch {
+      rmSync(join(dbPath, `${tableName}.lance`), { recursive: true, force: true });
+      table = await db.createTable(tableName, rows);
+    }
+    await table.close?.();
+  } finally {
+    await db.close?.();
+  }
+}
+
+export async function searchLanceTable({ dbPath, tableName = 'nodes', vector, limit = 5 }) {
+  const db = await openLanceDb(dbPath);
+  try {
+    const table = await db.openTable(tableName);
+    try {
+      return await table.search(vector).limit(limit).toArray();
+    } finally {
+      await table.close?.();
+    }
+  } finally {
+    await db.close?.();
+  }
+}
+
+export async function withDirectoryLock(lockDir, fn, timeoutSecs = 600) {
+  mkdirSync(dirname(lockDir), { recursive: true });
+  const pidPath = join(lockDir, 'pid');
+  const start = Date.now();
+  while (true) {
+    try {
+      mkdirSync(lockDir);
+      writeFileSync(pidPath, `${process.pid}\n`);
+      break;
+    } catch {
+      try {
+        const lockPid = Number.parseInt(readFileSync(pidPath, 'utf8').trim(), 10);
+        if (Number.isFinite(lockPid)) {
+          try {
+            process.kill(lockPid, 0);
+          } catch {
+            rmSync(lockDir, { recursive: true, force: true });
+            continue;
+          }
+        }
+      } catch {}
+      const waitedSecs = Math.floor((Date.now() - start) / 1000);
+      if (waitedSecs >= timeoutSecs) {
+        throw new Error(`Timed out waiting for lock: ${lockDir}`);
+      }
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+    }
+  }
+
+  try {
+    return await fn();
+  } finally {
+    rmSync(lockDir, { recursive: true, force: true });
+  }
 }
 
 function deterministicVector(text, dimensions) {
