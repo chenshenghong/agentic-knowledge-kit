@@ -29,6 +29,15 @@ To only write files and skip the first GitNexus/graphify run:
   --skip-initial-run
 ```
 
+To opt in to GitNexus embeddings during install and in the generated post-commit hook:
+
+```bash
+./scripts/install-agentic-knowledge.sh \
+  --repo /path/to/project \
+  --project-name ProjectName \
+  --enable-embeddings
+```
+
 ## Use As A Skill
 
 Copy this repository folder into a Codex/agent skills directory, then ask:
@@ -50,4 +59,4 @@ git diff --check
 
 ## Notes
 
-GitNexus embeddings can fail in the LadybugDB vector index step on some versions/platforms. The generated hook tries `analyze --embeddings` first, then force-rebuilds without embeddings so MCP access remains usable.
+GitNexus embeddings can fail in the LadybugDB vector index step on some versions/platforms. The generated hook defaults to the reliable non-embedding index and serializes GitNexus work with a repo-local lock. Set `AGENTIC_KNOWLEDGE_ENABLE_EMBEDDINGS=1` or pass `--enable-embeddings` during install to opt in to embeddings. If embeddings fail, the hook force-rebuilds without embeddings so MCP access remains usable.

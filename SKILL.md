@@ -34,6 +34,7 @@ Useful flags:
 - `--vault-root "$HOME/Documents/Obsidian Vault"` writes project logs under that vault.
 - `--obsidian-project-dir /path/to/vault/Project` writes directly to a project folder.
 - `--skip-initial-run` installs files/hooks without running GitNexus or graphify.
+- `--enable-embeddings` opts in to GitNexus embeddings during install and in the generated hook.
 - `--no-claude`, `--no-codex`, `--no-gitnexus-skills` for narrower installs.
 
 ## What It Installs
@@ -69,7 +70,7 @@ For multi-repo GitNexus registries, pass `repo` explicitly in MCP calls.
 
 ## Known Caveat
 
-GitNexus `--embeddings` can fail in the LadybugDB vector-index step on some versions/platforms. The generated post-commit hook tries embeddings first, then force-rebuilds without embeddings so MCP remains usable. Mention this caveat in the final report if embeddings stay at `0` in `~/.gitnexus/registry.json`.
+GitNexus `--embeddings` can fail in the LadybugDB vector-index step on some versions/platforms. The generated post-commit hook defaults to the reliable non-embedding index, serializes GitNexus with a repo-local lock, and only attempts embeddings when `AGENTIC_KNOWLEDGE_ENABLE_EMBEDDINGS=1` or `--enable-embeddings` was used during install. If embeddings fail, it force-rebuilds without embeddings so MCP remains usable. Mention this caveat in the final report if embeddings stay at `0` in `~/.gitnexus/registry.json`.
 
 ## Obsidian Memory
 

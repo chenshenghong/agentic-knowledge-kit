@@ -13,6 +13,7 @@ Options:
   --vault-root PATH           Obsidian vault root. Default: $HOME/Documents/Obsidian Vault.
   --obsidian-project-dir PATH Direct Obsidian project directory override.
   --skip-initial-run          Install files/hooks only; do not run GitNexus/graphify.
+  --enable-embeddings         Opt in to GitNexus embeddings in install and post-commit hook.
   --no-claude                 Do not create Claude graphify hook/settings.
   --no-codex                  Do not create Codex graphify hook/settings.
   --no-gitnexus-skills        Run GitNexus without --skills.
@@ -28,6 +29,7 @@ SKIP_INITIAL_RUN=0
 INSTALL_CLAUDE=1
 INSTALL_CODEX=1
 GITNEXUS_SKILLS=1
+ENABLE_EMBEDDINGS=0
 
 while [[ $# -gt 0 ]]; do
   case "$1" in
@@ -49,6 +51,10 @@ while [[ $# -gt 0 ]]; do
       ;;
     --skip-initial-run)
       SKIP_INITIAL_RUN=1
+      shift
+      ;;
+    --enable-embeddings)
+      ENABLE_EMBEDDINGS=1
       shift
       ;;
     --no-claude)
@@ -161,6 +167,8 @@ cd "$REPO_ROOT" || exit 0
 PROJECT_NAME="${AGENTIC_KNOWLEDGE_PROJECT_NAME:-__PROJECT_NAME__}"
 ASYNC_MODE="${AGENTIC_KNOWLEDGE_HOOK_ASYNC:-1}"
 HOOK_LOG_DIR="${AGENTIC_KNOWLEDGE_HOOK_LOG_DIR:-/tmp}"
+ENABLE_EMBEDDINGS="${AGENTIC_KNOWLEDGE_ENABLE_EMBEDDINGS:-__ENABLE_EMBEDDINGS__}"
+LOCK_TIMEOUT_SECS="${AGENTIC_KNOWLEDGE_LOCK_TIMEOUT_SECS:-600}"
 mkdir -p "$HOOK_LOG_DIR" 2>/dev/null || HOOK_LOG_DIR="/tmp"
 
 COMMIT_HASH="$(git rev-parse --short HEAD 2>/dev/null || echo unknown)"
@@ -186,11 +194,55 @@ run_gitnexus() {
     echo "[post-commit] GitNexus skipped: .gitnexus is not initialized"
     return 0
   fi
-  if run_gitnexus_command analyze --embeddings --skip-agents-md; then
+  if ! run_gitnexus_command analyze --force --skip-agents-md; then
+    echo "[post-commit] GitNexus non-embedding rebuild failed"
     return 0
   fi
-  echo "[post-commit] GitNexus embeddings failed; rebuilding without embeddings to keep the index usable"
-  run_gitnexus_command analyze --force --skip-agents-md || true
+  if [[ "$ENABLE_EMBEDDINGS" != "1" && "$ENABLE_EMBEDDINGS" != "true" ]]; then
+    echo "[post-commit] GitNexus embeddings skipped: set AGENTIC_KNOWLEDGE_ENABLE_EMBEDDINGS=1 to opt in"
+    return 0
+  fi
+  if ! run_gitnexus_command analyze --embeddings --force --skip-agents-md; then
+    echo "[post-commit] GitNexus embeddings failed; rebuilding without embeddings to keep the index usable"
+    run_gitnexus_command analyze --force --skip-agents-md || true
+  fi
+}
+
+acquire_gitnexus_lock() {
+  local lock_dir=".gitnexus/post-commit.lock"
+  local waited=0
+  while ! mkdir "$lock_dir" 2>/dev/null; do
+    if [[ -f "$lock_dir/pid" ]]; then
+      local lock_pid
+      lock_pid="$(cat "$lock_dir/pid" 2>/dev/null || true)"
+      if [[ -n "$lock_pid" ]] && ! kill -0 "$lock_pid" 2>/dev/null; then
+        echo "[post-commit] Removing stale GitNexus lock held by pid $lock_pid"
+        rm -rf "$lock_dir"
+        continue
+      fi
+    fi
+    if (( waited >= LOCK_TIMEOUT_SECS )); then
+      echo "[post-commit] GitNexus skipped: lock wait timed out after ${LOCK_TIMEOUT_SECS}s"
+      return 1
+    fi
+    sleep 1
+    waited=$((waited + 1))
+  done
+  printf '%s\n' "$$" > "$lock_dir/pid"
+}
+
+release_gitnexus_lock() {
+  rm -rf .gitnexus/post-commit.lock
+}
+
+run_gitnexus_locked() {
+  if [[ ! -d .gitnexus ]]; then
+    echo "[post-commit] GitNexus skipped: .gitnexus is not initialized"
+    return 0
+  fi
+  acquire_gitnexus_lock || return 0
+  run_gitnexus
+  release_gitnexus_lock
 }
 
 run_graphify() {
@@ -254,10 +306,10 @@ EOF
 }
 
 if [[ "$ASYNC_MODE" == "0" || "$ASYNC_MODE" == "false" ]]; then
-  run_gitnexus > "$HOOK_LOG_DIR/gitnexus-post-commit.log" 2>&1 || true
+  run_gitnexus_locked > "$HOOK_LOG_DIR/gitnexus-post-commit.log" 2>&1 || true
 else
-  (run_gitnexus > "$HOOK_LOG_DIR/gitnexus-post-commit.log" 2>&1 &)
-  echo "[post-commit] GitNexus analyze --embeddings running in background"
+  (run_gitnexus_locked > "$HOOK_LOG_DIR/gitnexus-post-commit.log" 2>&1 &)
+  echo "[post-commit] GitNexus analyze running in background"
 fi
 
 run_graphify > "$HOOK_LOG_DIR/graphify-post-commit.log" 2>&1 || true
@@ -265,6 +317,7 @@ write_obsidian_log || true
 HOOK
 
 replace_token scripts/post-commit-hook.sh "__PROJECT_NAME__" "$PROJECT_NAME"
+replace_token scripts/post-commit-hook.sh "__ENABLE_EMBEDDINGS__" "$ENABLE_EMBEDDINGS"
 chmod +x scripts/post-commit-hook.sh
 
 write_text_file scripts/install-knowledge-hook.sh <<'HOOK'
@@ -346,7 +399,15 @@ mkdir -p graphify-out .gitnexus
 PATH="$BIN_DIR:$PATH" STUB_LOG_DIR="$LOG_DIR" OBSIDIAN_VAULT="$VAULT_DIR" AGENTIC_KNOWLEDGE_HOOK_ASYNC=0 AGENTIC_KNOWLEDGE_HOOK_LOG_DIR="$LOG_DIR" \
   "$WORK_DIR/scripts/post-commit-hook.sh"
 
-grep -F "analyze --embeddings --skip-agents-md" "$LOG_DIR/gitnexus.log" >/dev/null
+grep -F "analyze --force --skip-agents-md" "$LOG_DIR/gitnexus.log" >/dev/null
+if [[ "ENABLE_EMBEDDINGS_PLACEHOLDER" == "1" ]]; then
+  grep -F "analyze --embeddings --force --skip-agents-md" "$LOG_DIR/gitnexus.log" >/dev/null
+else
+  if grep -F -- "--embeddings" "$LOG_DIR/gitnexus.log" >/dev/null; then
+    echo "embeddings should be opt-in by default" >&2
+    exit 1
+  fi
+fi
 grep -F "update ." "$LOG_DIR/graphify.log" >/dev/null
 
 MONTH_TAG="$(date +'%Y-%m')"
@@ -368,12 +429,26 @@ fi
 PATH="$BIN_DIR:$PATH" STUB_LOG_DIR="$LOG_DIR" STUB_GITNEXUS_FAIL_EMBEDDINGS=1 OBSIDIAN_VAULT="$VAULT_DIR" AGENTIC_KNOWLEDGE_HOOK_ASYNC=0 AGENTIC_KNOWLEDGE_HOOK_LOG_DIR="$LOG_DIR" \
   "$WORK_DIR/scripts/post-commit-hook.sh"
 
-grep -F "analyze --embeddings --skip-agents-md" "$LOG_DIR/gitnexus.log" >/dev/null
+grep -F "analyze --force --skip-agents-md" "$LOG_DIR/gitnexus.log" >/dev/null
+
+: > "$LOG_DIR/gitnexus.log"
+PATH="$BIN_DIR:$PATH" STUB_LOG_DIR="$LOG_DIR" STUB_GITNEXUS_FAIL_EMBEDDINGS=1 OBSIDIAN_VAULT="$VAULT_DIR" AGENTIC_KNOWLEDGE_ENABLE_EMBEDDINGS=1 AGENTIC_KNOWLEDGE_HOOK_ASYNC=0 AGENTIC_KNOWLEDGE_HOOK_LOG_DIR="$LOG_DIR" \
+  "$WORK_DIR/scripts/post-commit-hook.sh"
+
+grep -F "analyze --embeddings --force --skip-agents-md" "$LOG_DIR/gitnexus.log" >/dev/null
+grep -F "analyze --force --skip-agents-md" "$LOG_DIR/gitnexus.log" >/dev/null
+
+mkdir -p "$WORK_DIR/.gitnexus/post-commit.lock"
+printf '999999\n' > "$WORK_DIR/.gitnexus/post-commit.lock/pid"
+: > "$LOG_DIR/gitnexus.log"
+PATH="$BIN_DIR:$PATH" STUB_LOG_DIR="$LOG_DIR" OBSIDIAN_VAULT="$VAULT_DIR" AGENTIC_KNOWLEDGE_HOOK_ASYNC=0 AGENTIC_KNOWLEDGE_HOOK_LOG_DIR="$LOG_DIR" \
+  "$WORK_DIR/scripts/post-commit-hook.sh"
 grep -F "analyze --force --skip-agents-md" "$LOG_DIR/gitnexus.log" >/dev/null
 
 echo "post-commit hook smoke test passed"
 HOOK
 replace_token scripts/test-post-commit-hook.sh "PROJECT_NAME_PLACEHOLDER" "$PROJECT_NAME"
+replace_token scripts/test-post-commit-hook.sh "ENABLE_EMBEDDINGS_PLACEHOLDER" "$ENABLE_EMBEDDINGS"
 chmod +x scripts/test-post-commit-hook.sh
 
 write_text_file .gitnexusignore <<'IGNORE'
@@ -472,7 +547,7 @@ This repo is wired for GitNexus, graphify, and Obsidian project memory.
 - Obsidian project logs: \`${OBSIDIAN_PROJECT_DIR:-${VAULT_ROOT}/${PROJECT_NAME}}/Development Logs/\`
 - post-commit hook: \`scripts/post-commit-hook.sh\`
 
-After commits, the hook runs GitNexus \`analyze --embeddings --skip-agents-md\`, updates graphify, and appends the monthly Obsidian commit log. If embeddings fail, it force-rebuilds the non-embedding GitNexus index so MCP remains usable.
+After commits, the hook serializes GitNexus with a repo-local lock, force-rebuilds the non-embedding GitNexus index, updates graphify, and appends the monthly Obsidian commit log. Embeddings are opt-in via \`AGENTIC_KNOWLEDGE_ENABLE_EMBEDDINGS=1\` because some GitNexus/LadybugDB vector-index combinations can fail in native code; if embeddings fail, the hook force-rebuilds the non-embedding index so MCP remains usable.
 EOF
 update_block AGENTS.md "<!-- agentic-knowledge:start -->" "<!-- agentic-knowledge:end -->" "$tmp_block"
 update_block CLAUDE.md "<!-- agentic-knowledge:start -->" "<!-- agentic-knowledge:end -->" "$tmp_block"
@@ -490,7 +565,10 @@ if [[ "$SKIP_INITIAL_RUN" == "0" ]]; then
     else
       "${GITNEXUS_CMD[@]}" analyze
     fi
-    "${GITNEXUS_CMD[@]}" analyze --embeddings --skip-agents-md || "${GITNEXUS_CMD[@]}" analyze --force --skip-agents-md || true
+    "${GITNEXUS_CMD[@]}" analyze --force --skip-agents-md || true
+    if [[ "$ENABLE_EMBEDDINGS" == "1" ]]; then
+      "${GITNEXUS_CMD[@]}" analyze --embeddings --force --skip-agents-md || "${GITNEXUS_CMD[@]}" analyze --force --skip-agents-md || true
+    fi
   else
     echo "GitNexus not found; install gitnexus or use npx before first indexing." >&2
   fi
