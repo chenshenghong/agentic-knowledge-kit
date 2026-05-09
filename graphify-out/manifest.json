@@ -1,0 +1,62 @@
+{
+  "/Users/shenghongchen/Documents/Projects/agentic-knowledge-kit/scripts/semantic-vector-lib.mjs": {
+    "mtime": 1778157624.6226597,
+    "hash": "5a03efd0ed3f83aedbcd012ab42fa767"
+  },
+  "/Users/shenghongchen/Documents/Projects/agentic-knowledge-kit/scripts/test-semantic-vector-index.mjs": {
+    "mtime": 1778157624.6227412,
+    "hash": "d0cdc3bcf301799bd01e640b4157623f"
+  },
+  "/Users/shenghongchen/Documents/Projects/agentic-knowledge-kit/scripts/query-semantic-vector-index.mjs": {
+    "mtime": 1778157624.622551,
+    "hash": "8b5d27cf9ccb2b61954877dcfd0d4589"
+  },
+  "/Users/shenghongchen/Documents/Projects/agentic-knowledge-kit/scripts/build-semantic-vector-index.mjs": {
+    "mtime": 1778157624.6220908,
+    "hash": "5492b038eff2b2b867e4ff3e7b9c9606"
+  },
+  "/Users/shenghongchen/Documents/Projects/agentic-knowledge-kit/README.md": {
+    "mtime": 1778157624.6216538,
+    "hash": "93004edb7424e6da90759141a87c0723"
+  },
+  "/Users/shenghongchen/Documents/Projects/agentic-knowledge-kit/SKILL.md": {
+    "mtime": 1778157624.6217797,
+    "hash": "1481760469fecf01bd33468bf70d3ce7"
+  },
+  "/Users/shenghongchen/Documents/Projects/agentic-knowledge-kit/AGENTS.md": {
+    "mtime": 1778340679.7067854,
+    "hash": "b03435c5b8265abfa749a4a5dca36c1d"
+  },
+  "/Users/shenghongchen/Documents/Projects/agentic-knowledge-kit/CLAUDE.md": {
+    "mtime": 1778340679.7070184,
+    "hash": "022f1770e82e60a89882bcbb9abbc784"
+  },
+  "/Users/shenghongchen/Documents/Projects/agentic-knowledge-kit/agents/openai.yaml": {
+    "mtime": 1777955829.2391386,
+    "hash": "a9a2947f1c6e39e22a56eafa579bb9f9"
+  },
+  "/Users/shenghongchen/Documents/Projects/agentic-knowledge-kit/wiki/README.md": {
+    "mtime": 1778338689.1244645,
+    "hash": "55ae098e4b4db21519f25e94f091f99a"
+  },
+  "/Users/shenghongchen/Documents/Projects/agentic-knowledge-kit/wiki/concepts/README.md": {
+    "mtime": 1778338689.1246355,
+    "hash": "6c8a697468de441947abb24bd1824abf"
+  },
+  "/Users/shenghongchen/Documents/Projects/agentic-knowledge-kit/wiki/sources/graphify-knowledge-graph.md": {
+    "mtime": 1778338982.8372335,
+    "hash": "9d19861e10e56ebc819bb8b63d741bfc"
+  },
+  "/Users/shenghongchen/Documents/Projects/agentic-knowledge-kit/wiki/sources/README.md": {
+    "mtime": 1778338689.1249385,
+    "hash": "2d88c6204e9a951880d35624e0cfa03d"
+  },
+  "/Users/shenghongchen/Documents/Projects/agentic-knowledge-kit/wiki/entities/README.md": {
+    "mtime": 1778338689.12479,
+    "hash": "89c401f810a99f700dcdebc28d0753a3"
+  },
+  "/Users/shenghongchen/Documents/Projects/agentic-knowledge-kit/raw/README.md": {
+    "mtime": 1778338689.1242115,
+    "hash": "36160452263f50ecc18afce258358bed"
+  }
+}
