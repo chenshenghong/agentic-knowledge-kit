@@ -7,7 +7,7 @@ description: Use when a repository should be wired for GitNexus, graphify, Obsid
 
 ## Overview
 
-Install a repeatable agentic knowledge layer for a repo: GitNexus code intelligence, graphify semantic graph, Obsidian project commit memory, and AI-tool guidance files.
+Install a repeatable agentic knowledge layer for a repo: LLM Wiki ingest/lint, GitNexus code intelligence, graphify semantic graph, LanceDB semantic retrieval, Obsidian project commit memory, and AI-tool guidance files.
 
 Use the bundled installer first; patch generated files only when the target repo needs local variation.
 
@@ -40,9 +40,10 @@ Useful flags:
 
 ## What It Installs
 
-- Repo scripts: `scripts/post-commit-hook.sh`, `scripts/install-knowledge-hook.sh`, `scripts/test-post-commit-hook.sh`, `scripts/install-vector-deps.sh`, `scripts/build-semantic-vector-index.mjs`, `scripts/query-semantic-vector-index.mjs`, `scripts/agentic-knowledge-context.mjs`.
+- Repo scripts: `scripts/post-commit-hook.sh`, `scripts/install-knowledge-hook.sh`, `scripts/test-post-commit-hook.sh`, `scripts/install-vector-deps.sh`, `scripts/build-semantic-vector-index.mjs`, `scripts/query-semantic-vector-index.mjs`, `scripts/agentic-knowledge-context.mjs`, `scripts/ingest-llm-wiki.mjs`, `scripts/lint-llm-wiki.mjs`.
 - Git hook: `.git/hooks/post-commit` symlink to the repo script.
 - Agent config: `AGENTS.md`, `CLAUDE.md`, `GEMINI.md`, `.mcp.json`, `.gitnexusignore`, `.codex/hooks.json`, `.claude/settings.json`, `.agents/rules/agentic-knowledge.md`, `.agent/rules/agentic-knowledge.md`.
+- LLM Wiki substrate: `raw/`, `wiki/`, `wiki/concepts/`, `wiki/entities/`, `wiki/sources/`.
 - Local generated artifacts: `.gitnexus/`, `graphify-out/`, `semantic-vector-index/`, `scripts/node_modules/`, `.claude/skills/...`.
 
 The installer updates `.gitignore` so `.gitnexus/`, `graphify-out/`, `semantic-vector-index/`, and `scripts/node_modules/` stay local, while `.claude/skills/...` can be tracked.
@@ -59,7 +60,10 @@ scripts/install-vector-deps.sh
 node scripts/build-semantic-vector-index.mjs
 node scripts/query-semantic-vector-index.mjs "recording transcription flow"
 node scripts/agentic-knowledge-context.mjs "recording transcription flow"
+node scripts/ingest-llm-wiki.mjs raw/<document>
+node scripts/lint-llm-wiki.mjs --strict
 node scripts/test-agentic-knowledge-context.mjs
+node scripts/test-llm-wiki-workflow.mjs
 graphify query "recording transcription flow" --budget 800
 git diff --check
 ```
@@ -92,6 +96,22 @@ artifact:
 - Antigravity: `GEMINI.md`, `.agents/rules/agentic-knowledge.md`, and
   `.agent/rules/agentic-knowledge.md` instruct agents to use the broker at task
   start while still verifying with GitNexus, graphify, and source files.
+
+## LLM Wiki
+
+Use `raw/` as the immutable source drop and `wiki/` as the synthesized
+Obsidian-readable knowledge layer.
+
+```bash
+node scripts/ingest-llm-wiki.mjs raw/<document>
+node scripts/lint-llm-wiki.mjs --strict
+```
+
+The ingest command writes source summaries to `wiki/sources/`, creates linked
+concept notes in `wiki/concepts/`, creates linked entity notes in
+`wiki/entities/`, and records raw-file provenance with `source` and
+`source_sha256` frontmatter. The lint command checks missing provenance, broken
+wikilinks, stale raw hashes, duplicate titles, and orphan pages.
 
 ## Obsidian Memory
 

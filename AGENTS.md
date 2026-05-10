@@ -55,7 +55,7 @@ knowledge vault. Treat the project root as the vault root.
 <!-- gitnexus:start -->
 # GitNexus — Code Intelligence
 
-This project is indexed by GitNexus as **agentic-knowledge-kit** (260 symbols, 321 relationships, 6 execution flows). Use the GitNexus MCP tools to understand code, assess impact, and navigate safely.
+This project is indexed by GitNexus as **agentic-knowledge-kit** (416 symbols, 599 relationships, 18 execution flows). Use the GitNexus MCP tools to understand code, assess impact, and navigate safely.
 
 > If any GitNexus tool warns the index is stale, run `npx gitnexus analyze` in terminal first.
 
@@ -93,6 +93,7 @@ This project is indexed by GitNexus as **agentic-knowledge-kit** (260 symbols, 3
 | Rename / extract / split / refactor | `.claude/skills/gitnexus/gitnexus-refactoring/SKILL.md` |
 | Tools, resources, schema reference | `.claude/skills/gitnexus/gitnexus-guide/SKILL.md` |
 | Index, status, clean, wiki CLI commands | `.claude/skills/gitnexus/gitnexus-cli/SKILL.md` |
+| Work in the Scripts area (56 symbols) | `.claude/skills/generated/scripts/SKILL.md` |
 
 <!-- gitnexus:end -->
 
@@ -116,6 +117,8 @@ Obsidian project memory.
 - graphify graph: `graphify-out/`
 - semantic vector index: `semantic-vector-index/lancedb` and `semantic-vector-index/manifest.json`
 - task context broker: `node scripts/agentic-knowledge-context.mjs "<task>"`
+- LLM Wiki ingest: `node scripts/ingest-llm-wiki.mjs raw/<source>`
+- LLM Wiki lint: `node scripts/lint-llm-wiki.mjs --strict`
 - Obsidian project logs: `/Users/shenghongchen/Documents/Obsidian Vault/agentic-knowledge-kit/Development Logs/`
 - post-commit hook: `scripts/post-commit-hook.sh`
 

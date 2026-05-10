@@ -1,53 +1,62 @@
 ---
 name: scripts
-description: "Skill for the Scripts area of agentic-knowledge-kit. 15 symbols across 1 files."
+description: "Skill for the Scripts area of agentic-knowledge-kit. 56 symbols across 5 files."
 ---
 
 # Scripts
 
-15 symbols | 1 files | Cohesion: 92%
+56 symbols | 5 files | Cohesion: 83%
 
 ## When to Use
 
 - Working with code in `scripts/`
-- Understanding how readJson, collectGraphItems, resolveInside work
+- Understanding how repoRelative, sha256File, ensureWikiLayout work
 - Modifying scripts-related functionality
 
 ## Key Files
 
 | File | Symbols |
 |------|---------|
-| `scripts/semantic-vector-lib.mjs` | readJson, collectGraphItems, buildItem, sha256, resolveInside (+10) |
+| `scripts/llm-wiki-lib.mjs` | repoRelative, sha256File, ensureWikiLayout, noteTarget, parseFrontmatter (+16) |
+| `scripts/semantic-vector-lib.mjs` | sha256File, createEmbeddingProvider, openLanceDb, writeLanceTable, searchLanceTable (+11) |
+| `scripts/lint-llm-wiki.mjs` | firstHeading, issue, sourceNotes, validateSourceNote, validateLinks (+4) |
+| `scripts/ingest-llm-wiki.mjs` | sourceSlug, formatBulletList, upsertLinkedNote, sourceNoteBody, ingestSource |
+| `scripts/agentic-knowledge-context.mjs` | unavailableJson, buildContext, compactText, resultLocation, formatContext |
 
 ## Entry Points
 
 Start here when exploring this area:
 
-- **`readJson`** (Function) — `scripts/semantic-vector-lib.mjs:52`
-- **`collectGraphItems`** (Function) — `scripts/semantic-vector-lib.mjs:91`
-- **`resolveInside`** (Function) — `scripts/semantic-vector-lib.mjs:83`
-- **`openLanceDb`** (Function) — `scripts/semantic-vector-lib.mjs:290`
-- **`writeLanceTable`** (Function) — `scripts/semantic-vector-lib.mjs:296`
+- **`repoRelative`** (Function) — `scripts/llm-wiki-lib.mjs:96`
+- **`sha256File`** (Function) — `scripts/llm-wiki-lib.mjs:107`
+- **`ensureWikiLayout`** (Function) — `scripts/llm-wiki-lib.mjs:111`
+- **`noteTarget`** (Function) — `scripts/llm-wiki-lib.mjs:143`
+- **`parseFrontmatter`** (Function) — `scripts/llm-wiki-lib.mjs:276`
 
 ## Key Symbols
 
 | Symbol | Type | File | Line |
 |--------|------|------|------|
-| `readJson` | Function | `scripts/semantic-vector-lib.mjs` | 52 |
-| `collectGraphItems` | Function | `scripts/semantic-vector-lib.mjs` | 91 |
-| `resolveInside` | Function | `scripts/semantic-vector-lib.mjs` | 83 |
+| `repoRelative` | Function | `scripts/llm-wiki-lib.mjs` | 96 |
+| `sha256File` | Function | `scripts/llm-wiki-lib.mjs` | 107 |
+| `ensureWikiLayout` | Function | `scripts/llm-wiki-lib.mjs` | 111 |
+| `noteTarget` | Function | `scripts/llm-wiki-lib.mjs` | 143 |
+| `parseFrontmatter` | Function | `scripts/llm-wiki-lib.mjs` | 276 |
+| `extractWikiLinks` | Function | `scripts/llm-wiki-lib.mjs` | 290 |
+| `slugify` | Function | `scripts/llm-wiki-lib.mjs` | 117 |
+| `titleFromSlug` | Function | `scripts/llm-wiki-lib.mjs` | 127 |
+| `extractTitle` | Function | `scripts/llm-wiki-lib.mjs` | 199 |
+| `summarizeSource` | Function | `scripts/llm-wiki-lib.mjs` | 216 |
+| `extractConcepts` | Function | `scripts/llm-wiki-lib.mjs` | 243 |
+| `extractEntities` | Function | `scripts/llm-wiki-lib.mjs` | 260 |
+| `sha256File` | Function | `scripts/semantic-vector-lib.mjs` | 56 |
+| `createEmbeddingProvider` | Function | `scripts/semantic-vector-lib.mjs` | 209 |
 | `openLanceDb` | Function | `scripts/semantic-vector-lib.mjs` | 290 |
 | `writeLanceTable` | Function | `scripts/semantic-vector-lib.mjs` | 296 |
 | `searchLanceTable` | Function | `scripts/semantic-vector-lib.mjs` | 315 |
-| `createEmbeddingProvider` | Function | `scripts/semantic-vector-lib.mjs` | 209 |
-| `embed` | Method | `scripts/semantic-vector-lib.mjs` | 222 |
-| `buildItem` | Function | `scripts/semantic-vector-lib.mjs` | 113 |
-| `sha256` | Function | `scripts/semantic-vector-lib.mjs` | 408 |
-| `readSourceSnippet` | Function | `scripts/semantic-vector-lib.mjs` | 148 |
-| `findRepoFileBySuffix` | Function | `scripts/semantic-vector-lib.mjs` | 177 |
-| `parseLineNumber` | Function | `scripts/semantic-vector-lib.mjs` | 200 |
-| `locateGitNexusEmbedder` | Function | `scripts/semantic-vector-lib.mjs` | 376 |
-| `deterministicVector` | Function | `scripts/semantic-vector-lib.mjs` | 365 |
+| `wikilink` | Function | `scripts/llm-wiki-lib.mjs` | 138 |
+| `readSourceText` | Function | `scripts/llm-wiki-lib.mjs` | 190 |
+| `writeTextFile` | Function | `scripts/llm-wiki-lib.mjs` | 319 |
 
 ## Execution Flows
 
@@ -56,10 +65,16 @@ Start here when exploring this area:
 | `CollectGraphItems → ResolveInside` | cross_community | 4 |
 | `CollectGraphItems → FindRepoFileBySuffix` | cross_community | 4 |
 | `CollectGraphItems → ParseLineNumber` | cross_community | 4 |
-| `CollectGraphItems → Sha256` | intra_community | 3 |
+| `IngestSource → RepoRelative` | cross_community | 3 |
+| `IngestSource → Slugify` | cross_community | 3 |
+| `IngestSource → TitleFromSlug` | cross_community | 3 |
+| `ExtractConcepts → Slugify` | intra_community | 3 |
+| `Lint → WalkFiles` | cross_community | 3 |
+| `Lint → RepoRelative` | intra_community | 3 |
+| `Lint → ParseFrontmatter` | intra_community | 3 |
 
 ## How to Explore
 
-1. `gitnexus_context({name: "readJson"})` — see callers and callees
+1. `gitnexus_context({name: "repoRelative"})` — see callers and callees
 2. `gitnexus_query({query: "scripts"})` — find related execution flows
 3. Read key files listed above for implementation details

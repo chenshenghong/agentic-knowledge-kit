@@ -1,4 +1,4 @@
 interface:
   display_name: "Agentic Knowledge Setup"
-  short_description: "Install GitNexus, graphify, LanceDB retrieval, and Obsidian project memory"
-  default_prompt: "Use $agentic-knowledge-setup to add GitNexus, graphify, LanceDB semantic context, and Obsidian memory hooks to this repository."
+  short_description: "Install LLM Wiki, GitNexus, graphify, LanceDB retrieval, and Obsidian memory"
+  default_prompt: "Use $agentic-knowledge-setup to add LLM Wiki, GitNexus, graphify, LanceDB semantic context, and Obsidian memory hooks to this repository."

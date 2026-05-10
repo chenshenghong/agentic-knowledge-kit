@@ -113,6 +113,7 @@ if [[ -z "$PROJECT_NAME" ]]; then
 fi
 
 mkdir -p scripts
+mkdir -p raw wiki/concepts wiki/entities wiki/sources
 
 copy_helper_script() {
   local name="$1"
@@ -183,9 +184,13 @@ copy_helper_script semantic-vector-lib.mjs
 copy_helper_script build-semantic-vector-index.mjs
 copy_helper_script query-semantic-vector-index.mjs
 copy_helper_script agentic-knowledge-context.mjs
+copy_helper_script llm-wiki-lib.mjs
+copy_helper_script ingest-llm-wiki.mjs
+copy_helper_script lint-llm-wiki.mjs
 copy_helper_script test-semantic-vector-index.mjs
+copy_helper_script test-llm-wiki-workflow.mjs
 copy_helper_script install-vector-deps.sh
-chmod +x scripts/build-semantic-vector-index.mjs scripts/query-semantic-vector-index.mjs scripts/agentic-knowledge-context.mjs scripts/test-semantic-vector-index.mjs scripts/install-vector-deps.sh
+chmod +x scripts/build-semantic-vector-index.mjs scripts/query-semantic-vector-index.mjs scripts/agentic-knowledge-context.mjs scripts/ingest-llm-wiki.mjs scripts/lint-llm-wiki.mjs scripts/test-semantic-vector-index.mjs scripts/test-llm-wiki-workflow.mjs scripts/install-vector-deps.sh
 
 if [[ "$SKIP_VECTOR_DEPS" == "0" ]]; then
   scripts/install-vector-deps.sh || echo "LanceDB dependency install failed; semantic vector build will log a skip/failure until dependencies are installed." >&2
@@ -685,6 +690,8 @@ Obsidian project memory.
 - graphify graph: \`graphify-out/\`
 - semantic vector index: \`semantic-vector-index/lancedb\` and \`semantic-vector-index/manifest.json\`
 - task context broker: \`node scripts/agentic-knowledge-context.mjs "<task>"\`
+- LLM Wiki ingest: \`node scripts/ingest-llm-wiki.mjs raw/<source>\`
+- LLM Wiki lint: \`node scripts/lint-llm-wiki.mjs --strict\`
 - Obsidian project logs: \`${OBSIDIAN_PROJECT_DIR:-${VAULT_ROOT}/${PROJECT_NAME}}/Development Logs/\`
 - post-commit hook: \`scripts/post-commit-hook.sh\`
 
@@ -736,6 +743,10 @@ exact behavior. If the index is missing or stale, continue without blocking and
 rebuild with `graphify update . && node scripts/build-semantic-vector-index.mjs`
 when current context matters.
 
+For LLM Wiki ingestion, read immutable material from `raw/`, write synthesis
+under `wiki/`, and run `node scripts/lint-llm-wiki.mjs --strict` before treating
+wiki notes as clean.
+
 Do not expose raw vectors or embeddings in user-facing answers.
 RULE
   cp .agents/rules/agentic-knowledge.md .agent/rules/agentic-knowledge.md
@@ -779,4 +790,4 @@ bash -n scripts/post-commit-hook.sh scripts/install-knowledge-hook.sh scripts/te
 
 echo "Agentic knowledge setup installed for ${PROJECT_NAME}"
 echo "Target: ${REPO_ROOT}"
-echo "Next verification: bash scripts/test-post-commit-hook.sh && node scripts/test-semantic-vector-index.mjs && gitnexus status && graphify update ."
+echo "Next verification: bash scripts/test-post-commit-hook.sh && node scripts/test-semantic-vector-index.mjs && node scripts/test-llm-wiki-workflow.mjs && gitnexus status && graphify update ."

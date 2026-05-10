@@ -8,6 +8,7 @@ It wires together:
 - graphify semantic knowledge graph
 - independent LanceDB semantic vector index
 - task-start context broker for LanceDB retrieval
+- LLM Wiki ingest and lint commands for `raw/` -> `wiki/` synthesis
 - Obsidian project commit logs
 - Codex, Claude Code, and Antigravity retrieval-aware configuration
 - a post-commit hook that refreshes local knowledge artifacts
@@ -60,6 +61,8 @@ scripts/install-vector-deps.sh
 node scripts/build-semantic-vector-index.mjs
 node scripts/query-semantic-vector-index.mjs "authentication flow"
 node scripts/agentic-knowledge-context.mjs "authentication flow"
+node scripts/ingest-llm-wiki.mjs raw/<document>
+node scripts/lint-llm-wiki.mjs --strict
 npm test
 git diff --check
 ```
@@ -76,6 +79,20 @@ semantic vector index, and emits a compact context packet. Claude Code gets that
 packet automatically through a `UserPromptSubmit` hook. Codex and Antigravity
 receive durable rules in `AGENTS.md`, `GEMINI.md`, and `.agents/rules/` telling
 them to run the broker before broad repository exploration.
+
+LLM Wiki commands turn the Karpathy-style `raw/` folder into an Obsidian-ready
+wiki substrate:
+
+```bash
+node scripts/ingest-llm-wiki.mjs raw/<document>
+node scripts/lint-llm-wiki.mjs --strict
+```
+
+`ingest-llm-wiki.mjs` writes source summaries under `wiki/sources/`, creates or
+updates linked concept notes under `wiki/concepts/`, creates or updates entity
+notes under `wiki/entities/`, and preserves raw-file provenance with a SHA-256
+hash. `lint-llm-wiki.mjs` checks provenance, broken wikilinks, stale raw hashes,
+duplicate titles, and orphan notes.
 
 Vector index knobs:
 
