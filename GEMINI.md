@@ -8,6 +8,8 @@ Obsidian project memory.
 - graphify graph: `graphify-out/`
 - semantic vector index: `semantic-vector-index/lancedb` and `semantic-vector-index/manifest.json`
 - task context broker: `node scripts/agentic-knowledge-context.mjs "<task>"`
+- LLM Wiki ingest: `node scripts/ingest-llm-wiki.mjs raw/<source>`
+- LLM Wiki lint: `node scripts/lint-llm-wiki.mjs --strict`
 - Obsidian project logs: `/Users/shenghongchen/Documents/Obsidian Vault/agentic-knowledge-kit/Development Logs/`
 - post-commit hook: `scripts/post-commit-hook.sh`
 

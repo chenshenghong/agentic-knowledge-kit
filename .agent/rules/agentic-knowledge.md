@@ -13,4 +13,8 @@ exact behavior. If the index is missing or stale, continue without blocking and
 rebuild with `graphify update . && node scripts/build-semantic-vector-index.mjs`
 when current context matters.
 
+For LLM Wiki ingestion, read immutable material from `raw/`, write synthesis
+under `wiki/`, and run `node scripts/lint-llm-wiki.mjs --strict` before treating
+wiki notes as clean.
+
 Do not expose raw vectors or embeddings in user-facing answers.

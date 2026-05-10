@@ -243,7 +243,7 @@
       "source_file": "scripts/test-semantic-vector-index.mjs",
       "source_location": "L1",
       "id": "scripts_test_semantic_vector_index_mjs",
-      "community": 10,
+      "community": 11,
       "norm_label": "test-semantic-vector-index.mjs"
     },
     {
@@ -252,7 +252,7 @@
       "source_file": "scripts/test-semantic-vector-index.mjs",
       "source_location": "L9",
       "id": "scripts_test_semantic_vector_index_reporoot",
-      "community": 10,
+      "community": 11,
       "norm_label": "reporoot"
     },
     {
@@ -261,7 +261,7 @@
       "source_file": "scripts/test-semantic-vector-index.mjs",
       "source_location": "L10",
       "id": "scripts_test_semantic_vector_index_tmp",
-      "community": 10,
+      "community": 11,
       "norm_label": "tmp"
     },
     {
@@ -270,7 +270,7 @@
       "source_file": "scripts/test-semantic-vector-index.mjs",
       "source_location": "L56",
       "id": "scripts_test_semantic_vector_index_buildout",
-      "community": 10,
+      "community": 11,
       "norm_label": "buildout"
     },
     {
@@ -279,7 +279,7 @@
       "source_file": "scripts/test-semantic-vector-index.mjs",
       "source_location": "L72",
       "id": "scripts_test_semantic_vector_index_manifestpath",
-      "community": 10,
+      "community": 11,
       "norm_label": "manifestpath"
     },
     {
@@ -288,7 +288,7 @@
       "source_file": "scripts/test-semantic-vector-index.mjs",
       "source_location": "L73",
       "id": "scripts_test_semantic_vector_index_index",
-      "community": 10,
+      "community": 11,
       "norm_label": "index"
     },
     {
@@ -297,7 +297,7 @@
       "source_file": "scripts/test-semantic-vector-index.mjs",
       "source_location": "L104",
       "id": "scripts_test_semantic_vector_index_queryout",
-      "community": 10,
+      "community": 11,
       "norm_label": "queryout"
     },
     {
@@ -306,8 +306,134 @@
       "source_file": "scripts/test-semantic-vector-index.mjs",
       "source_location": "L118",
       "id": "scripts_test_semantic_vector_index_query",
-      "community": 10,
+      "community": 11,
       "norm_label": "query"
+    },
+    {
+      "label": "lint-llm-wiki.mjs",
+      "file_type": "code",
+      "source_file": "scripts/lint-llm-wiki.mjs",
+      "source_location": "L1",
+      "id": "scripts_lint_llm_wiki_mjs",
+      "community": 3,
+      "norm_label": "lint-llm-wiki.mjs"
+    },
+    {
+      "label": "firstHeading()",
+      "file_type": "code",
+      "source_file": "scripts/lint-llm-wiki.mjs",
+      "source_location": "L17",
+      "id": "scripts_lint_llm_wiki_firstheading",
+      "community": 3,
+      "norm_label": "firstheading()"
+    },
+    {
+      "label": "issue()",
+      "file_type": "code",
+      "source_file": "scripts/lint-llm-wiki.mjs",
+      "source_location": "L22",
+      "id": "scripts_lint_llm_wiki_issue",
+      "community": 3,
+      "norm_label": "issue()"
+    },
+    {
+      "label": "sourceNotes()",
+      "file_type": "code",
+      "source_file": "scripts/lint-llm-wiki.mjs",
+      "source_location": "L26",
+      "id": "scripts_lint_llm_wiki_sourcenotes",
+      "community": 3,
+      "norm_label": "sourcenotes()"
+    },
+    {
+      "label": "wikiNotes()",
+      "file_type": "code",
+      "source_file": "scripts/lint-llm-wiki.mjs",
+      "source_location": "L31",
+      "id": "scripts_lint_llm_wiki_wikinotes",
+      "community": 3,
+      "norm_label": "wikinotes()"
+    },
+    {
+      "label": "validateSourceNote()",
+      "file_type": "code",
+      "source_file": "scripts/lint-llm-wiki.mjs",
+      "source_location": "L35",
+      "id": "scripts_lint_llm_wiki_validatesourcenote",
+      "community": 3,
+      "norm_label": "validatesourcenote()"
+    },
+    {
+      "label": "validateLinks()",
+      "file_type": "code",
+      "source_file": "scripts/lint-llm-wiki.mjs",
+      "source_location": "L72",
+      "id": "scripts_lint_llm_wiki_validatelinks",
+      "community": 3,
+      "norm_label": "validatelinks()"
+    },
+    {
+      "label": "validateOrphans()",
+      "file_type": "code",
+      "source_file": "scripts/lint-llm-wiki.mjs",
+      "source_location": "L99",
+      "id": "scripts_lint_llm_wiki_validateorphans",
+      "community": 3,
+      "norm_label": "validateorphans()"
+    },
+    {
+      "label": "validateDuplicateTitles()",
+      "file_type": "code",
+      "source_file": "scripts/lint-llm-wiki.mjs",
+      "source_location": "L116",
+      "id": "scripts_lint_llm_wiki_validateduplicatetitles",
+      "community": 3,
+      "norm_label": "validateduplicatetitles()"
+    },
+    {
+      "label": "lint()",
+      "file_type": "code",
+      "source_file": "scripts/lint-llm-wiki.mjs",
+      "source_location": "L134",
+      "id": "scripts_lint_llm_wiki_lint",
+      "community": 3,
+      "norm_label": "lint()"
+    },
+    {
+      "label": "formatReport()",
+      "file_type": "code",
+      "source_file": "scripts/lint-llm-wiki.mjs",
+      "source_location": "L155",
+      "id": "scripts_lint_llm_wiki_formatreport",
+      "community": 3,
+      "norm_label": "formatreport()"
+    },
+    {
+      "label": "options",
+      "file_type": "code",
+      "source_file": "scripts/lint-llm-wiki.mjs",
+      "source_location": "L163",
+      "id": "scripts_lint_llm_wiki_options",
+      "community": 3,
+      "norm_label": "options"
+    },
+    {
+      "label": "repoRoot",
+      "file_type": "code",
+      "source_file": "scripts/lint-llm-wiki.mjs",
+      "source_location": "L164",
+      "id": "scripts_lint_llm_wiki_reporoot",
+      "community": 3,
+      "norm_label": "reporoot"
+    },
+    {
+      "label": "report",
+      "file_type": "code",
+      "source_file": "scripts/lint-llm-wiki.mjs",
+      "source_location": "L167",
+      "id": "scripts_lint_llm_wiki_report",
+      "community": 3,
+      "norm_label": "report"
     },
     {
       "label": "query-semantic-vector-index.mjs",
@@ -315,7 +441,7 @@
       "source_file": "scripts/query-semantic-vector-index.mjs",
       "source_location": "L1",
       "id": "scripts_query_semantic_vector_index_mjs",
-      "community": 3,
+      "community": 4,
       "norm_label": "query-semantic-vector-index.mjs"
     },
     {
@@ -324,7 +450,7 @@
       "source_file": "scripts/query-semantic-vector-index.mjs",
       "source_location": "L13",
       "id": "scripts_query_semantic_vector_index_options",
-      "community": 3,
+      "community": 4,
       "norm_label": "options"
     },
     {
@@ -333,7 +459,7 @@
       "source_file": "scripts/query-semantic-vector-index.mjs",
       "source_location": "L14",
       "id": "scripts_query_semantic_vector_index_query",
-      "community": 3,
+      "community": 4,
       "norm_label": "query"
     },
     {
@@ -342,7 +468,7 @@
       "source_file": "scripts/query-semantic-vector-index.mjs",
       "source_location": "L19",
       "id": "scripts_query_semantic_vector_index_reporoot",
-      "community": 3,
+      "community": 4,
       "norm_label": "reporoot"
     },
     {
@@ -351,7 +477,7 @@
       "source_file": "scripts/query-semantic-vector-index.mjs",
       "source_location": "L20",
       "id": "scripts_query_semantic_vector_index_requestedindex",
-      "community": 3,
+      "community": 4,
       "norm_label": "requestedindex"
     },
     {
@@ -360,7 +486,7 @@
       "source_file": "scripts/query-semantic-vector-index.mjs",
       "source_location": "L21",
       "id": "scripts_query_semantic_vector_index_manifestpath",
-      "community": 3,
+      "community": 4,
       "norm_label": "manifestpath"
     },
     {
@@ -369,7 +495,7 @@
       "source_file": "scripts/query-semantic-vector-index.mjs",
       "source_location": "L22",
       "id": "scripts_query_semantic_vector_index_index",
-      "community": 3,
+      "community": 4,
       "norm_label": "index"
     },
     {
@@ -378,7 +504,7 @@
       "source_file": "scripts/query-semantic-vector-index.mjs",
       "source_location": "L26",
       "id": "scripts_query_semantic_vector_index_graphpath",
-      "community": 3,
+      "community": 4,
       "norm_label": "graphpath"
     },
     {
@@ -387,7 +513,7 @@
       "source_file": "scripts/query-semantic-vector-index.mjs",
       "source_location": "L28",
       "id": "scripts_query_semantic_vector_index_currentgraphhash",
-      "community": 3,
+      "community": 4,
       "norm_label": "currentgraphhash"
     },
     {
@@ -396,7 +522,7 @@
       "source_file": "scripts/query-semantic-vector-index.mjs",
       "source_location": "L35",
       "id": "scripts_query_semantic_vector_index_providername",
-      "community": 3,
+      "community": 4,
       "norm_label": "providername"
     },
     {
@@ -405,7 +531,7 @@
       "source_file": "scripts/query-semantic-vector-index.mjs",
       "source_location": "L41",
       "id": "scripts_query_semantic_vector_index_model",
-      "community": 3,
+      "community": 4,
       "norm_label": "model"
     },
     {
@@ -414,7 +540,7 @@
       "source_file": "scripts/query-semantic-vector-index.mjs",
       "source_location": "L47",
       "id": "scripts_query_semantic_vector_index_dimensions",
-      "community": 3,
+      "community": 4,
       "norm_label": "dimensions"
     },
     {
@@ -423,7 +549,7 @@
       "source_file": "scripts/query-semantic-vector-index.mjs",
       "source_location": "L51",
       "id": "scripts_query_semantic_vector_index_device",
-      "community": 3,
+      "community": 4,
       "norm_label": "device"
     },
     {
@@ -432,7 +558,7 @@
       "source_file": "scripts/query-semantic-vector-index.mjs",
       "source_location": "L52",
       "id": "scripts_query_semantic_vector_index_limit",
-      "community": 3,
+      "community": 4,
       "norm_label": "limit"
     },
     {
@@ -441,7 +567,7 @@
       "source_file": "scripts/query-semantic-vector-index.mjs",
       "source_location": "L53",
       "id": "scripts_query_semantic_vector_index_dbpath",
-      "community": 3,
+      "community": 4,
       "norm_label": "dbpath"
     },
     {
@@ -450,7 +576,7 @@
       "source_file": "scripts/query-semantic-vector-index.mjs",
       "source_location": "L54",
       "id": "scripts_query_semantic_vector_index_tablename",
-      "community": 3,
+      "community": 4,
       "norm_label": "tablename"
     },
     {
@@ -459,7 +585,7 @@
       "source_file": "scripts/query-semantic-vector-index.mjs",
       "source_location": "L71",
       "id": "scripts_query_semantic_vector_index_results",
-      "community": 3,
+      "community": 4,
       "norm_label": "results"
     },
     {
@@ -468,7 +594,7 @@
       "source_file": "scripts/test-agentic-knowledge-context.mjs",
       "source_location": "L1",
       "id": "scripts_test_agentic_knowledge_context_mjs",
-      "community": 11,
+      "community": 12,
       "norm_label": "test-agentic-knowledge-context.mjs"
     },
     {
@@ -477,7 +603,7 @@
       "source_file": "scripts/test-agentic-knowledge-context.mjs",
       "source_location": "L15",
       "id": "scripts_test_agentic_knowledge_context_reporoot",
-      "community": 11,
+      "community": 12,
       "norm_label": "reporoot"
     },
     {
@@ -486,7 +612,7 @@
       "source_file": "scripts/test-agentic-knowledge-context.mjs",
       "source_location": "L16",
       "id": "scripts_test_agentic_knowledge_context_tmp",
-      "community": 11,
+      "community": 12,
       "norm_label": "tmp"
     },
     {
@@ -495,7 +621,7 @@
       "source_file": "scripts/test-agentic-knowledge-context.mjs",
       "source_location": "L68",
       "id": "scripts_test_agentic_knowledge_context_hookcontext",
-      "community": 11,
+      "community": 12,
       "norm_label": "hookcontext"
     },
     {
@@ -504,7 +630,7 @@
       "source_file": "scripts/test-agentic-knowledge-context.mjs",
       "source_location": "L96",
       "id": "scripts_test_agentic_knowledge_context_jsoncontext",
-      "community": 11,
+      "community": 12,
       "norm_label": "jsoncontext"
     },
     {
@@ -513,7 +639,7 @@
       "source_file": "scripts/test-agentic-knowledge-context.mjs",
       "source_location": "L112",
       "id": "scripts_test_agentic_knowledge_context_payload",
-      "community": 11,
+      "community": 12,
       "norm_label": "payload"
     },
     {
@@ -522,7 +648,7 @@
       "source_file": "scripts/test-agentic-knowledge-context.mjs",
       "source_location": "L118",
       "id": "scripts_test_agentic_knowledge_context_missingindex",
-      "community": 11,
+      "community": 12,
       "norm_label": "missingindex"
     },
     {
@@ -531,7 +657,7 @@
       "source_file": "scripts/test-agentic-knowledge-context.mjs",
       "source_location": "L135",
       "id": "scripts_test_agentic_knowledge_context_installer",
-      "community": 11,
+      "community": 12,
       "norm_label": "installer"
     },
     {
@@ -540,7 +666,7 @@
       "source_file": "scripts/build-semantic-vector-index.mjs",
       "source_location": "L1",
       "id": "scripts_build_semantic_vector_index_mjs",
-      "community": 4,
+      "community": 1,
       "norm_label": "build-semantic-vector-index.mjs"
     },
     {
@@ -549,7 +675,7 @@
       "source_file": "scripts/build-semantic-vector-index.mjs",
       "source_location": "L19",
       "id": "scripts_build_semantic_vector_index_options",
-      "community": 4,
+      "community": 1,
       "norm_label": "options"
     },
     {
@@ -558,7 +684,7 @@
       "source_file": "scripts/build-semantic-vector-index.mjs",
       "source_location": "L20",
       "id": "scripts_build_semantic_vector_index_reporoot",
-      "community": 4,
+      "community": 1,
       "norm_label": "reporoot"
     },
     {
@@ -567,7 +693,7 @@
       "source_file": "scripts/build-semantic-vector-index.mjs",
       "source_location": "L21",
       "id": "scripts_build_semantic_vector_index_graphpath",
-      "community": 4,
+      "community": 1,
       "norm_label": "graphpath"
     },
     {
@@ -576,7 +702,7 @@
       "source_file": "scripts/build-semantic-vector-index.mjs",
       "source_location": "L26",
       "id": "scripts_build_semantic_vector_index_dbpath",
-      "community": 4,
+      "community": 1,
       "norm_label": "dbpath"
     },
     {
@@ -585,7 +711,7 @@
       "source_file": "scripts/build-semantic-vector-index.mjs",
       "source_location": "L30",
       "id": "scripts_build_semantic_vector_index_tablename",
-      "community": 4,
+      "community": 1,
       "norm_label": "tablename"
     },
     {
@@ -594,7 +720,7 @@
       "source_file": "scripts/build-semantic-vector-index.mjs",
       "source_location": "L31",
       "id": "scripts_build_semantic_vector_index_providername",
-      "community": 4,
+      "community": 1,
       "norm_label": "providername"
     },
     {
@@ -603,7 +729,7 @@
       "source_file": "scripts/build-semantic-vector-index.mjs",
       "source_location": "L34",
       "id": "scripts_build_semantic_vector_index_model",
-      "community": 4,
+      "community": 1,
       "norm_label": "model"
     },
     {
@@ -612,7 +738,7 @@
       "source_file": "scripts/build-semantic-vector-index.mjs",
       "source_location": "L35",
       "id": "scripts_build_semantic_vector_index_dimensions",
-      "community": 4,
+      "community": 1,
       "norm_label": "dimensions"
     },
     {
@@ -621,7 +747,7 @@
       "source_file": "scripts/build-semantic-vector-index.mjs",
       "source_location": "L36",
       "id": "scripts_build_semantic_vector_index_batchsize",
-      "community": 4,
+      "community": 1,
       "norm_label": "batchsize"
     },
     {
@@ -630,7 +756,7 @@
       "source_file": "scripts/build-semantic-vector-index.mjs",
       "source_location": "L37",
       "id": "scripts_build_semantic_vector_index_maxtextchars",
-      "community": 4,
+      "community": 1,
       "norm_label": "maxtextchars"
     },
     {
@@ -639,7 +765,7 @@
       "source_file": "scripts/build-semantic-vector-index.mjs",
       "source_location": "L38",
       "id": "scripts_build_semantic_vector_index_maxitems",
-      "community": 4,
+      "community": 1,
       "norm_label": "maxitems"
     },
     {
@@ -648,7 +774,7 @@
       "source_file": "scripts/build-semantic-vector-index.mjs",
       "source_location": "L39",
       "id": "scripts_build_semantic_vector_index_device",
-      "community": 4,
+      "community": 1,
       "norm_label": "device"
     },
     {
@@ -657,7 +783,7 @@
       "source_file": "scripts/build-semantic-vector-index.mjs",
       "source_location": "L40",
       "id": "scripts_build_semantic_vector_index_locktimeoutsecs",
-      "community": 4,
+      "community": 1,
       "norm_label": "locktimeoutsecs"
     },
     {
@@ -666,7 +792,7 @@
       "source_file": "scripts/build-semantic-vector-index.mjs",
       "source_location": "L45",
       "id": "scripts_build_semantic_vector_index_nodes_links_items",
-      "community": 4,
+      "community": 1,
       "norm_label": "{ nodes, links, items }"
     },
     {
@@ -675,7 +801,7 @@
       "source_file": "scripts/build-semantic-vector-index.mjs",
       "source_location": "L70",
       "id": "scripts_build_semantic_vector_index_rows",
-      "community": 4,
+      "community": 1,
       "norm_label": "rows"
     },
     {
@@ -684,8 +810,332 @@
       "source_file": "scripts/build-semantic-vector-index.mjs",
       "source_location": "L82",
       "id": "scripts_build_semantic_vector_index_manifest",
-      "community": 4,
+      "community": 1,
       "norm_label": "manifest"
+    },
+    {
+      "label": "ingest-llm-wiki.mjs",
+      "file_type": "code",
+      "source_file": "scripts/ingest-llm-wiki.mjs",
+      "source_location": "L1",
+      "id": "scripts_ingest_llm_wiki_mjs",
+      "community": 2,
+      "norm_label": "ingest-llm-wiki.mjs"
+    },
+    {
+      "label": "sourceSlug()",
+      "file_type": "code",
+      "source_file": "scripts/ingest-llm-wiki.mjs",
+      "source_location": "L22",
+      "id": "scripts_ingest_llm_wiki_sourceslug",
+      "community": 2,
+      "norm_label": "sourceslug()"
+    },
+    {
+      "label": "formatBulletList()",
+      "file_type": "code",
+      "source_file": "scripts/ingest-llm-wiki.mjs",
+      "source_location": "L29",
+      "id": "scripts_ingest_llm_wiki_formatbulletlist",
+      "community": 2,
+      "norm_label": "formatbulletlist()"
+    },
+    {
+      "label": "upsertLinkedNote()",
+      "file_type": "code",
+      "source_file": "scripts/ingest-llm-wiki.mjs",
+      "source_location": "L34",
+      "id": "scripts_ingest_llm_wiki_upsertlinkednote",
+      "community": 2,
+      "norm_label": "upsertlinkednote()"
+    },
+    {
+      "label": "sourceNoteBody()",
+      "file_type": "code",
+      "source_file": "scripts/ingest-llm-wiki.mjs",
+      "source_location": "L49",
+      "id": "scripts_ingest_llm_wiki_sourcenotebody",
+      "community": 2,
+      "norm_label": "sourcenotebody()"
+    },
+    {
+      "label": "ingestSource()",
+      "file_type": "code",
+      "source_file": "scripts/ingest-llm-wiki.mjs",
+      "source_location": "L94",
+      "id": "scripts_ingest_llm_wiki_ingestsource",
+      "community": 2,
+      "norm_label": "ingestsource()"
+    },
+    {
+      "label": "options",
+      "file_type": "code",
+      "source_file": "scripts/ingest-llm-wiki.mjs",
+      "source_location": "L150",
+      "id": "scripts_ingest_llm_wiki_options",
+      "community": 2,
+      "norm_label": "options"
+    },
+    {
+      "label": "repoRoot",
+      "file_type": "code",
+      "source_file": "scripts/ingest-llm-wiki.mjs",
+      "source_location": "L151",
+      "id": "scripts_ingest_llm_wiki_reporoot",
+      "community": 2,
+      "norm_label": "reporoot"
+    },
+    {
+      "label": "sources",
+      "file_type": "code",
+      "source_file": "scripts/ingest-llm-wiki.mjs",
+      "source_location": "L155",
+      "id": "scripts_ingest_llm_wiki_sources",
+      "community": 2,
+      "norm_label": "sources"
+    },
+    {
+      "label": "ingested",
+      "file_type": "code",
+      "source_file": "scripts/ingest-llm-wiki.mjs",
+      "source_location": "L156",
+      "id": "scripts_ingest_llm_wiki_ingested",
+      "community": 2,
+      "norm_label": "ingested"
+    },
+    {
+      "label": "llm-wiki-lib.mjs",
+      "file_type": "code",
+      "source_file": "scripts/llm-wiki-lib.mjs",
+      "source_location": "L1",
+      "id": "scripts_llm_wiki_lib_mjs",
+      "community": 2,
+      "norm_label": "llm-wiki-lib.mjs"
+    },
+    {
+      "label": "TEXT_EXTENSIONS",
+      "file_type": "code",
+      "source_file": "scripts/llm-wiki-lib.mjs",
+      "source_location": "L20",
+      "id": "scripts_llm_wiki_lib_text_extensions",
+      "community": 2,
+      "norm_label": "text_extensions"
+    },
+    {
+      "label": "STOP_WORDS",
+      "file_type": "code",
+      "source_file": "scripts/llm-wiki-lib.mjs",
+      "source_location": "L32",
+      "id": "scripts_llm_wiki_lib_stop_words",
+      "community": 2,
+      "norm_label": "stop_words"
+    },
+    {
+      "label": "KNOWN_ENTITIES",
+      "file_type": "code",
+      "source_file": "scripts/llm-wiki-lib.mjs",
+      "source_location": "L59",
+      "id": "scripts_llm_wiki_lib_known_entities",
+      "community": 2,
+      "norm_label": "known_entities"
+    },
+    {
+      "label": "parseArgs()",
+      "file_type": "code",
+      "source_file": "scripts/llm-wiki-lib.mjs",
+      "source_location": "L73",
+      "id": "scripts_llm_wiki_lib_parseargs",
+      "community": 2,
+      "norm_label": "parseargs()"
+    },
+    {
+      "label": "repoRelative()",
+      "file_type": "code",
+      "source_file": "scripts/llm-wiki-lib.mjs",
+      "source_location": "L97",
+      "id": "scripts_llm_wiki_lib_reporelative",
+      "community": 2,
+      "norm_label": "reporelative()"
+    },
+    {
+      "label": "resolveInside()",
+      "file_type": "code",
+      "source_file": "scripts/llm-wiki-lib.mjs",
+      "source_location": "L101",
+      "id": "scripts_llm_wiki_lib_resolveinside",
+      "community": 3,
+      "norm_label": "resolveinside()"
+    },
+    {
+      "label": "sha256File()",
+      "file_type": "code",
+      "source_file": "scripts/llm-wiki-lib.mjs",
+      "source_location": "L108",
+      "id": "scripts_llm_wiki_lib_sha256file",
+      "community": 2,
+      "norm_label": "sha256file()"
+    },
+    {
+      "label": "ensureWikiLayout()",
+      "file_type": "code",
+      "source_file": "scripts/llm-wiki-lib.mjs",
+      "source_location": "L112",
+      "id": "scripts_llm_wiki_lib_ensurewikilayout",
+      "community": 3,
+      "norm_label": "ensurewikilayout()"
+    },
+    {
+      "label": "slugify()",
+      "file_type": "code",
+      "source_file": "scripts/llm-wiki-lib.mjs",
+      "source_location": "L118",
+      "id": "scripts_llm_wiki_lib_slugify",
+      "community": 2,
+      "norm_label": "slugify()"
+    },
+    {
+      "label": "titleFromSlug()",
+      "file_type": "code",
+      "source_file": "scripts/llm-wiki-lib.mjs",
+      "source_location": "L128",
+      "id": "scripts_llm_wiki_lib_titlefromslug",
+      "community": 2,
+      "norm_label": "titlefromslug()"
+    },
+    {
+      "label": "wikilink()",
+      "file_type": "code",
+      "source_file": "scripts/llm-wiki-lib.mjs",
+      "source_location": "L139",
+      "id": "scripts_llm_wiki_lib_wikilink",
+      "community": 2,
+      "norm_label": "wikilink()"
+    },
+    {
+      "label": "noteTarget()",
+      "file_type": "code",
+      "source_file": "scripts/llm-wiki-lib.mjs",
+      "source_location": "L144",
+      "id": "scripts_llm_wiki_lib_notetarget",
+      "community": 2,
+      "norm_label": "notetarget()"
+    },
+    {
+      "label": "walkFiles()",
+      "file_type": "code",
+      "source_file": "scripts/llm-wiki-lib.mjs",
+      "source_location": "L148",
+      "id": "scripts_llm_wiki_lib_walkfiles",
+      "community": 3,
+      "norm_label": "walkfiles()"
+    },
+    {
+      "label": "expandSourceInputs()",
+      "file_type": "code",
+      "source_file": "scripts/llm-wiki-lib.mjs",
+      "source_location": "L163",
+      "id": "scripts_llm_wiki_lib_expandsourceinputs",
+      "community": 2,
+      "norm_label": "expandsourceinputs()"
+    },
+    {
+      "label": "readSourceText()",
+      "file_type": "code",
+      "source_file": "scripts/llm-wiki-lib.mjs",
+      "source_location": "L191",
+      "id": "scripts_llm_wiki_lib_readsourcetext",
+      "community": 2,
+      "norm_label": "readsourcetext()"
+    },
+    {
+      "label": "extractTitle()",
+      "file_type": "code",
+      "source_file": "scripts/llm-wiki-lib.mjs",
+      "source_location": "L200",
+      "id": "scripts_llm_wiki_lib_extracttitle",
+      "community": 2,
+      "norm_label": "extracttitle()"
+    },
+    {
+      "label": "cleanMarkdown()",
+      "file_type": "code",
+      "source_file": "scripts/llm-wiki-lib.mjs",
+      "source_location": "L206",
+      "id": "scripts_llm_wiki_lib_cleanmarkdown",
+      "community": 2,
+      "norm_label": "cleanmarkdown()"
+    },
+    {
+      "label": "summarizeSource()",
+      "file_type": "code",
+      "source_file": "scripts/llm-wiki-lib.mjs",
+      "source_location": "L217",
+      "id": "scripts_llm_wiki_lib_summarizesource",
+      "community": 2,
+      "norm_label": "summarizesource()"
+    },
+    {
+      "label": "uniqueBySlug()",
+      "file_type": "code",
+      "source_file": "scripts/llm-wiki-lib.mjs",
+      "source_location": "L230",
+      "id": "scripts_llm_wiki_lib_uniquebyslug",
+      "community": 2,
+      "norm_label": "uniquebyslug()"
+    },
+    {
+      "label": "extractConcepts()",
+      "file_type": "code",
+      "source_file": "scripts/llm-wiki-lib.mjs",
+      "source_location": "L244",
+      "id": "scripts_llm_wiki_lib_extractconcepts",
+      "community": 2,
+      "norm_label": "extractconcepts()"
+    },
+    {
+      "label": "extractEntities()",
+      "file_type": "code",
+      "source_file": "scripts/llm-wiki-lib.mjs",
+      "source_location": "L261",
+      "id": "scripts_llm_wiki_lib_extractentities",
+      "community": 2,
+      "norm_label": "extractentities()"
+    },
+    {
+      "label": "parseFrontmatter()",
+      "file_type": "code",
+      "source_file": "scripts/llm-wiki-lib.mjs",
+      "source_location": "L277",
+      "id": "scripts_llm_wiki_lib_parsefrontmatter",
+      "community": 3,
+      "norm_label": "parsefrontmatter()"
+    },
+    {
+      "label": "extractWikiLinks()",
+      "file_type": "code",
+      "source_file": "scripts/llm-wiki-lib.mjs",
+      "source_location": "L291",
+      "id": "scripts_llm_wiki_lib_extractwikilinks",
+      "community": 3,
+      "norm_label": "extractwikilinks()"
+    },
+    {
+      "label": "resolveWikiTarget()",
+      "file_type": "code",
+      "source_file": "scripts/llm-wiki-lib.mjs",
+      "source_location": "L301",
+      "id": "scripts_llm_wiki_lib_resolvewikitarget",
+      "community": 3,
+      "norm_label": "resolvewikitarget()"
+    },
+    {
+      "label": "writeTextFile()",
+      "file_type": "code",
+      "source_file": "scripts/llm-wiki-lib.mjs",
+      "source_location": "L320",
+      "id": "scripts_llm_wiki_lib_writetextfile",
+      "community": 2,
+      "norm_label": "writetextfile()"
     },
     {
       "label": "agentic-knowledge-context.mjs",
@@ -693,7 +1143,7 @@
       "source_file": "scripts/agentic-knowledge-context.mjs",
       "source_location": "L1",
       "id": "scripts_agentic_knowledge_context_mjs",
-      "community": 7,
+      "community": 9,
       "norm_label": "agentic-knowledge-context.mjs"
     },
     {
@@ -702,7 +1152,7 @@
       "source_file": "scripts/agentic-knowledge-context.mjs",
       "source_location": "L16",
       "id": "scripts_agentic_knowledge_context_readstdin",
-      "community": 7,
+      "community": 9,
       "norm_label": "readstdin()"
     },
     {
@@ -711,7 +1161,7 @@
       "source_file": "scripts/agentic-knowledge-context.mjs",
       "source_location": "L21",
       "id": "scripts_agentic_knowledge_context_extractprompt",
-      "community": 7,
+      "community": 9,
       "norm_label": "extractprompt()"
     },
     {
@@ -720,7 +1170,7 @@
       "source_file": "scripts/agentic-knowledge-context.mjs",
       "source_location": "L40",
       "id": "scripts_agentic_knowledge_context_compacttext",
-      "community": 7,
+      "community": 9,
       "norm_label": "compacttext()"
     },
     {
@@ -729,7 +1179,7 @@
       "source_file": "scripts/agentic-knowledge-context.mjs",
       "source_location": "L50",
       "id": "scripts_agentic_knowledge_context_resultlocation",
-      "community": 7,
+      "community": 9,
       "norm_label": "resultlocation()"
     },
     {
@@ -738,7 +1188,7 @@
       "source_file": "scripts/agentic-knowledge-context.mjs",
       "source_location": "L54",
       "id": "scripts_agentic_knowledge_context_formatcontext",
-      "community": 7,
+      "community": 9,
       "norm_label": "formatcontext()"
     },
     {
@@ -747,7 +1197,7 @@
       "source_file": "scripts/agentic-knowledge-context.mjs",
       "source_location": "L87",
       "id": "scripts_agentic_knowledge_context_unavailablejson",
-      "community": 7,
+      "community": 9,
       "norm_label": "unavailablejson()"
     },
     {
@@ -756,7 +1206,7 @@
       "source_file": "scripts/agentic-knowledge-context.mjs",
       "source_location": "L96",
       "id": "scripts_agentic_knowledge_context_buildcontext",
-      "community": 7,
+      "community": 1,
       "norm_label": "buildcontext()"
     },
     {
@@ -765,7 +1215,7 @@
       "source_file": "scripts/agentic-knowledge-context.mjs",
       "source_location": "L185",
       "id": "scripts_agentic_knowledge_context_options",
-      "community": 7,
+      "community": 9,
       "norm_label": "options"
     },
     {
@@ -774,7 +1224,7 @@
       "source_file": "scripts/agentic-knowledge-context.mjs",
       "source_location": "L203",
       "id": "scripts_agentic_knowledge_context_maxchars",
-      "community": 7,
+      "community": 9,
       "norm_label": "maxchars"
     },
     {
@@ -783,8 +1233,116 @@
       "source_file": "scripts/agentic-knowledge-context.mjs",
       "source_location": "L207",
       "id": "scripts_agentic_knowledge_context_output",
-      "community": 7,
+      "community": 9,
       "norm_label": "output"
+    },
+    {
+      "label": "test-llm-wiki-workflow.mjs",
+      "file_type": "code",
+      "source_file": "scripts/test-llm-wiki-workflow.mjs",
+      "source_location": "L1",
+      "id": "scripts_test_llm_wiki_workflow_mjs",
+      "community": 7,
+      "norm_label": "test-llm-wiki-workflow.mjs"
+    },
+    {
+      "label": "repoRoot",
+      "file_type": "code",
+      "source_file": "scripts/test-llm-wiki-workflow.mjs",
+      "source_location": "L15",
+      "id": "scripts_test_llm_wiki_workflow_reporoot",
+      "community": 7,
+      "norm_label": "reporoot"
+    },
+    {
+      "label": "tmp",
+      "file_type": "code",
+      "source_file": "scripts/test-llm-wiki-workflow.mjs",
+      "source_location": "L16",
+      "id": "scripts_test_llm_wiki_workflow_tmp",
+      "community": 7,
+      "norm_label": "tmp"
+    },
+    {
+      "label": "ingestOut",
+      "file_type": "code",
+      "source_file": "scripts/test-llm-wiki-workflow.mjs",
+      "source_location": "L38",
+      "id": "scripts_test_llm_wiki_workflow_ingestout",
+      "community": 7,
+      "norm_label": "ingestout"
+    },
+    {
+      "label": "sourceNote",
+      "file_type": "code",
+      "source_file": "scripts/test-llm-wiki-workflow.mjs",
+      "source_location": "L51",
+      "id": "scripts_test_llm_wiki_workflow_sourcenote",
+      "community": 7,
+      "norm_label": "sourcenote"
+    },
+    {
+      "label": "sourceText",
+      "file_type": "code",
+      "source_file": "scripts/test-llm-wiki-workflow.mjs",
+      "source_location": "L54",
+      "id": "scripts_test_llm_wiki_workflow_sourcetext",
+      "community": 7,
+      "norm_label": "sourcetext"
+    },
+    {
+      "label": "conceptNote",
+      "file_type": "code",
+      "source_file": "scripts/test-llm-wiki-workflow.mjs",
+      "source_location": "L61",
+      "id": "scripts_test_llm_wiki_workflow_conceptnote",
+      "community": 7,
+      "norm_label": "conceptnote"
+    },
+    {
+      "label": "entityNote",
+      "file_type": "code",
+      "source_file": "scripts/test-llm-wiki-workflow.mjs",
+      "source_location": "L62",
+      "id": "scripts_test_llm_wiki_workflow_entitynote",
+      "community": 7,
+      "norm_label": "entitynote"
+    },
+    {
+      "label": "lintJson",
+      "file_type": "code",
+      "source_file": "scripts/test-llm-wiki-workflow.mjs",
+      "source_location": "L68",
+      "id": "scripts_test_llm_wiki_workflow_lintjson",
+      "community": 7,
+      "norm_label": "lintjson"
+    },
+    {
+      "label": "lint",
+      "file_type": "code",
+      "source_file": "scripts/test-llm-wiki-workflow.mjs",
+      "source_location": "L73",
+      "id": "scripts_test_llm_wiki_workflow_lint",
+      "community": 7,
+      "norm_label": "lint"
+    },
+    {
+      "label": "strictLint",
+      "file_type": "code",
+      "source_file": "scripts/test-llm-wiki-workflow.mjs",
+      "source_location": "L77",
+      "id": "scripts_test_llm_wiki_workflow_strictlint",
+      "community": 7,
+      "norm_label": "strictlint"
+    },
+    {
+      "label": "installer",
+      "file_type": "code",
+      "source_file": "scripts/test-llm-wiki-workflow.mjs",
+      "source_location": "L86",
+      "id": "scripts_test_llm_wiki_workflow_installer",
+      "community": 7,
+      "norm_label": "installer"
     },
     {
       "label": "README.md",
@@ -808,7 +1366,7 @@
       "label": "Install Into A Repository",
       "file_type": "document",
       "source_file": "README.md",
-      "source_location": "L15",
+      "source_location": "L16",
       "id": "agentic_knowledge_kit_readme_install_into_a_repository",
       "community": 8,
       "norm_label": "install into a repository"
@@ -817,7 +1375,7 @@
       "label": "code:bash (./scripts/install-agentic-knowledge.sh \\)",
       "file_type": "document",
       "source_file": "README.md",
-      "source_location": "L19",
+      "source_location": "L20",
       "id": "agentic_knowledge_kit_readme_codeblock_1",
       "community": 8,
       "norm_label": "code:bash (./scripts/install-agentic-knowledge.sh \\)"
@@ -826,7 +1384,7 @@
       "label": "code:bash (./scripts/install-agentic-knowledge.sh \\)",
       "file_type": "document",
       "source_file": "README.md",
-      "source_location": "L27",
+      "source_location": "L28",
       "id": "agentic_knowledge_kit_readme_codeblock_2",
       "community": 8,
       "norm_label": "code:bash (./scripts/install-agentic-knowledge.sh \\)"
@@ -835,7 +1393,7 @@
       "label": "code:bash (./scripts/install-agentic-knowledge.sh \\)",
       "file_type": "document",
       "source_file": "README.md",
-      "source_location": "L36",
+      "source_location": "L37",
       "id": "agentic_knowledge_kit_readme_codeblock_3",
       "community": 8,
       "norm_label": "code:bash (./scripts/install-agentic-knowledge.sh \\)"
@@ -844,7 +1402,7 @@
       "label": "Use As A Skill",
       "file_type": "document",
       "source_file": "README.md",
-      "source_location": "L43",
+      "source_location": "L44",
       "id": "agentic_knowledge_kit_readme_use_as_a_skill",
       "community": 8,
       "norm_label": "use as a skill"
@@ -853,7 +1411,7 @@
       "label": "code:text (Use $agentic-knowledge-setup to add GitNexus, graphify, and )",
       "file_type": "document",
       "source_file": "README.md",
-      "source_location": "L47",
+      "source_location": "L48",
       "id": "agentic_knowledge_kit_readme_codeblock_4",
       "community": 8,
       "norm_label": "code:text (use $agentic-knowledge-setup to add gitnexus, graphify, and )"
@@ -862,7 +1420,7 @@
       "label": "Verification",
       "file_type": "document",
       "source_file": "README.md",
-      "source_location": "L51",
+      "source_location": "L52",
       "id": "agentic_knowledge_kit_readme_verification",
       "community": 8,
       "norm_label": "verification"
@@ -871,7 +1429,7 @@
       "label": "code:bash (bash scripts/test-post-commit-hook.sh)",
       "file_type": "document",
       "source_file": "README.md",
-      "source_location": "L55",
+      "source_location": "L56",
       "id": "agentic_knowledge_kit_readme_codeblock_5",
       "community": 8,
       "norm_label": "code:bash (bash scripts/test-post-commit-hook.sh)"
@@ -880,10 +1438,19 @@
       "label": "Notes",
       "file_type": "document",
       "source_file": "README.md",
-      "source_location": "L67",
+      "source_location": "L70",
       "id": "agentic_knowledge_kit_readme_notes",
       "community": 8,
       "norm_label": "notes"
+    },
+    {
+      "label": "code:bash (node scripts/ingest-llm-wiki.mjs raw/<document>)",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": "L86",
+      "id": "agentic_knowledge_kit_readme_codeblock_6",
+      "community": 8,
+      "norm_label": "code:bash (node scripts/ingest-llm-wiki.mjs raw/<document>)"
     },
     {
       "label": "SKILL.md",
@@ -891,7 +1458,7 @@
       "source_file": "SKILL.md",
       "source_location": "L1",
       "id": "skill_md",
-      "community": 6,
+      "community": 5,
       "norm_label": "skill.md"
     },
     {
@@ -900,7 +1467,7 @@
       "source_file": "SKILL.md",
       "source_location": "L6",
       "id": "agentic_knowledge_kit_skill_agentic_knowledge_setup",
-      "community": 6,
+      "community": 5,
       "norm_label": "agentic knowledge setup"
     },
     {
@@ -909,7 +1476,7 @@
       "source_file": "SKILL.md",
       "source_location": "L8",
       "id": "agentic_knowledge_kit_skill_overview",
-      "community": 6,
+      "community": 5,
       "norm_label": "overview"
     },
     {
@@ -918,7 +1485,7 @@
       "source_file": "SKILL.md",
       "source_location": "L14",
       "id": "agentic_knowledge_kit_skill_workflow",
-      "community": 6,
+      "community": 5,
       "norm_label": "workflow"
     },
     {
@@ -927,7 +1494,7 @@
       "source_file": "SKILL.md",
       "source_location": "L22",
       "id": "agentic_knowledge_kit_skill_installer",
-      "community": 6,
+      "community": 5,
       "norm_label": "installer"
     },
     {
@@ -936,7 +1503,7 @@
       "source_file": "SKILL.md",
       "source_location": "L26",
       "id": "agentic_knowledge_kit_skill_codeblock_1",
-      "community": 6,
+      "community": 5,
       "norm_label": "code:bash (./scripts/install-agentic-knowledge.sh \\)"
     },
     {
@@ -945,61 +1512,79 @@
       "source_file": "SKILL.md",
       "source_location": "L41",
       "id": "agentic_knowledge_kit_skill_what_it_installs",
-      "community": 6,
+      "community": 5,
       "norm_label": "what it installs"
     },
     {
       "label": "Verification",
       "file_type": "document",
       "source_file": "SKILL.md",
-      "source_location": "L50",
+      "source_location": "L51",
       "id": "agentic_knowledge_kit_skill_verification",
-      "community": 6,
+      "community": 5,
       "norm_label": "verification"
     },
     {
       "label": "code:bash (bash scripts/test-post-commit-hook.sh)",
       "file_type": "document",
       "source_file": "SKILL.md",
-      "source_location": "L54",
+      "source_location": "L55",
       "id": "agentic_knowledge_kit_skill_codeblock_2",
-      "community": 6,
+      "community": 5,
       "norm_label": "code:bash (bash scripts/test-post-commit-hook.sh)"
     },
     {
       "label": "code:bash (test -L .git/hooks/post-commit)",
       "file_type": "document",
       "source_file": "SKILL.md",
-      "source_location": "L69",
+      "source_location": "L73",
       "id": "agentic_knowledge_kit_skill_codeblock_3",
-      "community": 6,
+      "community": 5,
       "norm_label": "code:bash (test -l .git/hooks/post-commit)"
     },
     {
       "label": "Known Caveat",
       "file_type": "document",
       "source_file": "SKILL.md",
-      "source_location": "L79",
+      "source_location": "L83",
       "id": "agentic_knowledge_kit_skill_known_caveat",
-      "community": 6,
+      "community": 5,
       "norm_label": "known caveat"
+    },
+    {
+      "label": "LLM Wiki",
+      "file_type": "document",
+      "source_file": "SKILL.md",
+      "source_location": "L100",
+      "id": "agentic_knowledge_kit_skill_llm_wiki",
+      "community": 5,
+      "norm_label": "llm wiki"
+    },
+    {
+      "label": "code:bash (node scripts/ingest-llm-wiki.mjs raw/<document>)",
+      "file_type": "document",
+      "source_file": "SKILL.md",
+      "source_location": "L105",
+      "id": "agentic_knowledge_kit_skill_codeblock_4",
+      "community": 5,
+      "norm_label": "code:bash (node scripts/ingest-llm-wiki.mjs raw/<document>)"
     },
     {
       "label": "Obsidian Memory",
       "file_type": "document",
       "source_file": "SKILL.md",
-      "source_location": "L96",
+      "source_location": "L116",
       "id": "agentic_knowledge_kit_skill_obsidian_memory",
-      "community": 6,
+      "community": 5,
       "norm_label": "obsidian memory"
     },
     {
       "label": "code:text (<vault>/<project>/Development Logs/YYYY-MM commit log.md)",
       "file_type": "document",
       "source_file": "SKILL.md",
-      "source_location": "L100",
-      "id": "agentic_knowledge_kit_skill_codeblock_4",
-      "community": 6,
+      "source_location": "L120",
+      "id": "agentic_knowledge_kit_skill_codeblock_5",
+      "community": 5,
       "norm_label": "code:text (<vault>/<project>/development logs/yyyy-mm commit log.md)"
     },
     {
@@ -1008,7 +1593,7 @@
       "source_file": "GEMINI.md",
       "source_location": "L1",
       "id": "gemini_md",
-      "community": 12,
+      "community": 13,
       "norm_label": "gemini.md"
     },
     {
@@ -1017,25 +1602,25 @@
       "source_file": "GEMINI.md",
       "source_location": "L2",
       "id": "agentic_knowledge_kit_gemini_agentic_knowledge_setup",
-      "community": 12,
+      "community": 13,
       "norm_label": "agentic knowledge setup"
     },
     {
       "label": "Retrieval Protocol",
       "file_type": "document",
       "source_file": "GEMINI.md",
-      "source_location": "L16",
+      "source_location": "L18",
       "id": "agentic_knowledge_kit_gemini_retrieval_protocol",
-      "community": 12,
+      "community": 13,
       "norm_label": "retrieval protocol"
     },
     {
       "label": "code:bash (node scripts/agentic-knowledge-context.mjs \"<task summary>\" )",
       "file_type": "document",
       "source_file": "GEMINI.md",
-      "source_location": "L21",
+      "source_location": "L23",
       "id": "agentic_knowledge_kit_gemini_codeblock_1",
-      "community": 12,
+      "community": 13,
       "norm_label": "code:bash (node scripts/agentic-knowledge-context.mjs \"<task summary>\" )"
     },
     {
@@ -1044,7 +1629,7 @@
       "source_file": "AGENTS.md",
       "source_location": "L1",
       "id": "agents_md",
-      "community": 5,
+      "community": 6,
       "norm_label": "agents.md"
     },
     {
@@ -1053,7 +1638,7 @@
       "source_file": "AGENTS.md",
       "source_location": "L1",
       "id": "agentic_knowledge_kit_agents_agentic_knowledge_kit_agent_rules",
-      "community": 5,
+      "community": 6,
       "norm_label": "agentic knowledge kit agent rules"
     },
     {
@@ -1062,7 +1647,7 @@
       "source_file": "AGENTS.md",
       "source_location": "L6",
       "id": "agentic_knowledge_kit_agents_knowledge_layout",
-      "community": 5,
+      "community": 6,
       "norm_label": "knowledge layout"
     },
     {
@@ -1071,7 +1656,7 @@
       "source_file": "AGENTS.md",
       "source_location": "L22",
       "id": "agentic_knowledge_kit_agents_strict_operation_rules",
-      "community": 5,
+      "community": 6,
       "norm_label": "strict operation rules"
     },
     {
@@ -1080,7 +1665,7 @@
       "source_file": "AGENTS.md",
       "source_location": "L46",
       "id": "agentic_knowledge_kit_agents_operational_notes",
-      "community": 5,
+      "community": 6,
       "norm_label": "operational notes"
     },
     {
@@ -1089,7 +1674,7 @@
       "source_file": "AGENTS.md",
       "source_location": "L56",
       "id": "agentic_knowledge_kit_agents_gitnexus_code_intelligence",
-      "community": 5,
+      "community": 6,
       "norm_label": "gitnexus \u2014 code intelligence"
     },
     {
@@ -1098,7 +1683,7 @@
       "source_file": "AGENTS.md",
       "source_location": "L62",
       "id": "agentic_knowledge_kit_agents_always_do",
-      "community": 5,
+      "community": 6,
       "norm_label": "always do"
     },
     {
@@ -1107,7 +1692,7 @@
       "source_file": "AGENTS.md",
       "source_location": "L70",
       "id": "agentic_knowledge_kit_agents_never_do",
-      "community": 5,
+      "community": 6,
       "norm_label": "never do"
     },
     {
@@ -1116,7 +1701,7 @@
       "source_file": "AGENTS.md",
       "source_location": "L77",
       "id": "agentic_knowledge_kit_agents_resources",
-      "community": 5,
+      "community": 6,
       "norm_label": "resources"
     },
     {
@@ -1125,7 +1710,7 @@
       "source_file": "AGENTS.md",
       "source_location": "L86",
       "id": "agentic_knowledge_kit_agents_cli",
-      "community": 5,
+      "community": 6,
       "norm_label": "cli"
     },
     {
@@ -1134,7 +1719,7 @@
       "source_file": "AGENTS.md",
       "source_location": "L100",
       "id": "agentic_knowledge_kit_agents_graphify",
-      "community": 5,
+      "community": 6,
       "norm_label": "graphify"
     },
     {
@@ -1143,25 +1728,25 @@
       "source_file": "AGENTS.md",
       "source_location": "L111",
       "id": "agentic_knowledge_kit_agents_agentic_knowledge_setup",
-      "community": 5,
+      "community": 6,
       "norm_label": "agentic knowledge setup"
     },
     {
       "label": "Retrieval Protocol",
       "file_type": "document",
       "source_file": "AGENTS.md",
-      "source_location": "L125",
+      "source_location": "L127",
       "id": "agentic_knowledge_kit_agents_retrieval_protocol",
-      "community": 5,
+      "community": 6,
       "norm_label": "retrieval protocol"
     },
     {
       "label": "code:bash (node scripts/agentic-knowledge-context.mjs \"<task summary>\" )",
       "file_type": "document",
       "source_file": "AGENTS.md",
-      "source_location": "L130",
+      "source_location": "L132",
       "id": "agentic_knowledge_kit_agents_codeblock_1",
-      "community": 5,
+      "community": 6,
       "norm_label": "code:bash (node scripts/agentic-knowledge-context.mjs \"<task summary>\" )"
     },
     {
@@ -1170,7 +1755,7 @@
       "source_file": "CLAUDE.md",
       "source_location": "L1",
       "id": "claude_md",
-      "community": 9,
+      "community": 10,
       "norm_label": "claude.md"
     },
     {
@@ -1179,7 +1764,7 @@
       "source_file": "CLAUDE.md",
       "source_location": "L1",
       "id": "agentic_knowledge_kit_claude_claude_project_rules",
-      "community": 9,
+      "community": 10,
       "norm_label": "claude project rules"
     },
     {
@@ -1188,7 +1773,7 @@
       "source_file": "CLAUDE.md",
       "source_location": "L15",
       "id": "agentic_knowledge_kit_claude_gitnexus_code_intelligence",
-      "community": 9,
+      "community": 10,
       "norm_label": "gitnexus \u2014 code intelligence"
     },
     {
@@ -1197,7 +1782,7 @@
       "source_file": "CLAUDE.md",
       "source_location": "L21",
       "id": "agentic_knowledge_kit_claude_always_do",
-      "community": 9,
+      "community": 10,
       "norm_label": "always do"
     },
     {
@@ -1206,7 +1791,7 @@
       "source_file": "CLAUDE.md",
       "source_location": "L29",
       "id": "agentic_knowledge_kit_claude_never_do",
-      "community": 9,
+      "community": 10,
       "norm_label": "never do"
     },
     {
@@ -1215,7 +1800,7 @@
       "source_file": "CLAUDE.md",
       "source_location": "L36",
       "id": "agentic_knowledge_kit_claude_resources",
-      "community": 9,
+      "community": 10,
       "norm_label": "resources"
     },
     {
@@ -1224,7 +1809,7 @@
       "source_file": "CLAUDE.md",
       "source_location": "L45",
       "id": "agentic_knowledge_kit_claude_cli",
-      "community": 9,
+      "community": 10,
       "norm_label": "cli"
     },
     {
@@ -1233,25 +1818,25 @@
       "source_file": "CLAUDE.md",
       "source_location": "L60",
       "id": "agentic_knowledge_kit_claude_agentic_knowledge_setup",
-      "community": 9,
+      "community": 10,
       "norm_label": "agentic knowledge setup"
     },
     {
       "label": "Retrieval Protocol",
       "file_type": "document",
       "source_file": "CLAUDE.md",
-      "source_location": "L74",
+      "source_location": "L76",
       "id": "agentic_knowledge_kit_claude_retrieval_protocol",
-      "community": 9,
+      "community": 10,
       "norm_label": "retrieval protocol"
     },
     {
       "label": "code:bash (node scripts/agentic-knowledge-context.mjs \"<task summary>\" )",
       "file_type": "document",
       "source_file": "CLAUDE.md",
-      "source_location": "L79",
+      "source_location": "L81",
       "id": "agentic_knowledge_kit_claude_codeblock_1",
-      "community": 9,
+      "community": 10,
       "norm_label": "code:bash (node scripts/agentic-knowledge-context.mjs \"<task summary>\" )"
     },
     {
@@ -1260,7 +1845,7 @@
       "source_file": "wiki/README.md",
       "source_location": "L1",
       "id": "wiki_readme_md",
-      "community": 14,
+      "community": 15,
       "norm_label": "readme.md"
     },
     {
@@ -1269,7 +1854,7 @@
       "source_file": "wiki/README.md",
       "source_location": "L1",
       "id": "wiki_readme_llm_wiki",
-      "community": 14,
+      "community": 15,
       "norm_label": "llm wiki"
     },
     {
@@ -1278,7 +1863,7 @@
       "source_file": "wiki/concepts/README.md",
       "source_location": "L1",
       "id": "wiki_concepts_readme_md",
-      "community": 15,
+      "community": 16,
       "norm_label": "readme.md"
     },
     {
@@ -1287,7 +1872,7 @@
       "source_file": "wiki/concepts/README.md",
       "source_location": "L1",
       "id": "concepts_readme_concepts",
-      "community": 15,
+      "community": 16,
       "norm_label": "concepts"
     },
     {
@@ -1296,34 +1881,34 @@
       "source_file": "wiki/sources/graphify-knowledge-graph.md",
       "source_location": "L1",
       "id": "wiki_sources_graphify_knowledge_graph_md",
-      "community": 13,
+      "community": 14,
       "norm_label": "graphify-knowledge-graph.md"
     },
     {
       "label": "Graphify Knowledge Graph",
       "file_type": "document",
       "source_file": "wiki/sources/graphify-knowledge-graph.md",
-      "source_location": "L1",
+      "source_location": "L6",
       "id": "sources_graphify_knowledge_graph_graphify_knowledge_graph",
-      "community": 13,
+      "community": 14,
       "norm_label": "graphify knowledge graph"
     },
     {
       "label": "Tracked Artifacts",
       "file_type": "document",
       "source_file": "wiki/sources/graphify-knowledge-graph.md",
-      "source_location": "L5",
+      "source_location": "L12",
       "id": "sources_graphify_knowledge_graph_tracked_artifacts",
-      "community": 13,
+      "community": 14,
       "norm_label": "tracked artifacts"
     },
     {
       "label": "Current Build",
       "file_type": "document",
       "source_file": "wiki/sources/graphify-knowledge-graph.md",
-      "source_location": "L11",
+      "source_location": "L18",
       "id": "sources_graphify_knowledge_graph_current_build",
-      "community": 13,
+      "community": 14,
       "norm_label": "current build"
     },
     {
@@ -1332,7 +1917,7 @@
       "source_file": "wiki/sources/README.md",
       "source_location": "L1",
       "id": "wiki_sources_readme_md",
-      "community": 16,
+      "community": 17,
       "norm_label": "readme.md"
     },
     {
@@ -1341,7 +1926,7 @@
       "source_file": "wiki/sources/README.md",
       "source_location": "L1",
       "id": "sources_readme_sources",
-      "community": 16,
+      "community": 17,
       "norm_label": "sources"
     },
     {
@@ -1350,7 +1935,7 @@
       "source_file": "wiki/entities/README.md",
       "source_location": "L1",
       "id": "wiki_entities_readme_md",
-      "community": 17,
+      "community": 18,
       "norm_label": "readme.md"
     },
     {
@@ -1359,7 +1944,7 @@
       "source_file": "wiki/entities/README.md",
       "source_location": "L1",
       "id": "entities_readme_entities",
-      "community": 17,
+      "community": 18,
       "norm_label": "entities"
     },
     {
@@ -1368,7 +1953,7 @@
       "source_file": "raw/README.md",
       "source_location": "L1",
       "id": "raw_readme_md",
-      "community": 18,
+      "community": 19,
       "norm_label": "readme.md"
     },
     {
@@ -1377,7 +1962,7 @@
       "source_file": "raw/README.md",
       "source_location": "L1",
       "id": "raw_readme_raw_sources",
-      "community": 18,
+      "community": 19,
       "norm_label": "raw sources"
     },
     {
@@ -1394,7 +1979,7 @@
       "file_type": "code",
       "source_file": "test-semantic-vector-index.mjs",
       "source_location": "L1",
-      "community": 21,
+      "community": 22,
       "norm_label": "test-semantic-vector-index.mjs",
       "id": "test_semantic_vector_index_mjs"
     },
@@ -1516,7 +2101,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 2,
+      "community": 0,
       "norm_label": "codex",
       "id": "entity_codex"
     },
@@ -1529,7 +2114,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 2,
+      "community": 0,
       "norm_label": "claude",
       "id": "entity_claude"
     },
@@ -1542,7 +2127,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 2,
+      "community": 0,
       "norm_label": "lancedb",
       "id": "entity_lancedb"
     },
@@ -1555,7 +2140,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 2,
+      "community": 0,
       "norm_label": "semantic vector index",
       "id": "concept_semantic_vector_index"
     },
@@ -1568,7 +2153,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 2,
+      "community": 0,
       "norm_label": "post-commit hook",
       "id": "concept_post_commit_hook"
     },
@@ -1607,7 +2192,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 2,
+      "community": 0,
       "norm_label": "graphify-out",
       "id": "concept_graphify_out"
     },
@@ -1620,7 +2205,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 2,
+      "community": 0,
       "norm_label": ".gitnexus",
       "id": "concept_gitnexus"
     },
@@ -1633,7 +2218,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 2,
+      "community": 0,
       "norm_label": ".codex/hooks.json",
       "id": "concept_codex_hooks_json"
     },
@@ -1646,7 +2231,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 2,
+      "community": 0,
       "norm_label": "readme.md",
       "id": "doc_readme_md"
     },
@@ -1659,7 +2244,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 2,
+      "community": 0,
       "norm_label": "skill.md",
       "id": "doc_skill_md"
     },
@@ -1724,7 +2309,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 19,
+      "community": 20,
       "norm_label": "wiki/concepts/readme.md",
       "id": "doc_wiki_concepts_readme_md"
     },
@@ -1750,7 +2335,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 20,
+      "community": 21,
       "norm_label": "wiki/entities/readme.md",
       "id": "doc_wiki_entities_readme_md"
     },
@@ -1776,7 +2361,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 2,
+      "community": 0,
       "norm_label": "agentic knowledge kit",
       "id": "concept_readme_md_1_agentic_knowledge_kit"
     },
@@ -1789,7 +2374,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 2,
+      "community": 0,
       "norm_label": "install into a repository",
       "id": "concept_readme_md_14_install_into_a_repository"
     },
@@ -1802,7 +2387,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 2,
+      "community": 0,
       "norm_label": "use as a skill",
       "id": "concept_readme_md_42_use_as_a_skill"
     },
@@ -1815,7 +2400,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 2,
+      "community": 0,
       "norm_label": "verification",
       "id": "concept_readme_md_50_verification"
     },
@@ -1828,7 +2413,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 2,
+      "community": 0,
       "norm_label": "notes",
       "id": "concept_readme_md_64_notes"
     },
@@ -1841,7 +2426,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 2,
+      "community": 0,
       "norm_label": "agentic knowledge setup",
       "id": "concept_skill_md_6_agentic_knowledge_setup"
     },
@@ -1854,7 +2439,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 2,
+      "community": 0,
       "norm_label": "overview",
       "id": "concept_skill_md_8_overview"
     },
@@ -1867,7 +2452,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 2,
+      "community": 0,
       "norm_label": "workflow",
       "id": "concept_skill_md_14_workflow"
     },
@@ -1880,7 +2465,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 2,
+      "community": 0,
       "norm_label": "installer",
       "id": "concept_skill_md_22_installer"
     },
@@ -1893,7 +2478,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 2,
+      "community": 0,
       "norm_label": "what it installs",
       "id": "concept_skill_md_41_what_it_installs"
     },
@@ -1906,7 +2491,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 2,
+      "community": 0,
       "norm_label": "verification",
       "id": "concept_skill_md_50_verification"
     },
@@ -1919,7 +2504,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 2,
+      "community": 0,
       "norm_label": "known caveat",
       "id": "concept_skill_md_77_known_caveat"
     },
@@ -1932,7 +2517,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 2,
+      "community": 0,
       "norm_label": "obsidian memory",
       "id": "concept_skill_md_83_obsidian_memory"
     },
@@ -2166,7 +2751,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 19,
+      "community": 20,
       "norm_label": "concepts",
       "id": "concept_wiki_concepts_readme_md_1_concepts"
     },
@@ -2192,7 +2777,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 20,
+      "community": 21,
       "norm_label": "entities",
       "id": "concept_wiki_entities_readme_md_1_entities"
     },
@@ -3301,6 +3886,444 @@
       "target": "scripts_test_semantic_vector_index_query"
     },
     {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/lint-llm-wiki.mjs",
+      "source_location": "L5",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "scripts_lint_llm_wiki_mjs",
+      "target": "scripts_llm_wiki_lib_mjs"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/lint-llm-wiki.mjs",
+      "source_location": "L5",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "scripts_lint_llm_wiki_mjs",
+      "target": "scripts_llm_wiki_lib_ensurewikilayout"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/lint-llm-wiki.mjs",
+      "source_location": "L5",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "scripts_lint_llm_wiki_mjs",
+      "target": "scripts_llm_wiki_lib_extractwikilinks"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/lint-llm-wiki.mjs",
+      "source_location": "L5",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "scripts_lint_llm_wiki_mjs",
+      "target": "scripts_llm_wiki_lib_parseargs"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/lint-llm-wiki.mjs",
+      "source_location": "L5",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "scripts_lint_llm_wiki_mjs",
+      "target": "scripts_llm_wiki_lib_parsefrontmatter"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/lint-llm-wiki.mjs",
+      "source_location": "L5",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "scripts_lint_llm_wiki_mjs",
+      "target": "scripts_llm_wiki_lib_reporelative"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/lint-llm-wiki.mjs",
+      "source_location": "L5",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "scripts_lint_llm_wiki_mjs",
+      "target": "scripts_llm_wiki_lib_resolveinside"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/lint-llm-wiki.mjs",
+      "source_location": "L5",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "scripts_lint_llm_wiki_mjs",
+      "target": "scripts_llm_wiki_lib_resolvewikitarget"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/lint-llm-wiki.mjs",
+      "source_location": "L5",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "scripts_lint_llm_wiki_mjs",
+      "target": "scripts_llm_wiki_lib_sha256file"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/lint-llm-wiki.mjs",
+      "source_location": "L5",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "scripts_lint_llm_wiki_mjs",
+      "target": "scripts_llm_wiki_lib_walkfiles"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/lint-llm-wiki.mjs",
+      "source_location": "L17",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "scripts_lint_llm_wiki_mjs",
+      "target": "scripts_lint_llm_wiki_firstheading"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/lint-llm-wiki.mjs",
+      "source_location": "L22",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "scripts_lint_llm_wiki_mjs",
+      "target": "scripts_lint_llm_wiki_issue"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/lint-llm-wiki.mjs",
+      "source_location": "L26",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "scripts_lint_llm_wiki_mjs",
+      "target": "scripts_lint_llm_wiki_sourcenotes"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/lint-llm-wiki.mjs",
+      "source_location": "L31",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "scripts_lint_llm_wiki_mjs",
+      "target": "scripts_lint_llm_wiki_wikinotes"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/lint-llm-wiki.mjs",
+      "source_location": "L35",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "scripts_lint_llm_wiki_mjs",
+      "target": "scripts_lint_llm_wiki_validatesourcenote"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/lint-llm-wiki.mjs",
+      "source_location": "L72",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "scripts_lint_llm_wiki_mjs",
+      "target": "scripts_lint_llm_wiki_validatelinks"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/lint-llm-wiki.mjs",
+      "source_location": "L99",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "scripts_lint_llm_wiki_mjs",
+      "target": "scripts_lint_llm_wiki_validateorphans"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/lint-llm-wiki.mjs",
+      "source_location": "L116",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "scripts_lint_llm_wiki_mjs",
+      "target": "scripts_lint_llm_wiki_validateduplicatetitles"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/lint-llm-wiki.mjs",
+      "source_location": "L134",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "scripts_lint_llm_wiki_mjs",
+      "target": "scripts_lint_llm_wiki_lint"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/lint-llm-wiki.mjs",
+      "source_location": "L155",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "scripts_lint_llm_wiki_mjs",
+      "target": "scripts_lint_llm_wiki_formatreport"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/lint-llm-wiki.mjs",
+      "source_location": "L163",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "scripts_lint_llm_wiki_mjs",
+      "target": "scripts_lint_llm_wiki_options"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/lint-llm-wiki.mjs",
+      "source_location": "L164",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "scripts_lint_llm_wiki_mjs",
+      "target": "scripts_lint_llm_wiki_reporoot"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/lint-llm-wiki.mjs",
+      "source_location": "L167",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "scripts_lint_llm_wiki_mjs",
+      "target": "scripts_lint_llm_wiki_report"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/lint-llm-wiki.mjs",
+      "source_location": "L120",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "scripts_lint_llm_wiki_validateduplicatetitles",
+      "target": "scripts_lint_llm_wiki_firstheading"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/lint-llm-wiki.mjs",
+      "source_location": "L42",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "scripts_lint_llm_wiki_validatesourcenote",
+      "target": "scripts_lint_llm_wiki_issue"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/lint-llm-wiki.mjs",
+      "source_location": "L86",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "scripts_lint_llm_wiki_validatelinks",
+      "target": "scripts_lint_llm_wiki_issue"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/lint-llm-wiki.mjs",
+      "source_location": "L110",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "scripts_lint_llm_wiki_validateorphans",
+      "target": "scripts_lint_llm_wiki_issue"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/lint-llm-wiki.mjs",
+      "source_location": "L128",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "scripts_lint_llm_wiki_validateduplicatetitles",
+      "target": "scripts_lint_llm_wiki_issue"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/lint-llm-wiki.mjs",
+      "source_location": "L139",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "scripts_lint_llm_wiki_lint",
+      "target": "scripts_lint_llm_wiki_sourcenotes"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "scripts/lint-llm-wiki.mjs",
+      "source_location": "L27",
+      "weight": 1.0,
+      "source": "scripts_lint_llm_wiki_sourcenotes",
+      "target": "scripts_llm_wiki_lib_walkfiles"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/lint-llm-wiki.mjs",
+      "source_location": "L136",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "scripts_lint_llm_wiki_lint",
+      "target": "scripts_lint_llm_wiki_wikinotes"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "scripts/lint-llm-wiki.mjs",
+      "source_location": "L32",
+      "weight": 1.0,
+      "source": "scripts_lint_llm_wiki_wikinotes",
+      "target": "scripts_llm_wiki_lib_walkfiles"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/lint-llm-wiki.mjs",
+      "source_location": "L140",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "scripts_lint_llm_wiki_lint",
+      "target": "scripts_lint_llm_wiki_validatesourcenote"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "scripts/lint-llm-wiki.mjs",
+      "source_location": "L38",
+      "weight": 1.0,
+      "source": "scripts_lint_llm_wiki_validatesourcenote",
+      "target": "scripts_llm_wiki_lib_parsefrontmatter"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/lint-llm-wiki.mjs",
+      "source_location": "L143",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "scripts_lint_llm_wiki_lint",
+      "target": "scripts_lint_llm_wiki_validatelinks"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "scripts/lint-llm-wiki.mjs",
+      "source_location": "L80",
+      "weight": 1.0,
+      "source": "scripts_lint_llm_wiki_validatelinks",
+      "target": "scripts_llm_wiki_lib_extractwikilinks"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "scripts/lint-llm-wiki.mjs",
+      "source_location": "L84",
+      "weight": 1.0,
+      "source": "scripts_lint_llm_wiki_validatelinks",
+      "target": "scripts_llm_wiki_lib_resolvewikitarget"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/lint-llm-wiki.mjs",
+      "source_location": "L145",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "scripts_lint_llm_wiki_lint",
+      "target": "scripts_lint_llm_wiki_validateorphans"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "scripts/lint-llm-wiki.mjs",
+      "source_location": "L105",
+      "weight": 1.0,
+      "source": "scripts_lint_llm_wiki_validateorphans",
+      "target": "scripts_llm_wiki_lib_parsefrontmatter"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/lint-llm-wiki.mjs",
+      "source_location": "L146",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "scripts_lint_llm_wiki_lint",
+      "target": "scripts_lint_llm_wiki_validateduplicatetitles"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "scripts/lint-llm-wiki.mjs",
+      "source_location": "L135",
+      "weight": 1.0,
+      "source": "scripts_lint_llm_wiki_lint",
+      "target": "scripts_llm_wiki_lib_ensurewikilayout"
+    },
+    {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "scripts/query-semantic-vector-index.mjs",
@@ -3691,6 +4714,797 @@
       "target": "scripts_build_semantic_vector_index_manifest"
     },
     {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/ingest-llm-wiki.mjs",
+      "source_location": "L5",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "scripts_ingest_llm_wiki_mjs",
+      "target": "scripts_llm_wiki_lib_mjs"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/ingest-llm-wiki.mjs",
+      "source_location": "L5",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "scripts_ingest_llm_wiki_mjs",
+      "target": "scripts_llm_wiki_lib_ensurewikilayout"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/ingest-llm-wiki.mjs",
+      "source_location": "L5",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "scripts_ingest_llm_wiki_mjs",
+      "target": "scripts_llm_wiki_lib_expandsourceinputs"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/ingest-llm-wiki.mjs",
+      "source_location": "L5",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "scripts_ingest_llm_wiki_mjs",
+      "target": "scripts_llm_wiki_lib_extractconcepts"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/ingest-llm-wiki.mjs",
+      "source_location": "L5",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "scripts_ingest_llm_wiki_mjs",
+      "target": "scripts_llm_wiki_lib_extractentities"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/ingest-llm-wiki.mjs",
+      "source_location": "L5",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "scripts_ingest_llm_wiki_mjs",
+      "target": "scripts_llm_wiki_lib_extracttitle"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/ingest-llm-wiki.mjs",
+      "source_location": "L5",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "scripts_ingest_llm_wiki_mjs",
+      "target": "scripts_llm_wiki_lib_notetarget"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/ingest-llm-wiki.mjs",
+      "source_location": "L5",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "scripts_ingest_llm_wiki_mjs",
+      "target": "scripts_llm_wiki_lib_parseargs"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/ingest-llm-wiki.mjs",
+      "source_location": "L5",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "scripts_ingest_llm_wiki_mjs",
+      "target": "scripts_llm_wiki_lib_readsourcetext"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/ingest-llm-wiki.mjs",
+      "source_location": "L5",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "scripts_ingest_llm_wiki_mjs",
+      "target": "scripts_llm_wiki_lib_reporelative"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/ingest-llm-wiki.mjs",
+      "source_location": "L5",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "scripts_ingest_llm_wiki_mjs",
+      "target": "scripts_llm_wiki_lib_sha256file"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/ingest-llm-wiki.mjs",
+      "source_location": "L5",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "scripts_ingest_llm_wiki_mjs",
+      "target": "scripts_llm_wiki_lib_slugify"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/ingest-llm-wiki.mjs",
+      "source_location": "L5",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "scripts_ingest_llm_wiki_mjs",
+      "target": "scripts_llm_wiki_lib_summarizesource"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/ingest-llm-wiki.mjs",
+      "source_location": "L5",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "scripts_ingest_llm_wiki_mjs",
+      "target": "scripts_llm_wiki_lib_wikilink"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/ingest-llm-wiki.mjs",
+      "source_location": "L5",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "scripts_ingest_llm_wiki_mjs",
+      "target": "scripts_llm_wiki_lib_writetextfile"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/ingest-llm-wiki.mjs",
+      "source_location": "L22",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "scripts_ingest_llm_wiki_mjs",
+      "target": "scripts_ingest_llm_wiki_sourceslug"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/ingest-llm-wiki.mjs",
+      "source_location": "L29",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "scripts_ingest_llm_wiki_mjs",
+      "target": "scripts_ingest_llm_wiki_formatbulletlist"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/ingest-llm-wiki.mjs",
+      "source_location": "L34",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "scripts_ingest_llm_wiki_mjs",
+      "target": "scripts_ingest_llm_wiki_upsertlinkednote"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/ingest-llm-wiki.mjs",
+      "source_location": "L49",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "scripts_ingest_llm_wiki_mjs",
+      "target": "scripts_ingest_llm_wiki_sourcenotebody"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/ingest-llm-wiki.mjs",
+      "source_location": "L94",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "scripts_ingest_llm_wiki_mjs",
+      "target": "scripts_ingest_llm_wiki_ingestsource"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/ingest-llm-wiki.mjs",
+      "source_location": "L150",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "scripts_ingest_llm_wiki_mjs",
+      "target": "scripts_ingest_llm_wiki_options"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/ingest-llm-wiki.mjs",
+      "source_location": "L151",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "scripts_ingest_llm_wiki_mjs",
+      "target": "scripts_ingest_llm_wiki_reporoot"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/ingest-llm-wiki.mjs",
+      "source_location": "L155",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "scripts_ingest_llm_wiki_mjs",
+      "target": "scripts_ingest_llm_wiki_sources"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/ingest-llm-wiki.mjs",
+      "source_location": "L156",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "scripts_ingest_llm_wiki_mjs",
+      "target": "scripts_ingest_llm_wiki_ingested"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/ingest-llm-wiki.mjs",
+      "source_location": "L97",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "scripts_ingest_llm_wiki_ingestsource",
+      "target": "scripts_ingest_llm_wiki_sourceslug"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "scripts/ingest-llm-wiki.mjs",
+      "source_location": "L26",
+      "weight": 1.0,
+      "source": "scripts_ingest_llm_wiki_sourceslug",
+      "target": "scripts_llm_wiki_lib_slugify"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/ingest-llm-wiki.mjs",
+      "source_location": "L76",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "scripts_ingest_llm_wiki_sourcenotebody",
+      "target": "scripts_ingest_llm_wiki_formatbulletlist"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/ingest-llm-wiki.mjs",
+      "source_location": "L130",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "scripts_ingest_llm_wiki_ingestsource",
+      "target": "scripts_ingest_llm_wiki_upsertlinkednote"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "scripts/ingest-llm-wiki.mjs",
+      "source_location": "L35",
+      "weight": 1.0,
+      "source": "scripts_ingest_llm_wiki_upsertlinkednote",
+      "target": "scripts_llm_wiki_lib_wikilink"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "scripts/ingest-llm-wiki.mjs",
+      "source_location": "L46",
+      "weight": 1.0,
+      "source": "scripts_ingest_llm_wiki_upsertlinkednote",
+      "target": "scripts_llm_wiki_lib_writetextfile"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/ingest-llm-wiki.mjs",
+      "source_location": "L118",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "scripts_ingest_llm_wiki_ingestsource",
+      "target": "scripts_ingest_llm_wiki_sourcenotebody"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "scripts/ingest-llm-wiki.mjs",
+      "source_location": "L100",
+      "weight": 1.0,
+      "source": "scripts_ingest_llm_wiki_ingestsource",
+      "target": "scripts_llm_wiki_lib_readsourcetext"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "scripts/ingest-llm-wiki.mjs",
+      "source_location": "L101",
+      "weight": 1.0,
+      "source": "scripts_ingest_llm_wiki_ingestsource",
+      "target": "scripts_llm_wiki_lib_extracttitle"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "scripts/ingest-llm-wiki.mjs",
+      "source_location": "L103",
+      "weight": 1.0,
+      "source": "scripts_ingest_llm_wiki_ingestsource",
+      "target": "scripts_llm_wiki_lib_summarizesource"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "scripts/ingest-llm-wiki.mjs",
+      "source_location": "L104",
+      "weight": 1.0,
+      "source": "scripts_ingest_llm_wiki_ingestsource",
+      "target": "scripts_llm_wiki_lib_extractconcepts"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "scripts/ingest-llm-wiki.mjs",
+      "source_location": "L105",
+      "weight": 1.0,
+      "source": "scripts_ingest_llm_wiki_ingestsource",
+      "target": "scripts_llm_wiki_lib_extractentities"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "scripts/ingest-llm-wiki.mjs",
+      "source_location": "L116",
+      "weight": 1.0,
+      "source": "scripts_ingest_llm_wiki_ingestsource",
+      "target": "scripts_llm_wiki_lib_writetextfile"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/llm-wiki-lib.mjs",
+      "source_location": "L20",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "scripts_llm_wiki_lib_mjs",
+      "target": "scripts_llm_wiki_lib_text_extensions"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/llm-wiki-lib.mjs",
+      "source_location": "L32",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "scripts_llm_wiki_lib_mjs",
+      "target": "scripts_llm_wiki_lib_stop_words"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/llm-wiki-lib.mjs",
+      "source_location": "L59",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "scripts_llm_wiki_lib_mjs",
+      "target": "scripts_llm_wiki_lib_known_entities"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/llm-wiki-lib.mjs",
+      "source_location": "L73",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "scripts_llm_wiki_lib_mjs",
+      "target": "scripts_llm_wiki_lib_parseargs"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/llm-wiki-lib.mjs",
+      "source_location": "L97",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "scripts_llm_wiki_lib_mjs",
+      "target": "scripts_llm_wiki_lib_reporelative"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/llm-wiki-lib.mjs",
+      "source_location": "L101",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "scripts_llm_wiki_lib_mjs",
+      "target": "scripts_llm_wiki_lib_resolveinside"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/llm-wiki-lib.mjs",
+      "source_location": "L108",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "scripts_llm_wiki_lib_mjs",
+      "target": "scripts_llm_wiki_lib_sha256file"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/llm-wiki-lib.mjs",
+      "source_location": "L112",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "scripts_llm_wiki_lib_mjs",
+      "target": "scripts_llm_wiki_lib_ensurewikilayout"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/llm-wiki-lib.mjs",
+      "source_location": "L118",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "scripts_llm_wiki_lib_mjs",
+      "target": "scripts_llm_wiki_lib_slugify"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/llm-wiki-lib.mjs",
+      "source_location": "L128",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "scripts_llm_wiki_lib_mjs",
+      "target": "scripts_llm_wiki_lib_titlefromslug"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/llm-wiki-lib.mjs",
+      "source_location": "L139",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "scripts_llm_wiki_lib_mjs",
+      "target": "scripts_llm_wiki_lib_wikilink"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/llm-wiki-lib.mjs",
+      "source_location": "L144",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "scripts_llm_wiki_lib_mjs",
+      "target": "scripts_llm_wiki_lib_notetarget"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/llm-wiki-lib.mjs",
+      "source_location": "L148",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "scripts_llm_wiki_lib_mjs",
+      "target": "scripts_llm_wiki_lib_walkfiles"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/llm-wiki-lib.mjs",
+      "source_location": "L163",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "scripts_llm_wiki_lib_mjs",
+      "target": "scripts_llm_wiki_lib_expandsourceinputs"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/llm-wiki-lib.mjs",
+      "source_location": "L191",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "scripts_llm_wiki_lib_mjs",
+      "target": "scripts_llm_wiki_lib_readsourcetext"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/llm-wiki-lib.mjs",
+      "source_location": "L200",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "scripts_llm_wiki_lib_mjs",
+      "target": "scripts_llm_wiki_lib_extracttitle"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/llm-wiki-lib.mjs",
+      "source_location": "L206",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "scripts_llm_wiki_lib_mjs",
+      "target": "scripts_llm_wiki_lib_cleanmarkdown"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/llm-wiki-lib.mjs",
+      "source_location": "L217",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "scripts_llm_wiki_lib_mjs",
+      "target": "scripts_llm_wiki_lib_summarizesource"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/llm-wiki-lib.mjs",
+      "source_location": "L230",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "scripts_llm_wiki_lib_mjs",
+      "target": "scripts_llm_wiki_lib_uniquebyslug"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/llm-wiki-lib.mjs",
+      "source_location": "L244",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "scripts_llm_wiki_lib_mjs",
+      "target": "scripts_llm_wiki_lib_extractconcepts"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/llm-wiki-lib.mjs",
+      "source_location": "L261",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "scripts_llm_wiki_lib_mjs",
+      "target": "scripts_llm_wiki_lib_extractentities"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/llm-wiki-lib.mjs",
+      "source_location": "L277",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "scripts_llm_wiki_lib_mjs",
+      "target": "scripts_llm_wiki_lib_parsefrontmatter"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/llm-wiki-lib.mjs",
+      "source_location": "L291",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "scripts_llm_wiki_lib_mjs",
+      "target": "scripts_llm_wiki_lib_extractwikilinks"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/llm-wiki-lib.mjs",
+      "source_location": "L301",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "scripts_llm_wiki_lib_mjs",
+      "target": "scripts_llm_wiki_lib_resolvewikitarget"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/llm-wiki-lib.mjs",
+      "source_location": "L320",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "scripts_llm_wiki_lib_mjs",
+      "target": "scripts_llm_wiki_lib_writetextfile"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/llm-wiki-lib.mjs",
+      "source_location": "L145",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "scripts_llm_wiki_lib_notetarget",
+      "target": "scripts_llm_wiki_lib_reporelative"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/llm-wiki-lib.mjs",
+      "source_location": "L171",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "scripts_llm_wiki_lib_expandsourceinputs",
+      "target": "scripts_llm_wiki_lib_reporelative"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/llm-wiki-lib.mjs",
+      "source_location": "L169",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "scripts_llm_wiki_lib_expandsourceinputs",
+      "target": "scripts_llm_wiki_lib_resolveinside"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/llm-wiki-lib.mjs",
+      "source_location": "L310",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "scripts_llm_wiki_lib_resolvewikitarget",
+      "target": "scripts_llm_wiki_lib_resolveinside"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/llm-wiki-lib.mjs",
+      "source_location": "L203",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "scripts_llm_wiki_lib_extracttitle",
+      "target": "scripts_llm_wiki_lib_slugify"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/llm-wiki-lib.mjs",
+      "source_location": "L235",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "scripts_llm_wiki_lib_uniquebyslug",
+      "target": "scripts_llm_wiki_lib_slugify"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/llm-wiki-lib.mjs",
+      "source_location": "L203",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "scripts_llm_wiki_lib_extracttitle",
+      "target": "scripts_llm_wiki_lib_titlefromslug"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/llm-wiki-lib.mjs",
+      "source_location": "L179",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "scripts_llm_wiki_lib_expandsourceinputs",
+      "target": "scripts_llm_wiki_lib_walkfiles"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/llm-wiki-lib.mjs",
+      "source_location": "L315",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "scripts_llm_wiki_lib_resolvewikitarget",
+      "target": "scripts_llm_wiki_lib_walkfiles"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/llm-wiki-lib.mjs",
+      "source_location": "L218",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "scripts_llm_wiki_lib_summarizesource",
+      "target": "scripts_llm_wiki_lib_cleanmarkdown"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/llm-wiki-lib.mjs",
+      "source_location": "L246",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "scripts_llm_wiki_lib_extractconcepts",
+      "target": "scripts_llm_wiki_lib_cleanmarkdown"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/llm-wiki-lib.mjs",
+      "source_location": "L258",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "scripts_llm_wiki_lib_extractconcepts",
+      "target": "scripts_llm_wiki_lib_uniquebyslug"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/llm-wiki-lib.mjs",
+      "source_location": "L274",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "scripts_llm_wiki_lib_extractentities",
+      "target": "scripts_llm_wiki_lib_uniquebyslug"
+    },
+    {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "scripts/agentic-knowledge-context.mjs",
@@ -3826,6 +5640,116 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
+      "source_file": "scripts/test-llm-wiki-workflow.mjs",
+      "source_location": "L15",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "scripts_test_llm_wiki_workflow_mjs",
+      "target": "scripts_test_llm_wiki_workflow_reporoot"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/test-llm-wiki-workflow.mjs",
+      "source_location": "L16",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "scripts_test_llm_wiki_workflow_mjs",
+      "target": "scripts_test_llm_wiki_workflow_tmp"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/test-llm-wiki-workflow.mjs",
+      "source_location": "L38",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "scripts_test_llm_wiki_workflow_mjs",
+      "target": "scripts_test_llm_wiki_workflow_ingestout"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/test-llm-wiki-workflow.mjs",
+      "source_location": "L51",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "scripts_test_llm_wiki_workflow_mjs",
+      "target": "scripts_test_llm_wiki_workflow_sourcenote"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/test-llm-wiki-workflow.mjs",
+      "source_location": "L54",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "scripts_test_llm_wiki_workflow_mjs",
+      "target": "scripts_test_llm_wiki_workflow_sourcetext"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/test-llm-wiki-workflow.mjs",
+      "source_location": "L61",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "scripts_test_llm_wiki_workflow_mjs",
+      "target": "scripts_test_llm_wiki_workflow_conceptnote"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/test-llm-wiki-workflow.mjs",
+      "source_location": "L62",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "scripts_test_llm_wiki_workflow_mjs",
+      "target": "scripts_test_llm_wiki_workflow_entitynote"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/test-llm-wiki-workflow.mjs",
+      "source_location": "L68",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "scripts_test_llm_wiki_workflow_mjs",
+      "target": "scripts_test_llm_wiki_workflow_lintjson"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/test-llm-wiki-workflow.mjs",
+      "source_location": "L73",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "scripts_test_llm_wiki_workflow_mjs",
+      "target": "scripts_test_llm_wiki_workflow_lint"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/test-llm-wiki-workflow.mjs",
+      "source_location": "L77",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "scripts_test_llm_wiki_workflow_mjs",
+      "target": "scripts_test_llm_wiki_workflow_strictlint"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/test-llm-wiki-workflow.mjs",
+      "source_location": "L86",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "scripts_test_llm_wiki_workflow_mjs",
+      "target": "scripts_test_llm_wiki_workflow_installer"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
       "source_file": "README.md",
       "source_location": "L1",
       "weight": 1.0,
@@ -3926,6 +5850,16 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L86",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "agentic_knowledge_kit_readme_notes",
+      "target": "agentic_knowledge_kit_readme_codeblock_6"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
       "source_file": "SKILL.md",
       "source_location": "L6",
       "weight": 1.0,
@@ -3997,6 +5931,16 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "SKILL.md",
+      "source_location": "L100",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "agentic_knowledge_kit_skill_agentic_knowledge_setup",
+      "target": "agentic_knowledge_kit_skill_llm_wiki"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "SKILL.md",
       "source_location": "L83",
       "weight": 1.0,
       "confidence_score": 1.0,
@@ -4037,11 +5981,31 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "SKILL.md",
+      "source_location": "L105",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "agentic_knowledge_kit_skill_llm_wiki",
+      "target": "agentic_knowledge_kit_skill_codeblock_4"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "SKILL.md",
       "source_location": "L87",
       "weight": 1.0,
       "confidence_score": 1.0,
       "source": "agentic_knowledge_kit_skill_obsidian_memory",
       "target": "agentic_knowledge_kit_skill_codeblock_4"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "SKILL.md",
+      "source_location": "L120",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "agentic_knowledge_kit_skill_obsidian_memory",
+      "target": "agentic_knowledge_kit_skill_codeblock_5"
     },
     {
       "relation": "contains",
@@ -5267,5 +7231,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "531f59f5683c37de359d9c7732a6255e81b3b673"
+  "built_at_commit": "c5b167fa0946aa5dd33860c975b7997e8aff41be"
 }

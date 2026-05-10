@@ -1,6 +1,13 @@
+---
+source: graphify-out/GRAPH_REPORT.md
+generator: manual
+---
+
 # Graphify Knowledge Graph
 
 This note links the generated Graphify artifacts into the Obsidian vault.
+
+Source: [[graphify-out/GRAPH_REPORT.md|graphify-out/GRAPH_REPORT.md]]
 
 ## Tracked Artifacts
 
