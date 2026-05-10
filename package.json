@@ -4,8 +4,8 @@
   "description": "Reusable Codex/agent skill and installer for adding a project knowledge layer to a git repository.",
   "private": true,
   "scripts": {
-    "test": "node scripts/test-semantic-vector-index.mjs",
-    "check": "node --check scripts/semantic-vector-lib.mjs && node --check scripts/build-semantic-vector-index.mjs && node --check scripts/query-semantic-vector-index.mjs && node --check scripts/test-semantic-vector-index.mjs"
+    "test": "node scripts/test-semantic-vector-index.mjs && node scripts/test-agentic-knowledge-context.mjs",
+    "check": "node --check scripts/semantic-vector-lib.mjs && node --check scripts/build-semantic-vector-index.mjs && node --check scripts/query-semantic-vector-index.mjs && node --check scripts/agentic-knowledge-context.mjs && node --check scripts/test-semantic-vector-index.mjs && node --check scripts/test-agentic-knowledge-context.mjs"
   },
   "repository": {
     "type": "git",

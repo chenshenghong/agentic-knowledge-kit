@@ -19,6 +19,7 @@ Options:
   --skip-vector-deps          Do not install isolated LanceDB dependencies under scripts/node_modules.
   --no-claude                 Do not create Claude graphify hook/settings.
   --no-codex                  Do not create Codex graphify hook/settings.
+  --no-antigravity            Do not create Antigravity/Gemini rules.
   --no-gitnexus-skills        Run GitNexus without --skills.
   -h, --help                  Show this help.
 USAGE
@@ -31,6 +32,7 @@ OBSIDIAN_PROJECT_DIR=""
 SKIP_INITIAL_RUN=0
 INSTALL_CLAUDE=1
 INSTALL_CODEX=1
+INSTALL_ANTIGRAVITY=1
 GITNEXUS_SKILLS=1
 ENABLE_EMBEDDINGS=0
 SKIP_VECTOR_DEPS=0
@@ -71,6 +73,10 @@ while [[ $# -gt 0 ]]; do
       ;;
     --no-codex)
       INSTALL_CODEX=0
+      shift
+      ;;
+    --no-antigravity)
+      INSTALL_ANTIGRAVITY=0
       shift
       ;;
     --no-gitnexus-skills)
@@ -176,9 +182,10 @@ ensure_gitignore_line() {
 copy_helper_script semantic-vector-lib.mjs
 copy_helper_script build-semantic-vector-index.mjs
 copy_helper_script query-semantic-vector-index.mjs
+copy_helper_script agentic-knowledge-context.mjs
 copy_helper_script test-semantic-vector-index.mjs
 copy_helper_script install-vector-deps.sh
-chmod +x scripts/build-semantic-vector-index.mjs scripts/query-semantic-vector-index.mjs scripts/test-semantic-vector-index.mjs scripts/install-vector-deps.sh
+chmod +x scripts/build-semantic-vector-index.mjs scripts/query-semantic-vector-index.mjs scripts/agentic-knowledge-context.mjs scripts/test-semantic-vector-index.mjs scripts/install-vector-deps.sh
 
 if [[ "$SKIP_VECTOR_DEPS" == "0" ]]; then
   scripts/install-vector-deps.sh || echo "LanceDB dependency install failed; semantic vector build will log a skip/failure until dependencies are installed." >&2
@@ -431,6 +438,7 @@ cp "$SCRIPT_UNDER_TEST" "$WORK_DIR/scripts/post-commit-hook.sh"
 cp "$REPO_ROOT/scripts/semantic-vector-lib.mjs" "$WORK_DIR/scripts/semantic-vector-lib.mjs"
 cp "$REPO_ROOT/scripts/build-semantic-vector-index.mjs" "$WORK_DIR/scripts/build-semantic-vector-index.mjs"
 cp "$REPO_ROOT/scripts/query-semantic-vector-index.mjs" "$WORK_DIR/scripts/query-semantic-vector-index.mjs"
+cp "$REPO_ROOT/scripts/agentic-knowledge-context.mjs" "$WORK_DIR/scripts/agentic-knowledge-context.mjs"
 cp "$REPO_ROOT/scripts/install-vector-deps.sh" "$WORK_DIR/scripts/install-vector-deps.sh"
 chmod +x "$WORK_DIR/scripts/install-vector-deps.sh"
 
@@ -504,6 +512,9 @@ grep -F "update ." "$LOG_DIR/graphify.log" >/dev/null
 test -f "$WORK_DIR/semantic-vector-index/manifest.json"
 test -d "$WORK_DIR/semantic-vector-index/lancedb"
 node -e 'const fs=require("fs"); const p=process.argv[1]; const idx=JSON.parse(fs.readFileSync(p,"utf8")); if (idx.provider.name !== "test" || idx.store.kind !== "lancedb" || idx.source.indexedItemCount !== 1) process.exit(1);' "$WORK_DIR/semantic-vector-index/manifest.json"
+CONTEXT_OUT="$(AGENTIC_KNOWLEDGE_VECTOR_PROVIDER=test node "$WORK_DIR/scripts/agentic-knowledge-context.mjs" --repo "$WORK_DIR" --provider test "virtual audio mixer")"
+grep -F "Agentic Knowledge Context" <<< "$CONTEXT_OUT" >/dev/null
+grep -F "mixVirtualAudio" <<< "$CONTEXT_OUT" >/dev/null
 
 MONTH_TAG="$(date +'%Y-%m')"
 OBSIDIAN_LOG="$VAULT_DIR/PROJECT_NAME_PLACEHOLDER/Development Logs/${MONTH_TAG} commit log.md"
@@ -605,6 +616,26 @@ if [[ "$INSTALL_CODEX" == "1" ]]; then
           }
         ]
       }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit|MultiEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "graphify update . >/dev/null 2>&1 || true"
+          }
+        ]
+      },
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "graphify check-update ."
+          }
+        ]
+      }
     ]
   }
 }
@@ -615,6 +646,16 @@ if [[ "$INSTALL_CLAUDE" == "1" ]]; then
   write_text_file .claude/settings.json <<'JSON'
 {
   "hooks": {
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "[ -f scripts/agentic-knowledge-context.mjs ] && node scripts/agentic-knowledge-context.mjs --limit ${AGENTIC_KNOWLEDGE_CONTEXT_LIMIT:-5} || true"
+          }
+        ]
+      }
+    ],
     "PreToolUse": [
       {
         "matcher": "Bash",
@@ -637,19 +678,68 @@ tmp_block="$(mktemp)"
 cat > "$tmp_block" <<EOF
 ## Agentic Knowledge Setup
 
-This repo is wired for GitNexus, graphify, and Obsidian project memory.
+This repo is wired for GitNexus, graphify, LanceDB semantic retrieval, and
+Obsidian project memory.
 
 - GitNexus MCP repo name: \`${PROJECT_NAME}\`
 - graphify graph: \`graphify-out/\`
 - semantic vector index: \`semantic-vector-index/lancedb\` and \`semantic-vector-index/manifest.json\`
+- task context broker: \`node scripts/agentic-knowledge-context.mjs "<task>"\`
 - Obsidian project logs: \`${OBSIDIAN_PROJECT_DIR:-${VAULT_ROOT}/${PROJECT_NAME}}/Development Logs/\`
 - post-commit hook: \`scripts/post-commit-hook.sh\`
 
 After commits, the hook serializes GitNexus with a repo-local lock, force-rebuilds the non-embedding GitNexus index, updates graphify, rebuilds the independent LanceDB semantic vector index, and appends the monthly Obsidian commit log. GitNexus LadybugDB embeddings are opt-in via \`AGENTIC_KNOWLEDGE_ENABLE_EMBEDDINGS=1\` because some vector-index combinations can fail in native code; if embeddings fail, the hook force-rebuilds the non-embedding index so MCP remains usable. The semantic vector index uses GitNexus bundled transformers by default and writes vectors to LanceDB outside LadybugDB.
+
+### Retrieval Protocol
+
+At the start of each task that needs repository context, run or consume the
+task context broker before broad raw-file search:
+
+\`\`\`bash
+node scripts/agentic-knowledge-context.mjs "<task summary>" --limit "\${AGENTIC_KNOWLEDGE_CONTEXT_LIMIT:-5}"
+\`\`\`
+
+Use the returned semantic matches as starting points only. Verify structural
+questions with GitNexus, cross-module relationships with graphify, and exact
+behavior in source files/tests before editing. If the semantic vector index is
+missing or stale, continue with GitNexus/graphify and rebuild with
+\`graphify update . && node scripts/build-semantic-vector-index.mjs\` when the
+task depends on current context.
+
+Claude Code receives this broker output automatically through the
+\`.claude/settings.json\` \`UserPromptSubmit\` hook. Codex and Antigravity
+agents must follow this protocol from \`AGENTS.md\`, \`GEMINI.md\`, and the
+workspace rule files.
 EOF
 update_block AGENTS.md "<!-- agentic-knowledge:start -->" "<!-- agentic-knowledge:end -->" "$tmp_block"
 update_block CLAUDE.md "<!-- agentic-knowledge:start -->" "<!-- agentic-knowledge:end -->" "$tmp_block"
+if [[ "$INSTALL_ANTIGRAVITY" == "1" ]]; then
+  update_block GEMINI.md "<!-- agentic-knowledge:start -->" "<!-- agentic-knowledge:end -->" "$tmp_block"
+fi
 rm -f "$tmp_block"
+
+if [[ "$INSTALL_ANTIGRAVITY" == "1" ]]; then
+  mkdir -p .agents/rules .agent/rules
+  write_text_file .agents/rules/agentic-knowledge.md <<'RULE'
+# Agentic Knowledge Retrieval
+
+Before starting a repository task, query the local semantic vector index when it
+exists:
+
+```bash
+node scripts/agentic-knowledge-context.mjs "<task summary>" --limit "${AGENTIC_KNOWLEDGE_CONTEXT_LIMIT:-5}"
+```
+
+Use semantic matches as a starting point, then verify with GitNexus for code
+structure, graphify for cross-module relationships, and source files/tests for
+exact behavior. If the index is missing or stale, continue without blocking and
+rebuild with `graphify update . && node scripts/build-semantic-vector-index.mjs`
+when current context matters.
+
+Do not expose raw vectors or embeddings in user-facing answers.
+RULE
+  cp .agents/rules/agentic-knowledge.md .agent/rules/agentic-knowledge.md
+fi
 
 if [[ "$SKIP_INITIAL_RUN" == "0" ]]; then
   if command -v gitnexus >/dev/null 2>&1 || command -v npx >/dev/null 2>&1; then

@@ -13,6 +13,15 @@
       "norm_label": "semantic-vector-lib.mjs"
     },
     {
+      "label": "require",
+      "file_type": "code",
+      "source_file": "scripts/semantic-vector-lib.mjs",
+      "source_location": "L27",
+      "id": "scripts_semantic_vector_lib_require",
+      "community": 1,
+      "norm_label": "require"
+    },
+    {
       "label": "parseArgs()",
       "file_type": "code",
       "source_file": "scripts/semantic-vector-lib.mjs",
@@ -101,6 +110,15 @@
       "id": "scripts_semantic_vector_lib_readsourcesnippet",
       "community": 1,
       "norm_label": "readsourcesnippet()"
+    },
+    {
+      "label": "repoFileCache",
+      "file_type": "code",
+      "source_file": "scripts/semantic-vector-lib.mjs",
+      "source_location": "L176",
+      "id": "scripts_semantic_vector_lib_repofilecache",
+      "community": 1,
+      "norm_label": "repofilecache"
     },
     {
       "label": "findRepoFileBySuffix()",
@@ -225,8 +243,71 @@
       "source_file": "scripts/test-semantic-vector-index.mjs",
       "source_location": "L1",
       "id": "scripts_test_semantic_vector_index_mjs",
-      "community": 15,
+      "community": 10,
       "norm_label": "test-semantic-vector-index.mjs"
+    },
+    {
+      "label": "repoRoot",
+      "file_type": "code",
+      "source_file": "scripts/test-semantic-vector-index.mjs",
+      "source_location": "L9",
+      "id": "scripts_test_semantic_vector_index_reporoot",
+      "community": 10,
+      "norm_label": "reporoot"
+    },
+    {
+      "label": "tmp",
+      "file_type": "code",
+      "source_file": "scripts/test-semantic-vector-index.mjs",
+      "source_location": "L10",
+      "id": "scripts_test_semantic_vector_index_tmp",
+      "community": 10,
+      "norm_label": "tmp"
+    },
+    {
+      "label": "buildOut",
+      "file_type": "code",
+      "source_file": "scripts/test-semantic-vector-index.mjs",
+      "source_location": "L56",
+      "id": "scripts_test_semantic_vector_index_buildout",
+      "community": 10,
+      "norm_label": "buildout"
+    },
+    {
+      "label": "manifestPath",
+      "file_type": "code",
+      "source_file": "scripts/test-semantic-vector-index.mjs",
+      "source_location": "L72",
+      "id": "scripts_test_semantic_vector_index_manifestpath",
+      "community": 10,
+      "norm_label": "manifestpath"
+    },
+    {
+      "label": "index",
+      "file_type": "code",
+      "source_file": "scripts/test-semantic-vector-index.mjs",
+      "source_location": "L73",
+      "id": "scripts_test_semantic_vector_index_index",
+      "community": 10,
+      "norm_label": "index"
+    },
+    {
+      "label": "queryOut",
+      "file_type": "code",
+      "source_file": "scripts/test-semantic-vector-index.mjs",
+      "source_location": "L104",
+      "id": "scripts_test_semantic_vector_index_queryout",
+      "community": 10,
+      "norm_label": "queryout"
+    },
+    {
+      "label": "query",
+      "file_type": "code",
+      "source_file": "scripts/test-semantic-vector-index.mjs",
+      "source_location": "L118",
+      "id": "scripts_test_semantic_vector_index_query",
+      "community": 10,
+      "norm_label": "query"
     },
     {
       "label": "query-semantic-vector-index.mjs",
@@ -234,8 +315,224 @@
       "source_file": "scripts/query-semantic-vector-index.mjs",
       "source_location": "L1",
       "id": "scripts_query_semantic_vector_index_mjs",
-      "community": 1,
+      "community": 3,
       "norm_label": "query-semantic-vector-index.mjs"
+    },
+    {
+      "label": "options",
+      "file_type": "code",
+      "source_file": "scripts/query-semantic-vector-index.mjs",
+      "source_location": "L13",
+      "id": "scripts_query_semantic_vector_index_options",
+      "community": 3,
+      "norm_label": "options"
+    },
+    {
+      "label": "query",
+      "file_type": "code",
+      "source_file": "scripts/query-semantic-vector-index.mjs",
+      "source_location": "L14",
+      "id": "scripts_query_semantic_vector_index_query",
+      "community": 3,
+      "norm_label": "query"
+    },
+    {
+      "label": "repoRoot",
+      "file_type": "code",
+      "source_file": "scripts/query-semantic-vector-index.mjs",
+      "source_location": "L19",
+      "id": "scripts_query_semantic_vector_index_reporoot",
+      "community": 3,
+      "norm_label": "reporoot"
+    },
+    {
+      "label": "requestedIndex",
+      "file_type": "code",
+      "source_file": "scripts/query-semantic-vector-index.mjs",
+      "source_location": "L20",
+      "id": "scripts_query_semantic_vector_index_requestedindex",
+      "community": 3,
+      "norm_label": "requestedindex"
+    },
+    {
+      "label": "manifestPath",
+      "file_type": "code",
+      "source_file": "scripts/query-semantic-vector-index.mjs",
+      "source_location": "L21",
+      "id": "scripts_query_semantic_vector_index_manifestpath",
+      "community": 3,
+      "norm_label": "manifestpath"
+    },
+    {
+      "label": "index",
+      "file_type": "code",
+      "source_file": "scripts/query-semantic-vector-index.mjs",
+      "source_location": "L22",
+      "id": "scripts_query_semantic_vector_index_index",
+      "community": 3,
+      "norm_label": "index"
+    },
+    {
+      "label": "graphPath",
+      "file_type": "code",
+      "source_file": "scripts/query-semantic-vector-index.mjs",
+      "source_location": "L26",
+      "id": "scripts_query_semantic_vector_index_graphpath",
+      "community": 3,
+      "norm_label": "graphpath"
+    },
+    {
+      "label": "currentGraphHash",
+      "file_type": "code",
+      "source_file": "scripts/query-semantic-vector-index.mjs",
+      "source_location": "L28",
+      "id": "scripts_query_semantic_vector_index_currentgraphhash",
+      "community": 3,
+      "norm_label": "currentgraphhash"
+    },
+    {
+      "label": "providerName",
+      "file_type": "code",
+      "source_file": "scripts/query-semantic-vector-index.mjs",
+      "source_location": "L35",
+      "id": "scripts_query_semantic_vector_index_providername",
+      "community": 3,
+      "norm_label": "providername"
+    },
+    {
+      "label": "model",
+      "file_type": "code",
+      "source_file": "scripts/query-semantic-vector-index.mjs",
+      "source_location": "L41",
+      "id": "scripts_query_semantic_vector_index_model",
+      "community": 3,
+      "norm_label": "model"
+    },
+    {
+      "label": "dimensions",
+      "file_type": "code",
+      "source_file": "scripts/query-semantic-vector-index.mjs",
+      "source_location": "L47",
+      "id": "scripts_query_semantic_vector_index_dimensions",
+      "community": 3,
+      "norm_label": "dimensions"
+    },
+    {
+      "label": "device",
+      "file_type": "code",
+      "source_file": "scripts/query-semantic-vector-index.mjs",
+      "source_location": "L51",
+      "id": "scripts_query_semantic_vector_index_device",
+      "community": 3,
+      "norm_label": "device"
+    },
+    {
+      "label": "limit",
+      "file_type": "code",
+      "source_file": "scripts/query-semantic-vector-index.mjs",
+      "source_location": "L52",
+      "id": "scripts_query_semantic_vector_index_limit",
+      "community": 3,
+      "norm_label": "limit"
+    },
+    {
+      "label": "dbPath",
+      "file_type": "code",
+      "source_file": "scripts/query-semantic-vector-index.mjs",
+      "source_location": "L53",
+      "id": "scripts_query_semantic_vector_index_dbpath",
+      "community": 3,
+      "norm_label": "dbpath"
+    },
+    {
+      "label": "tableName",
+      "file_type": "code",
+      "source_file": "scripts/query-semantic-vector-index.mjs",
+      "source_location": "L54",
+      "id": "scripts_query_semantic_vector_index_tablename",
+      "community": 3,
+      "norm_label": "tablename"
+    },
+    {
+      "label": "results",
+      "file_type": "code",
+      "source_file": "scripts/query-semantic-vector-index.mjs",
+      "source_location": "L71",
+      "id": "scripts_query_semantic_vector_index_results",
+      "community": 3,
+      "norm_label": "results"
+    },
+    {
+      "label": "test-agentic-knowledge-context.mjs",
+      "file_type": "code",
+      "source_file": "scripts/test-agentic-knowledge-context.mjs",
+      "source_location": "L1",
+      "id": "scripts_test_agentic_knowledge_context_mjs",
+      "community": 11,
+      "norm_label": "test-agentic-knowledge-context.mjs"
+    },
+    {
+      "label": "repoRoot",
+      "file_type": "code",
+      "source_file": "scripts/test-agentic-knowledge-context.mjs",
+      "source_location": "L15",
+      "id": "scripts_test_agentic_knowledge_context_reporoot",
+      "community": 11,
+      "norm_label": "reporoot"
+    },
+    {
+      "label": "tmp",
+      "file_type": "code",
+      "source_file": "scripts/test-agentic-knowledge-context.mjs",
+      "source_location": "L16",
+      "id": "scripts_test_agentic_knowledge_context_tmp",
+      "community": 11,
+      "norm_label": "tmp"
+    },
+    {
+      "label": "hookContext",
+      "file_type": "code",
+      "source_file": "scripts/test-agentic-knowledge-context.mjs",
+      "source_location": "L68",
+      "id": "scripts_test_agentic_knowledge_context_hookcontext",
+      "community": 11,
+      "norm_label": "hookcontext"
+    },
+    {
+      "label": "jsonContext",
+      "file_type": "code",
+      "source_file": "scripts/test-agentic-knowledge-context.mjs",
+      "source_location": "L96",
+      "id": "scripts_test_agentic_knowledge_context_jsoncontext",
+      "community": 11,
+      "norm_label": "jsoncontext"
+    },
+    {
+      "label": "payload",
+      "file_type": "code",
+      "source_file": "scripts/test-agentic-knowledge-context.mjs",
+      "source_location": "L112",
+      "id": "scripts_test_agentic_knowledge_context_payload",
+      "community": 11,
+      "norm_label": "payload"
+    },
+    {
+      "label": "missingIndex",
+      "file_type": "code",
+      "source_file": "scripts/test-agentic-knowledge-context.mjs",
+      "source_location": "L118",
+      "id": "scripts_test_agentic_knowledge_context_missingindex",
+      "community": 11,
+      "norm_label": "missingindex"
+    },
+    {
+      "label": "installer",
+      "file_type": "code",
+      "source_file": "scripts/test-agentic-knowledge-context.mjs",
+      "source_location": "L135",
+      "id": "scripts_test_agentic_knowledge_context_installer",
+      "community": 11,
+      "norm_label": "installer"
     },
     {
       "label": "build-semantic-vector-index.mjs",
@@ -243,8 +540,251 @@
       "source_file": "scripts/build-semantic-vector-index.mjs",
       "source_location": "L1",
       "id": "scripts_build_semantic_vector_index_mjs",
-      "community": 1,
+      "community": 4,
       "norm_label": "build-semantic-vector-index.mjs"
+    },
+    {
+      "label": "options",
+      "file_type": "code",
+      "source_file": "scripts/build-semantic-vector-index.mjs",
+      "source_location": "L19",
+      "id": "scripts_build_semantic_vector_index_options",
+      "community": 4,
+      "norm_label": "options"
+    },
+    {
+      "label": "repoRoot",
+      "file_type": "code",
+      "source_file": "scripts/build-semantic-vector-index.mjs",
+      "source_location": "L20",
+      "id": "scripts_build_semantic_vector_index_reporoot",
+      "community": 4,
+      "norm_label": "reporoot"
+    },
+    {
+      "label": "graphPath",
+      "file_type": "code",
+      "source_file": "scripts/build-semantic-vector-index.mjs",
+      "source_location": "L21",
+      "id": "scripts_build_semantic_vector_index_graphpath",
+      "community": 4,
+      "norm_label": "graphpath"
+    },
+    {
+      "label": "dbPath",
+      "file_type": "code",
+      "source_file": "scripts/build-semantic-vector-index.mjs",
+      "source_location": "L26",
+      "id": "scripts_build_semantic_vector_index_dbpath",
+      "community": 4,
+      "norm_label": "dbpath"
+    },
+    {
+      "label": "tableName",
+      "file_type": "code",
+      "source_file": "scripts/build-semantic-vector-index.mjs",
+      "source_location": "L30",
+      "id": "scripts_build_semantic_vector_index_tablename",
+      "community": 4,
+      "norm_label": "tablename"
+    },
+    {
+      "label": "providerName",
+      "file_type": "code",
+      "source_file": "scripts/build-semantic-vector-index.mjs",
+      "source_location": "L31",
+      "id": "scripts_build_semantic_vector_index_providername",
+      "community": 4,
+      "norm_label": "providername"
+    },
+    {
+      "label": "model",
+      "file_type": "code",
+      "source_file": "scripts/build-semantic-vector-index.mjs",
+      "source_location": "L34",
+      "id": "scripts_build_semantic_vector_index_model",
+      "community": 4,
+      "norm_label": "model"
+    },
+    {
+      "label": "dimensions",
+      "file_type": "code",
+      "source_file": "scripts/build-semantic-vector-index.mjs",
+      "source_location": "L35",
+      "id": "scripts_build_semantic_vector_index_dimensions",
+      "community": 4,
+      "norm_label": "dimensions"
+    },
+    {
+      "label": "batchSize",
+      "file_type": "code",
+      "source_file": "scripts/build-semantic-vector-index.mjs",
+      "source_location": "L36",
+      "id": "scripts_build_semantic_vector_index_batchsize",
+      "community": 4,
+      "norm_label": "batchsize"
+    },
+    {
+      "label": "maxTextChars",
+      "file_type": "code",
+      "source_file": "scripts/build-semantic-vector-index.mjs",
+      "source_location": "L37",
+      "id": "scripts_build_semantic_vector_index_maxtextchars",
+      "community": 4,
+      "norm_label": "maxtextchars"
+    },
+    {
+      "label": "maxItems",
+      "file_type": "code",
+      "source_file": "scripts/build-semantic-vector-index.mjs",
+      "source_location": "L38",
+      "id": "scripts_build_semantic_vector_index_maxitems",
+      "community": 4,
+      "norm_label": "maxitems"
+    },
+    {
+      "label": "device",
+      "file_type": "code",
+      "source_file": "scripts/build-semantic-vector-index.mjs",
+      "source_location": "L39",
+      "id": "scripts_build_semantic_vector_index_device",
+      "community": 4,
+      "norm_label": "device"
+    },
+    {
+      "label": "lockTimeoutSecs",
+      "file_type": "code",
+      "source_file": "scripts/build-semantic-vector-index.mjs",
+      "source_location": "L40",
+      "id": "scripts_build_semantic_vector_index_locktimeoutsecs",
+      "community": 4,
+      "norm_label": "locktimeoutsecs"
+    },
+    {
+      "label": "{ nodes, links, items }",
+      "file_type": "code",
+      "source_file": "scripts/build-semantic-vector-index.mjs",
+      "source_location": "L45",
+      "id": "scripts_build_semantic_vector_index_nodes_links_items",
+      "community": 4,
+      "norm_label": "{ nodes, links, items }"
+    },
+    {
+      "label": "rows",
+      "file_type": "code",
+      "source_file": "scripts/build-semantic-vector-index.mjs",
+      "source_location": "L70",
+      "id": "scripts_build_semantic_vector_index_rows",
+      "community": 4,
+      "norm_label": "rows"
+    },
+    {
+      "label": "manifest",
+      "file_type": "code",
+      "source_file": "scripts/build-semantic-vector-index.mjs",
+      "source_location": "L82",
+      "id": "scripts_build_semantic_vector_index_manifest",
+      "community": 4,
+      "norm_label": "manifest"
+    },
+    {
+      "label": "agentic-knowledge-context.mjs",
+      "file_type": "code",
+      "source_file": "scripts/agentic-knowledge-context.mjs",
+      "source_location": "L1",
+      "id": "scripts_agentic_knowledge_context_mjs",
+      "community": 7,
+      "norm_label": "agentic-knowledge-context.mjs"
+    },
+    {
+      "label": "readStdin()",
+      "file_type": "code",
+      "source_file": "scripts/agentic-knowledge-context.mjs",
+      "source_location": "L16",
+      "id": "scripts_agentic_knowledge_context_readstdin",
+      "community": 7,
+      "norm_label": "readstdin()"
+    },
+    {
+      "label": "extractPrompt()",
+      "file_type": "code",
+      "source_file": "scripts/agentic-knowledge-context.mjs",
+      "source_location": "L21",
+      "id": "scripts_agentic_knowledge_context_extractprompt",
+      "community": 7,
+      "norm_label": "extractprompt()"
+    },
+    {
+      "label": "compactText()",
+      "file_type": "code",
+      "source_file": "scripts/agentic-knowledge-context.mjs",
+      "source_location": "L40",
+      "id": "scripts_agentic_knowledge_context_compacttext",
+      "community": 7,
+      "norm_label": "compacttext()"
+    },
+    {
+      "label": "resultLocation()",
+      "file_type": "code",
+      "source_file": "scripts/agentic-knowledge-context.mjs",
+      "source_location": "L50",
+      "id": "scripts_agentic_knowledge_context_resultlocation",
+      "community": 7,
+      "norm_label": "resultlocation()"
+    },
+    {
+      "label": "formatContext()",
+      "file_type": "code",
+      "source_file": "scripts/agentic-knowledge-context.mjs",
+      "source_location": "L54",
+      "id": "scripts_agentic_knowledge_context_formatcontext",
+      "community": 7,
+      "norm_label": "formatcontext()"
+    },
+    {
+      "label": "unavailableJson()",
+      "file_type": "code",
+      "source_file": "scripts/agentic-knowledge-context.mjs",
+      "source_location": "L87",
+      "id": "scripts_agentic_knowledge_context_unavailablejson",
+      "community": 7,
+      "norm_label": "unavailablejson()"
+    },
+    {
+      "label": "buildContext()",
+      "file_type": "code",
+      "source_file": "scripts/agentic-knowledge-context.mjs",
+      "source_location": "L96",
+      "id": "scripts_agentic_knowledge_context_buildcontext",
+      "community": 7,
+      "norm_label": "buildcontext()"
+    },
+    {
+      "label": "options",
+      "file_type": "code",
+      "source_file": "scripts/agentic-knowledge-context.mjs",
+      "source_location": "L185",
+      "id": "scripts_agentic_knowledge_context_options",
+      "community": 7,
+      "norm_label": "options"
+    },
+    {
+      "label": "maxChars",
+      "file_type": "code",
+      "source_file": "scripts/agentic-knowledge-context.mjs",
+      "source_location": "L203",
+      "id": "scripts_agentic_knowledge_context_maxchars",
+      "community": 7,
+      "norm_label": "maxchars"
+    },
+    {
+      "label": "output",
+      "file_type": "code",
+      "source_file": "scripts/agentic-knowledge-context.mjs",
+      "source_location": "L207",
+      "id": "scripts_agentic_knowledge_context_output",
+      "community": 7,
+      "norm_label": "output"
     },
     {
       "label": "README.md",
@@ -252,7 +792,7 @@
       "source_file": "README.md",
       "source_location": "L1",
       "id": "readme_md",
-      "community": 4,
+      "community": 8,
       "norm_label": "readme.md"
     },
     {
@@ -261,88 +801,88 @@
       "source_file": "README.md",
       "source_location": "L1",
       "id": "agentic_knowledge_kit_readme_agentic_knowledge_kit",
-      "community": 4,
+      "community": 8,
       "norm_label": "agentic knowledge kit"
     },
     {
       "label": "Install Into A Repository",
       "file_type": "document",
       "source_file": "README.md",
-      "source_location": "L14",
+      "source_location": "L15",
       "id": "agentic_knowledge_kit_readme_install_into_a_repository",
-      "community": 4,
+      "community": 8,
       "norm_label": "install into a repository"
     },
     {
       "label": "code:bash (./scripts/install-agentic-knowledge.sh \\)",
       "file_type": "document",
       "source_file": "README.md",
-      "source_location": "L18",
+      "source_location": "L19",
       "id": "agentic_knowledge_kit_readme_codeblock_1",
-      "community": 4,
+      "community": 8,
       "norm_label": "code:bash (./scripts/install-agentic-knowledge.sh \\)"
     },
     {
       "label": "code:bash (./scripts/install-agentic-knowledge.sh \\)",
       "file_type": "document",
       "source_file": "README.md",
-      "source_location": "L26",
+      "source_location": "L27",
       "id": "agentic_knowledge_kit_readme_codeblock_2",
-      "community": 4,
+      "community": 8,
       "norm_label": "code:bash (./scripts/install-agentic-knowledge.sh \\)"
     },
     {
       "label": "code:bash (./scripts/install-agentic-knowledge.sh \\)",
       "file_type": "document",
       "source_file": "README.md",
-      "source_location": "L35",
+      "source_location": "L36",
       "id": "agentic_knowledge_kit_readme_codeblock_3",
-      "community": 4,
+      "community": 8,
       "norm_label": "code:bash (./scripts/install-agentic-knowledge.sh \\)"
     },
     {
       "label": "Use As A Skill",
       "file_type": "document",
       "source_file": "README.md",
-      "source_location": "L42",
+      "source_location": "L43",
       "id": "agentic_knowledge_kit_readme_use_as_a_skill",
-      "community": 4,
+      "community": 8,
       "norm_label": "use as a skill"
     },
     {
       "label": "code:text (Use $agentic-knowledge-setup to add GitNexus, graphify, and )",
       "file_type": "document",
       "source_file": "README.md",
-      "source_location": "L46",
+      "source_location": "L47",
       "id": "agentic_knowledge_kit_readme_codeblock_4",
-      "community": 4,
+      "community": 8,
       "norm_label": "code:text (use $agentic-knowledge-setup to add gitnexus, graphify, and )"
     },
     {
       "label": "Verification",
       "file_type": "document",
       "source_file": "README.md",
-      "source_location": "L50",
+      "source_location": "L51",
       "id": "agentic_knowledge_kit_readme_verification",
-      "community": 4,
+      "community": 8,
       "norm_label": "verification"
     },
     {
       "label": "code:bash (bash scripts/test-post-commit-hook.sh)",
       "file_type": "document",
       "source_file": "README.md",
-      "source_location": "L54",
+      "source_location": "L55",
       "id": "agentic_knowledge_kit_readme_codeblock_5",
-      "community": 4,
+      "community": 8,
       "norm_label": "code:bash (bash scripts/test-post-commit-hook.sh)"
     },
     {
       "label": "Notes",
       "file_type": "document",
       "source_file": "README.md",
-      "source_location": "L64",
+      "source_location": "L67",
       "id": "agentic_knowledge_kit_readme_notes",
-      "community": 4,
+      "community": 8,
       "norm_label": "notes"
     },
     {
@@ -351,7 +891,7 @@
       "source_file": "SKILL.md",
       "source_location": "L1",
       "id": "skill_md",
-      "community": 3,
+      "community": 6,
       "norm_label": "skill.md"
     },
     {
@@ -360,7 +900,7 @@
       "source_file": "SKILL.md",
       "source_location": "L6",
       "id": "agentic_knowledge_kit_skill_agentic_knowledge_setup",
-      "community": 3,
+      "community": 6,
       "norm_label": "agentic knowledge setup"
     },
     {
@@ -369,7 +909,7 @@
       "source_file": "SKILL.md",
       "source_location": "L8",
       "id": "agentic_knowledge_kit_skill_overview",
-      "community": 3,
+      "community": 6,
       "norm_label": "overview"
     },
     {
@@ -378,7 +918,7 @@
       "source_file": "SKILL.md",
       "source_location": "L14",
       "id": "agentic_knowledge_kit_skill_workflow",
-      "community": 3,
+      "community": 6,
       "norm_label": "workflow"
     },
     {
@@ -387,7 +927,7 @@
       "source_file": "SKILL.md",
       "source_location": "L22",
       "id": "agentic_knowledge_kit_skill_installer",
-      "community": 3,
+      "community": 6,
       "norm_label": "installer"
     },
     {
@@ -396,7 +936,7 @@
       "source_file": "SKILL.md",
       "source_location": "L26",
       "id": "agentic_knowledge_kit_skill_codeblock_1",
-      "community": 3,
+      "community": 6,
       "norm_label": "code:bash (./scripts/install-agentic-knowledge.sh \\)"
     },
     {
@@ -405,7 +945,7 @@
       "source_file": "SKILL.md",
       "source_location": "L41",
       "id": "agentic_knowledge_kit_skill_what_it_installs",
-      "community": 3,
+      "community": 6,
       "norm_label": "what it installs"
     },
     {
@@ -414,7 +954,7 @@
       "source_file": "SKILL.md",
       "source_location": "L50",
       "id": "agentic_knowledge_kit_skill_verification",
-      "community": 3,
+      "community": 6,
       "norm_label": "verification"
     },
     {
@@ -423,44 +963,80 @@
       "source_file": "SKILL.md",
       "source_location": "L54",
       "id": "agentic_knowledge_kit_skill_codeblock_2",
-      "community": 3,
+      "community": 6,
       "norm_label": "code:bash (bash scripts/test-post-commit-hook.sh)"
     },
     {
       "label": "code:bash (test -L .git/hooks/post-commit)",
       "file_type": "document",
       "source_file": "SKILL.md",
-      "source_location": "L67",
+      "source_location": "L69",
       "id": "agentic_knowledge_kit_skill_codeblock_3",
-      "community": 3,
+      "community": 6,
       "norm_label": "code:bash (test -l .git/hooks/post-commit)"
     },
     {
       "label": "Known Caveat",
       "file_type": "document",
       "source_file": "SKILL.md",
-      "source_location": "L77",
+      "source_location": "L79",
       "id": "agentic_knowledge_kit_skill_known_caveat",
-      "community": 3,
+      "community": 6,
       "norm_label": "known caveat"
     },
     {
       "label": "Obsidian Memory",
       "file_type": "document",
       "source_file": "SKILL.md",
-      "source_location": "L83",
+      "source_location": "L96",
       "id": "agentic_knowledge_kit_skill_obsidian_memory",
-      "community": 3,
+      "community": 6,
       "norm_label": "obsidian memory"
     },
     {
       "label": "code:text (<vault>/<project>/Development Logs/YYYY-MM commit log.md)",
       "file_type": "document",
       "source_file": "SKILL.md",
-      "source_location": "L87",
+      "source_location": "L100",
       "id": "agentic_knowledge_kit_skill_codeblock_4",
-      "community": 3,
+      "community": 6,
       "norm_label": "code:text (<vault>/<project>/development logs/yyyy-mm commit log.md)"
+    },
+    {
+      "label": "GEMINI.md",
+      "file_type": "document",
+      "source_file": "GEMINI.md",
+      "source_location": "L1",
+      "id": "gemini_md",
+      "community": 12,
+      "norm_label": "gemini.md"
+    },
+    {
+      "label": "Agentic Knowledge Setup",
+      "file_type": "document",
+      "source_file": "GEMINI.md",
+      "source_location": "L2",
+      "id": "agentic_knowledge_kit_gemini_agentic_knowledge_setup",
+      "community": 12,
+      "norm_label": "agentic knowledge setup"
+    },
+    {
+      "label": "Retrieval Protocol",
+      "file_type": "document",
+      "source_file": "GEMINI.md",
+      "source_location": "L16",
+      "id": "agentic_knowledge_kit_gemini_retrieval_protocol",
+      "community": 12,
+      "norm_label": "retrieval protocol"
+    },
+    {
+      "label": "code:bash (node scripts/agentic-knowledge-context.mjs \"<task summary>\" )",
+      "file_type": "document",
+      "source_file": "GEMINI.md",
+      "source_location": "L21",
+      "id": "agentic_knowledge_kit_gemini_codeblock_1",
+      "community": 12,
+      "norm_label": "code:bash (node scripts/agentic-knowledge-context.mjs \"<task summary>\" )"
     },
     {
       "label": "AGENTS.md",
@@ -562,12 +1138,39 @@
       "norm_label": "graphify"
     },
     {
+      "label": "Agentic Knowledge Setup",
+      "file_type": "document",
+      "source_file": "AGENTS.md",
+      "source_location": "L111",
+      "id": "agentic_knowledge_kit_agents_agentic_knowledge_setup",
+      "community": 5,
+      "norm_label": "agentic knowledge setup"
+    },
+    {
+      "label": "Retrieval Protocol",
+      "file_type": "document",
+      "source_file": "AGENTS.md",
+      "source_location": "L125",
+      "id": "agentic_knowledge_kit_agents_retrieval_protocol",
+      "community": 5,
+      "norm_label": "retrieval protocol"
+    },
+    {
+      "label": "code:bash (node scripts/agentic-knowledge-context.mjs \"<task summary>\" )",
+      "file_type": "document",
+      "source_file": "AGENTS.md",
+      "source_location": "L130",
+      "id": "agentic_knowledge_kit_agents_codeblock_1",
+      "community": 5,
+      "norm_label": "code:bash (node scripts/agentic-knowledge-context.mjs \"<task summary>\" )"
+    },
+    {
       "label": "CLAUDE.md",
       "file_type": "document",
       "source_file": "CLAUDE.md",
       "source_location": "L1",
       "id": "claude_md",
-      "community": 6,
+      "community": 9,
       "norm_label": "claude.md"
     },
     {
@@ -576,7 +1179,7 @@
       "source_file": "CLAUDE.md",
       "source_location": "L1",
       "id": "agentic_knowledge_kit_claude_claude_project_rules",
-      "community": 6,
+      "community": 9,
       "norm_label": "claude project rules"
     },
     {
@@ -585,7 +1188,7 @@
       "source_file": "CLAUDE.md",
       "source_location": "L15",
       "id": "agentic_knowledge_kit_claude_gitnexus_code_intelligence",
-      "community": 6,
+      "community": 9,
       "norm_label": "gitnexus \u2014 code intelligence"
     },
     {
@@ -594,7 +1197,7 @@
       "source_file": "CLAUDE.md",
       "source_location": "L21",
       "id": "agentic_knowledge_kit_claude_always_do",
-      "community": 6,
+      "community": 9,
       "norm_label": "always do"
     },
     {
@@ -603,7 +1206,7 @@
       "source_file": "CLAUDE.md",
       "source_location": "L29",
       "id": "agentic_knowledge_kit_claude_never_do",
-      "community": 6,
+      "community": 9,
       "norm_label": "never do"
     },
     {
@@ -612,7 +1215,7 @@
       "source_file": "CLAUDE.md",
       "source_location": "L36",
       "id": "agentic_knowledge_kit_claude_resources",
-      "community": 6,
+      "community": 9,
       "norm_label": "resources"
     },
     {
@@ -621,8 +1224,35 @@
       "source_file": "CLAUDE.md",
       "source_location": "L45",
       "id": "agentic_knowledge_kit_claude_cli",
-      "community": 6,
+      "community": 9,
       "norm_label": "cli"
+    },
+    {
+      "label": "Agentic Knowledge Setup",
+      "file_type": "document",
+      "source_file": "CLAUDE.md",
+      "source_location": "L60",
+      "id": "agentic_knowledge_kit_claude_agentic_knowledge_setup",
+      "community": 9,
+      "norm_label": "agentic knowledge setup"
+    },
+    {
+      "label": "Retrieval Protocol",
+      "file_type": "document",
+      "source_file": "CLAUDE.md",
+      "source_location": "L74",
+      "id": "agentic_knowledge_kit_claude_retrieval_protocol",
+      "community": 9,
+      "norm_label": "retrieval protocol"
+    },
+    {
+      "label": "code:bash (node scripts/agentic-knowledge-context.mjs \"<task summary>\" )",
+      "file_type": "document",
+      "source_file": "CLAUDE.md",
+      "source_location": "L79",
+      "id": "agentic_knowledge_kit_claude_codeblock_1",
+      "community": 9,
+      "norm_label": "code:bash (node scripts/agentic-knowledge-context.mjs \"<task summary>\" )"
     },
     {
       "label": "README.md",
@@ -630,7 +1260,7 @@
       "source_file": "wiki/README.md",
       "source_location": "L1",
       "id": "wiki_readme_md",
-      "community": 8,
+      "community": 14,
       "norm_label": "readme.md"
     },
     {
@@ -639,7 +1269,7 @@
       "source_file": "wiki/README.md",
       "source_location": "L1",
       "id": "wiki_readme_llm_wiki",
-      "community": 8,
+      "community": 14,
       "norm_label": "llm wiki"
     },
     {
@@ -648,7 +1278,7 @@
       "source_file": "wiki/concepts/README.md",
       "source_location": "L1",
       "id": "wiki_concepts_readme_md",
-      "community": 9,
+      "community": 15,
       "norm_label": "readme.md"
     },
     {
@@ -657,7 +1287,7 @@
       "source_file": "wiki/concepts/README.md",
       "source_location": "L1",
       "id": "concepts_readme_concepts",
-      "community": 9,
+      "community": 15,
       "norm_label": "concepts"
     },
     {
@@ -666,7 +1296,7 @@
       "source_file": "wiki/sources/graphify-knowledge-graph.md",
       "source_location": "L1",
       "id": "wiki_sources_graphify_knowledge_graph_md",
-      "community": 7,
+      "community": 13,
       "norm_label": "graphify-knowledge-graph.md"
     },
     {
@@ -675,7 +1305,7 @@
       "source_file": "wiki/sources/graphify-knowledge-graph.md",
       "source_location": "L1",
       "id": "sources_graphify_knowledge_graph_graphify_knowledge_graph",
-      "community": 7,
+      "community": 13,
       "norm_label": "graphify knowledge graph"
     },
     {
@@ -684,7 +1314,7 @@
       "source_file": "wiki/sources/graphify-knowledge-graph.md",
       "source_location": "L5",
       "id": "sources_graphify_knowledge_graph_tracked_artifacts",
-      "community": 7,
+      "community": 13,
       "norm_label": "tracked artifacts"
     },
     {
@@ -693,7 +1323,7 @@
       "source_file": "wiki/sources/graphify-knowledge-graph.md",
       "source_location": "L11",
       "id": "sources_graphify_knowledge_graph_current_build",
-      "community": 7,
+      "community": 13,
       "norm_label": "current build"
     },
     {
@@ -702,7 +1332,7 @@
       "source_file": "wiki/sources/README.md",
       "source_location": "L1",
       "id": "wiki_sources_readme_md",
-      "community": 10,
+      "community": 16,
       "norm_label": "readme.md"
     },
     {
@@ -711,7 +1341,7 @@
       "source_file": "wiki/sources/README.md",
       "source_location": "L1",
       "id": "sources_readme_sources",
-      "community": 10,
+      "community": 16,
       "norm_label": "sources"
     },
     {
@@ -720,7 +1350,7 @@
       "source_file": "wiki/entities/README.md",
       "source_location": "L1",
       "id": "wiki_entities_readme_md",
-      "community": 11,
+      "community": 17,
       "norm_label": "readme.md"
     },
     {
@@ -729,7 +1359,7 @@
       "source_file": "wiki/entities/README.md",
       "source_location": "L1",
       "id": "entities_readme_entities",
-      "community": 11,
+      "community": 17,
       "norm_label": "entities"
     },
     {
@@ -738,7 +1368,7 @@
       "source_file": "raw/README.md",
       "source_location": "L1",
       "id": "raw_readme_md",
-      "community": 12,
+      "community": 18,
       "norm_label": "readme.md"
     },
     {
@@ -747,7 +1377,7 @@
       "source_file": "raw/README.md",
       "source_location": "L1",
       "id": "raw_readme_raw_sources",
-      "community": 12,
+      "community": 18,
       "norm_label": "raw sources"
     },
     {
@@ -764,7 +1394,7 @@
       "file_type": "code",
       "source_file": "test-semantic-vector-index.mjs",
       "source_location": "L1",
-      "community": 16,
+      "community": 21,
       "norm_label": "test-semantic-vector-index.mjs",
       "id": "test_semantic_vector_index_mjs"
     },
@@ -860,7 +1490,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 2,
+      "community": 0,
       "norm_label": "query",
       "id": "concept_query"
     },
@@ -899,7 +1529,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 0,
+      "community": 2,
       "norm_label": "claude",
       "id": "entity_claude"
     },
@@ -1094,7 +1724,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 13,
+      "community": 19,
       "norm_label": "wiki/concepts/readme.md",
       "id": "doc_wiki_concepts_readme_md"
     },
@@ -1120,7 +1750,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 14,
+      "community": 20,
       "norm_label": "wiki/entities/readme.md",
       "id": "doc_wiki_entities_readme_md"
     },
@@ -1536,7 +2166,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 13,
+      "community": 19,
       "norm_label": "concepts",
       "id": "concept_wiki_concepts_readme_md_1_concepts"
     },
@@ -1562,7 +2192,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 14,
+      "community": 20,
       "norm_label": "entities",
       "id": "concept_wiki_entities_readme_md_1_entities"
     },
@@ -1581,6 +2211,16 @@
     }
   ],
   "links": [
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/semantic-vector-lib.mjs",
+      "source_location": "L27",
+      "weight": 1.0,
+      "source": "scripts_semantic_vector_lib_mjs",
+      "target": "scripts_semantic_vector_lib_require",
+      "confidence_score": 1.0
+    },
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
@@ -1680,6 +2320,16 @@
       "confidence_score": 1.0,
       "source": "scripts_semantic_vector_lib_mjs",
       "target": "scripts_semantic_vector_lib_readsourcesnippet"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/semantic-vector-lib.mjs",
+      "source_location": "L176",
+      "weight": 1.0,
+      "source": "scripts_semantic_vector_lib_mjs",
+      "target": "scripts_semantic_vector_lib_repofilecache",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -1834,6 +2484,17 @@
       "target": "scripts_semantic_vector_lib_mjs"
     },
     {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/agentic-knowledge-context.mjs",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "scripts_agentic_knowledge_context_mjs",
+      "target": "scripts_semantic_vector_lib_mjs",
+      "confidence_score": 1.0
+    },
+    {
       "relation": "imports",
       "context": "import",
       "confidence": "EXTRACTED",
@@ -1854,6 +2515,17 @@
       "confidence_score": 1.0,
       "source": "scripts_build_semantic_vector_index_mjs",
       "target": "scripts_semantic_vector_lib_parseargs"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/agentic-knowledge-context.mjs",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "scripts_agentic_knowledge_context_mjs",
+      "target": "scripts_semantic_vector_lib_parseargs",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -1928,6 +2600,28 @@
       "weight": 1.0,
       "confidence_score": 1.0,
       "source": "scripts_build_semantic_vector_index_mjs",
+      "target": "scripts_semantic_vector_lib_sha256file"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/agentic-knowledge-context.mjs",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "scripts_agentic_knowledge_context_mjs",
+      "target": "scripts_semantic_vector_lib_sha256file",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "scripts/agentic-knowledge-context.mjs",
+      "source_location": "L112",
+      "weight": 1.0,
+      "source": "scripts_agentic_knowledge_context_buildcontext",
       "target": "scripts_semantic_vector_lib_sha256file"
     },
     {
@@ -2229,6 +2923,28 @@
       "target": "scripts_semantic_vector_lib_createembeddingprovider"
     },
     {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/agentic-knowledge-context.mjs",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "scripts_agentic_knowledge_context_mjs",
+      "target": "scripts_semantic_vector_lib_createembeddingprovider",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "scripts/agentic-knowledge-context.mjs",
+      "source_location": "L139",
+      "weight": 1.0,
+      "source": "scripts_agentic_knowledge_context_buildcontext",
+      "target": "scripts_semantic_vector_lib_createembeddingprovider"
+    },
+    {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "semantic-vector-lib.mjs",
@@ -2410,6 +3126,28 @@
       "target": "scripts_semantic_vector_lib_searchlancetable"
     },
     {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/agentic-knowledge-context.mjs",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "scripts_agentic_knowledge_context_mjs",
+      "target": "scripts_semantic_vector_lib_searchlancetable",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "scripts/agentic-knowledge-context.mjs",
+      "source_location": "L148",
+      "weight": 1.0,
+      "source": "scripts_agentic_knowledge_context_buildcontext",
+      "target": "scripts_semantic_vector_lib_searchlancetable"
+    },
+    {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "semantic-vector-lib.mjs",
@@ -2491,6 +3229,599 @@
       "confidence_score": 1.0,
       "source": "semantic_vector_lib_mjs",
       "target": "scripts_semantic_vector_lib_sha256"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/test-semantic-vector-index.mjs",
+      "source_location": "L9",
+      "weight": 1.0,
+      "source": "scripts_test_semantic_vector_index_mjs",
+      "target": "scripts_test_semantic_vector_index_reporoot",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/test-semantic-vector-index.mjs",
+      "source_location": "L10",
+      "weight": 1.0,
+      "source": "scripts_test_semantic_vector_index_mjs",
+      "target": "scripts_test_semantic_vector_index_tmp",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/test-semantic-vector-index.mjs",
+      "source_location": "L56",
+      "weight": 1.0,
+      "source": "scripts_test_semantic_vector_index_mjs",
+      "target": "scripts_test_semantic_vector_index_buildout",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/test-semantic-vector-index.mjs",
+      "source_location": "L72",
+      "weight": 1.0,
+      "source": "scripts_test_semantic_vector_index_mjs",
+      "target": "scripts_test_semantic_vector_index_manifestpath",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/test-semantic-vector-index.mjs",
+      "source_location": "L73",
+      "weight": 1.0,
+      "source": "scripts_test_semantic_vector_index_mjs",
+      "target": "scripts_test_semantic_vector_index_index",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/test-semantic-vector-index.mjs",
+      "source_location": "L104",
+      "weight": 1.0,
+      "source": "scripts_test_semantic_vector_index_mjs",
+      "target": "scripts_test_semantic_vector_index_queryout",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/test-semantic-vector-index.mjs",
+      "source_location": "L118",
+      "weight": 1.0,
+      "source": "scripts_test_semantic_vector_index_mjs",
+      "target": "scripts_test_semantic_vector_index_query",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/query-semantic-vector-index.mjs",
+      "source_location": "L13",
+      "weight": 1.0,
+      "source": "scripts_query_semantic_vector_index_mjs",
+      "target": "scripts_query_semantic_vector_index_options",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/query-semantic-vector-index.mjs",
+      "source_location": "L14",
+      "weight": 1.0,
+      "source": "scripts_query_semantic_vector_index_mjs",
+      "target": "scripts_query_semantic_vector_index_query",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/query-semantic-vector-index.mjs",
+      "source_location": "L19",
+      "weight": 1.0,
+      "source": "scripts_query_semantic_vector_index_mjs",
+      "target": "scripts_query_semantic_vector_index_reporoot",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/query-semantic-vector-index.mjs",
+      "source_location": "L20",
+      "weight": 1.0,
+      "source": "scripts_query_semantic_vector_index_mjs",
+      "target": "scripts_query_semantic_vector_index_requestedindex",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/query-semantic-vector-index.mjs",
+      "source_location": "L21",
+      "weight": 1.0,
+      "source": "scripts_query_semantic_vector_index_mjs",
+      "target": "scripts_query_semantic_vector_index_manifestpath",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/query-semantic-vector-index.mjs",
+      "source_location": "L22",
+      "weight": 1.0,
+      "source": "scripts_query_semantic_vector_index_mjs",
+      "target": "scripts_query_semantic_vector_index_index",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/query-semantic-vector-index.mjs",
+      "source_location": "L26",
+      "weight": 1.0,
+      "source": "scripts_query_semantic_vector_index_mjs",
+      "target": "scripts_query_semantic_vector_index_graphpath",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/query-semantic-vector-index.mjs",
+      "source_location": "L28",
+      "weight": 1.0,
+      "source": "scripts_query_semantic_vector_index_mjs",
+      "target": "scripts_query_semantic_vector_index_currentgraphhash",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/query-semantic-vector-index.mjs",
+      "source_location": "L35",
+      "weight": 1.0,
+      "source": "scripts_query_semantic_vector_index_mjs",
+      "target": "scripts_query_semantic_vector_index_providername",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/query-semantic-vector-index.mjs",
+      "source_location": "L41",
+      "weight": 1.0,
+      "source": "scripts_query_semantic_vector_index_mjs",
+      "target": "scripts_query_semantic_vector_index_model",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/query-semantic-vector-index.mjs",
+      "source_location": "L47",
+      "weight": 1.0,
+      "source": "scripts_query_semantic_vector_index_mjs",
+      "target": "scripts_query_semantic_vector_index_dimensions",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/query-semantic-vector-index.mjs",
+      "source_location": "L51",
+      "weight": 1.0,
+      "source": "scripts_query_semantic_vector_index_mjs",
+      "target": "scripts_query_semantic_vector_index_device",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/query-semantic-vector-index.mjs",
+      "source_location": "L52",
+      "weight": 1.0,
+      "source": "scripts_query_semantic_vector_index_mjs",
+      "target": "scripts_query_semantic_vector_index_limit",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/query-semantic-vector-index.mjs",
+      "source_location": "L53",
+      "weight": 1.0,
+      "source": "scripts_query_semantic_vector_index_mjs",
+      "target": "scripts_query_semantic_vector_index_dbpath",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/query-semantic-vector-index.mjs",
+      "source_location": "L54",
+      "weight": 1.0,
+      "source": "scripts_query_semantic_vector_index_mjs",
+      "target": "scripts_query_semantic_vector_index_tablename",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/query-semantic-vector-index.mjs",
+      "source_location": "L71",
+      "weight": 1.0,
+      "source": "scripts_query_semantic_vector_index_mjs",
+      "target": "scripts_query_semantic_vector_index_results",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/test-agentic-knowledge-context.mjs",
+      "source_location": "L15",
+      "weight": 1.0,
+      "source": "scripts_test_agentic_knowledge_context_mjs",
+      "target": "scripts_test_agentic_knowledge_context_reporoot",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/test-agentic-knowledge-context.mjs",
+      "source_location": "L16",
+      "weight": 1.0,
+      "source": "scripts_test_agentic_knowledge_context_mjs",
+      "target": "scripts_test_agentic_knowledge_context_tmp",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/test-agentic-knowledge-context.mjs",
+      "source_location": "L68",
+      "weight": 1.0,
+      "source": "scripts_test_agentic_knowledge_context_mjs",
+      "target": "scripts_test_agentic_knowledge_context_hookcontext",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/test-agentic-knowledge-context.mjs",
+      "source_location": "L96",
+      "weight": 1.0,
+      "source": "scripts_test_agentic_knowledge_context_mjs",
+      "target": "scripts_test_agentic_knowledge_context_jsoncontext",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/test-agentic-knowledge-context.mjs",
+      "source_location": "L112",
+      "weight": 1.0,
+      "source": "scripts_test_agentic_knowledge_context_mjs",
+      "target": "scripts_test_agentic_knowledge_context_payload",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/test-agentic-knowledge-context.mjs",
+      "source_location": "L118",
+      "weight": 1.0,
+      "source": "scripts_test_agentic_knowledge_context_mjs",
+      "target": "scripts_test_agentic_knowledge_context_missingindex",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/test-agentic-knowledge-context.mjs",
+      "source_location": "L135",
+      "weight": 1.0,
+      "source": "scripts_test_agentic_knowledge_context_mjs",
+      "target": "scripts_test_agentic_knowledge_context_installer",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/build-semantic-vector-index.mjs",
+      "source_location": "L19",
+      "weight": 1.0,
+      "source": "scripts_build_semantic_vector_index_mjs",
+      "target": "scripts_build_semantic_vector_index_options",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/build-semantic-vector-index.mjs",
+      "source_location": "L20",
+      "weight": 1.0,
+      "source": "scripts_build_semantic_vector_index_mjs",
+      "target": "scripts_build_semantic_vector_index_reporoot",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/build-semantic-vector-index.mjs",
+      "source_location": "L21",
+      "weight": 1.0,
+      "source": "scripts_build_semantic_vector_index_mjs",
+      "target": "scripts_build_semantic_vector_index_graphpath",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/build-semantic-vector-index.mjs",
+      "source_location": "L26",
+      "weight": 1.0,
+      "source": "scripts_build_semantic_vector_index_mjs",
+      "target": "scripts_build_semantic_vector_index_dbpath",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/build-semantic-vector-index.mjs",
+      "source_location": "L30",
+      "weight": 1.0,
+      "source": "scripts_build_semantic_vector_index_mjs",
+      "target": "scripts_build_semantic_vector_index_tablename",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/build-semantic-vector-index.mjs",
+      "source_location": "L31",
+      "weight": 1.0,
+      "source": "scripts_build_semantic_vector_index_mjs",
+      "target": "scripts_build_semantic_vector_index_providername",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/build-semantic-vector-index.mjs",
+      "source_location": "L34",
+      "weight": 1.0,
+      "source": "scripts_build_semantic_vector_index_mjs",
+      "target": "scripts_build_semantic_vector_index_model",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/build-semantic-vector-index.mjs",
+      "source_location": "L35",
+      "weight": 1.0,
+      "source": "scripts_build_semantic_vector_index_mjs",
+      "target": "scripts_build_semantic_vector_index_dimensions",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/build-semantic-vector-index.mjs",
+      "source_location": "L36",
+      "weight": 1.0,
+      "source": "scripts_build_semantic_vector_index_mjs",
+      "target": "scripts_build_semantic_vector_index_batchsize",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/build-semantic-vector-index.mjs",
+      "source_location": "L37",
+      "weight": 1.0,
+      "source": "scripts_build_semantic_vector_index_mjs",
+      "target": "scripts_build_semantic_vector_index_maxtextchars",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/build-semantic-vector-index.mjs",
+      "source_location": "L38",
+      "weight": 1.0,
+      "source": "scripts_build_semantic_vector_index_mjs",
+      "target": "scripts_build_semantic_vector_index_maxitems",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/build-semantic-vector-index.mjs",
+      "source_location": "L39",
+      "weight": 1.0,
+      "source": "scripts_build_semantic_vector_index_mjs",
+      "target": "scripts_build_semantic_vector_index_device",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/build-semantic-vector-index.mjs",
+      "source_location": "L40",
+      "weight": 1.0,
+      "source": "scripts_build_semantic_vector_index_mjs",
+      "target": "scripts_build_semantic_vector_index_locktimeoutsecs",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/build-semantic-vector-index.mjs",
+      "source_location": "L45",
+      "weight": 1.0,
+      "source": "scripts_build_semantic_vector_index_mjs",
+      "target": "scripts_build_semantic_vector_index_nodes_links_items",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/build-semantic-vector-index.mjs",
+      "source_location": "L70",
+      "weight": 1.0,
+      "source": "scripts_build_semantic_vector_index_mjs",
+      "target": "scripts_build_semantic_vector_index_rows",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/build-semantic-vector-index.mjs",
+      "source_location": "L82",
+      "weight": 1.0,
+      "source": "scripts_build_semantic_vector_index_mjs",
+      "target": "scripts_build_semantic_vector_index_manifest",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/agentic-knowledge-context.mjs",
+      "source_location": "L16",
+      "weight": 1.0,
+      "source": "scripts_agentic_knowledge_context_mjs",
+      "target": "scripts_agentic_knowledge_context_readstdin",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/agentic-knowledge-context.mjs",
+      "source_location": "L21",
+      "weight": 1.0,
+      "source": "scripts_agentic_knowledge_context_mjs",
+      "target": "scripts_agentic_knowledge_context_extractprompt",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/agentic-knowledge-context.mjs",
+      "source_location": "L40",
+      "weight": 1.0,
+      "source": "scripts_agentic_knowledge_context_mjs",
+      "target": "scripts_agentic_knowledge_context_compacttext",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/agentic-knowledge-context.mjs",
+      "source_location": "L50",
+      "weight": 1.0,
+      "source": "scripts_agentic_knowledge_context_mjs",
+      "target": "scripts_agentic_knowledge_context_resultlocation",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/agentic-knowledge-context.mjs",
+      "source_location": "L54",
+      "weight": 1.0,
+      "source": "scripts_agentic_knowledge_context_mjs",
+      "target": "scripts_agentic_knowledge_context_formatcontext",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/agentic-knowledge-context.mjs",
+      "source_location": "L87",
+      "weight": 1.0,
+      "source": "scripts_agentic_knowledge_context_mjs",
+      "target": "scripts_agentic_knowledge_context_unavailablejson",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/agentic-knowledge-context.mjs",
+      "source_location": "L96",
+      "weight": 1.0,
+      "source": "scripts_agentic_knowledge_context_mjs",
+      "target": "scripts_agentic_knowledge_context_buildcontext",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/agentic-knowledge-context.mjs",
+      "source_location": "L185",
+      "weight": 1.0,
+      "source": "scripts_agentic_knowledge_context_mjs",
+      "target": "scripts_agentic_knowledge_context_options",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/agentic-knowledge-context.mjs",
+      "source_location": "L203",
+      "weight": 1.0,
+      "source": "scripts_agentic_knowledge_context_mjs",
+      "target": "scripts_agentic_knowledge_context_maxchars",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/agentic-knowledge-context.mjs",
+      "source_location": "L207",
+      "weight": 1.0,
+      "source": "scripts_agentic_knowledge_context_mjs",
+      "target": "scripts_agentic_knowledge_context_output",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/agentic-knowledge-context.mjs",
+      "source_location": "L78",
+      "weight": 1.0,
+      "source": "scripts_agentic_knowledge_context_formatcontext",
+      "target": "scripts_agentic_knowledge_context_compacttext",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/agentic-knowledge-context.mjs",
+      "source_location": "L75",
+      "weight": 1.0,
+      "source": "scripts_agentic_knowledge_context_formatcontext",
+      "target": "scripts_agentic_knowledge_context_resultlocation",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/agentic-knowledge-context.mjs",
+      "source_location": "L101",
+      "weight": 1.0,
+      "source": "scripts_agentic_knowledge_context_buildcontext",
+      "target": "scripts_agentic_knowledge_context_unavailablejson",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -2715,6 +4046,36 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
+      "source_file": "GEMINI.md",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "gemini_md",
+      "target": "agentic_knowledge_kit_gemini_agentic_knowledge_setup",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "GEMINI.md",
+      "source_location": "L16",
+      "weight": 1.0,
+      "source": "agentic_knowledge_kit_gemini_agentic_knowledge_setup",
+      "target": "agentic_knowledge_kit_gemini_retrieval_protocol",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "GEMINI.md",
+      "source_location": "L21",
+      "weight": 1.0,
+      "source": "agentic_knowledge_kit_gemini_retrieval_protocol",
+      "target": "agentic_knowledge_kit_gemini_codeblock_1",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
       "source_file": "AGENTS.md",
       "source_location": "L1",
       "weight": 1.0,
@@ -2815,6 +4176,36 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
+      "source_file": "AGENTS.md",
+      "source_location": "L111",
+      "weight": 1.0,
+      "source": "agentic_knowledge_kit_agents_gitnexus_code_intelligence",
+      "target": "agentic_knowledge_kit_agents_agentic_knowledge_setup",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "AGENTS.md",
+      "source_location": "L125",
+      "weight": 1.0,
+      "source": "agentic_knowledge_kit_agents_agentic_knowledge_setup",
+      "target": "agentic_knowledge_kit_agents_retrieval_protocol",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "AGENTS.md",
+      "source_location": "L130",
+      "weight": 1.0,
+      "source": "agentic_knowledge_kit_agents_retrieval_protocol",
+      "target": "agentic_knowledge_kit_agents_codeblock_1",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
       "source_file": "CLAUDE.md",
       "source_location": "L1",
       "weight": 1.0,
@@ -2871,6 +4262,36 @@
       "confidence_score": 1.0,
       "source": "agentic_knowledge_kit_claude_gitnexus_code_intelligence",
       "target": "agentic_knowledge_kit_claude_cli"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "CLAUDE.md",
+      "source_location": "L60",
+      "weight": 1.0,
+      "source": "agentic_knowledge_kit_claude_gitnexus_code_intelligence",
+      "target": "agentic_knowledge_kit_claude_agentic_knowledge_setup",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "CLAUDE.md",
+      "source_location": "L74",
+      "weight": 1.0,
+      "source": "agentic_knowledge_kit_claude_agentic_knowledge_setup",
+      "target": "agentic_knowledge_kit_claude_retrieval_protocol",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "CLAUDE.md",
+      "source_location": "L79",
+      "weight": 1.0,
+      "source": "agentic_knowledge_kit_claude_retrieval_protocol",
+      "target": "agentic_knowledge_kit_claude_codeblock_1",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -3846,5 +5267,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "aadbbd19206d2400e7b7b5b4eda24e536dc803b0"
+  "built_at_commit": "de4c535fddf9c783448a70a7424fedf60c06e147"
 }

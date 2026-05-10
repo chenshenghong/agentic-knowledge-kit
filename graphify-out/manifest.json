@@ -11,52 +11,64 @@
     "mtime": 1778157624.622551,
     "hash": "8b5d27cf9ccb2b61954877dcfd0d4589"
   },
+  "/Users/shenghongchen/Documents/Projects/agentic-knowledge-kit/scripts/test-agentic-knowledge-context.mjs": {
+    "mtime": 1778395710.4686081,
+    "hash": "b4d232a4e22aec481cf31b276edff0a4"
+  },
   "/Users/shenghongchen/Documents/Projects/agentic-knowledge-kit/scripts/build-semantic-vector-index.mjs": {
     "mtime": 1778157624.6220908,
     "hash": "5492b038eff2b2b867e4ff3e7b9c9606"
   },
+  "/Users/shenghongchen/Documents/Projects/agentic-knowledge-kit/scripts/agentic-knowledge-context.mjs": {
+    "mtime": 1778395695.9518855,
+    "hash": "2bc3ae5247acb7a77e2863f873cb3b2d"
+  },
   "/Users/shenghongchen/Documents/Projects/agentic-knowledge-kit/README.md": {
-    "mtime": 1778157624.6216538,
-    "hash": "93004edb7424e6da90759141a87c0723"
+    "mtime": 1778395793.029206,
+    "hash": "ae00031f7e54699b2d4a8c2f702676ad"
   },
   "/Users/shenghongchen/Documents/Projects/agentic-knowledge-kit/SKILL.md": {
-    "mtime": 1778157624.6217797,
-    "hash": "1481760469fecf01bd33468bf70d3ce7"
+    "mtime": 1778395840.632246,
+    "hash": "d4a7f603d8dde5ab978b68faef6b007e"
+  },
+  "/Users/shenghongchen/Documents/Projects/agentic-knowledge-kit/GEMINI.md": {
+    "mtime": 1778395909.9163022,
+    "hash": "fba2b5eb6c3379a3c0a1daaed54e5c5e"
   },
   "/Users/shenghongchen/Documents/Projects/agentic-knowledge-kit/AGENTS.md": {
-    "mtime": 1778340994.9635174,
-    "hash": "41eeaa60dfd704f41aeef9777e9490db"
+    "mtime": 1778395909.8658657,
+    "hash": "06cb1240111c55c3982784894385881b"
   },
   "/Users/shenghongchen/Documents/Projects/agentic-knowledge-kit/CLAUDE.md": {
-    "mtime": 1778340994.9637547,
-    "hash": "4b1b356277191d807a0b137d609db975"
+    "mtime": 1778395909.8904762,
+    "hash": "f966cda9a3cf94bf32f751c93687cbfc"
   },
   "/Users/shenghongchen/Documents/Projects/agentic-knowledge-kit/agents/openai.yaml": {
-    "mtime": 1777955829.2391386,
-    "hash": "a9a2947f1c6e39e22a56eafa579bb9f9"
+    "mtime": 1778395851.180132,
+    "hash": "a7d92d4f90ad9a9a894aac5b786cee74"
   },
   "/Users/shenghongchen/Documents/Projects/agentic-knowledge-kit/wiki/README.md": {
-    "mtime": 1778338689.1244645,
+    "mtime": 1778341148.1033876,
     "hash": "55ae098e4b4db21519f25e94f091f99a"
   },
   "/Users/shenghongchen/Documents/Projects/agentic-knowledge-kit/wiki/concepts/README.md": {
-    "mtime": 1778338689.1246355,
+    "mtime": 1778341148.1035202,
     "hash": "6c8a697468de441947abb24bd1824abf"
   },
   "/Users/shenghongchen/Documents/Projects/agentic-knowledge-kit/wiki/sources/graphify-knowledge-graph.md": {
-    "mtime": 1778340699.8627217,
+    "mtime": 1778341148.1038668,
     "hash": "0e7d8537c8be41f36733fdac4c27599c"
   },
   "/Users/shenghongchen/Documents/Projects/agentic-knowledge-kit/wiki/sources/README.md": {
-    "mtime": 1778338689.1249385,
+    "mtime": 1778341148.1037676,
     "hash": "2d88c6204e9a951880d35624e0cfa03d"
   },
   "/Users/shenghongchen/Documents/Projects/agentic-knowledge-kit/wiki/entities/README.md": {
-    "mtime": 1778338689.12479,
+    "mtime": 1778341148.103648,
     "hash": "89c401f810a99f700dcdebc28d0753a3"
   },
   "/Users/shenghongchen/Documents/Projects/agentic-knowledge-kit/raw/README.md": {
-    "mtime": 1778338689.1242115,
+    "mtime": 1778341148.1032557,
     "hash": "36160452263f50ecc18afce258358bed"
   }
 }

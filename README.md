@@ -7,8 +7,9 @@ It wires together:
 - GitNexus code intelligence and MCP configuration
 - graphify semantic knowledge graph
 - independent LanceDB semantic vector index
+- task-start context broker for LanceDB retrieval
 - Obsidian project commit logs
-- Codex and Claude graph-aware hook configuration
+- Codex, Claude Code, and Antigravity retrieval-aware configuration
 - a post-commit hook that refreshes local knowledge artifacts
 
 ## Install Into A Repository
@@ -58,6 +59,8 @@ graphify update .
 scripts/install-vector-deps.sh
 node scripts/build-semantic-vector-index.mjs
 node scripts/query-semantic-vector-index.mjs "authentication flow"
+node scripts/agentic-knowledge-context.mjs "authentication flow"
+npm test
 git diff --check
 ```
 
@@ -67,9 +70,17 @@ GitNexus embeddings can fail in the LadybugDB vector index step on some versions
 
 For semantic vector search, the kit builds an independent LanceDB store at `semantic-vector-index/lancedb` with metadata in `semantic-vector-index/manifest.json`. It uses GitNexus bundled transformers by default, with the same `Snowflake/snowflake-arctic-embed-xs` model, but stores vectors outside LadybugDB.
 
+`scripts/agentic-knowledge-context.mjs` is the bridge that makes LanceDB useful
+inside agent workflows. It reads a task prompt from argv or stdin, searches the
+semantic vector index, and emits a compact context packet. Claude Code gets that
+packet automatically through a `UserPromptSubmit` hook. Codex and Antigravity
+receive durable rules in `AGENTS.md`, `GEMINI.md`, and `.agents/rules/` telling
+them to run the broker before broad repository exploration.
+
 Vector index knobs:
 
 - `AGENTIC_KNOWLEDGE_VECTOR_INDEX=0` disables hook-time vector rebuilds.
 - `AGENTIC_KNOWLEDGE_VECTOR_MODEL=Snowflake/snowflake-arctic-embed-xs` overrides the local embedding model.
 - `AGENTIC_KNOWLEDGE_VECTOR_PROVIDER=test` is only for smoke tests; it is deterministic, not semantic.
 - `AGENTIC_KNOWLEDGE_SKIP_VECTOR_DEPS=1` skips isolated `@lancedb/lancedb` installation under `scripts/node_modules`.
+- `AGENTIC_KNOWLEDGE_CONTEXT_LIMIT=5` controls how many semantic matches are injected for each task.

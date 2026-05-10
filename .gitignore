@@ -14,3 +14,6 @@ graphify-out/.graphify_*
 !graphify-out/graph.json
 semantic-vector-index/
 scripts/node_modules/
+
+# Local code intelligence artifacts
+graphify-out/

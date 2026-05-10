@@ -36,13 +36,13 @@ Useful flags:
 - `--skip-initial-run` installs files/hooks without running GitNexus or graphify.
 - `--enable-embeddings` opts in to GitNexus embeddings during install and in the generated hook.
 - `--skip-vector-deps` skips isolated LanceDB dependency installation under `scripts/node_modules`.
-- `--no-claude`, `--no-codex`, `--no-gitnexus-skills` for narrower installs.
+- `--no-claude`, `--no-codex`, `--no-antigravity`, `--no-gitnexus-skills` for narrower installs.
 
 ## What It Installs
 
-- Repo scripts: `scripts/post-commit-hook.sh`, `scripts/install-knowledge-hook.sh`, `scripts/test-post-commit-hook.sh`, `scripts/install-vector-deps.sh`, `scripts/build-semantic-vector-index.mjs`, `scripts/query-semantic-vector-index.mjs`.
+- Repo scripts: `scripts/post-commit-hook.sh`, `scripts/install-knowledge-hook.sh`, `scripts/test-post-commit-hook.sh`, `scripts/install-vector-deps.sh`, `scripts/build-semantic-vector-index.mjs`, `scripts/query-semantic-vector-index.mjs`, `scripts/agentic-knowledge-context.mjs`.
 - Git hook: `.git/hooks/post-commit` symlink to the repo script.
-- Agent config: `AGENTS.md`, `CLAUDE.md`, `.mcp.json`, `.gitnexusignore`, `.codex/hooks.json`, `.claude/settings.json`.
+- Agent config: `AGENTS.md`, `CLAUDE.md`, `GEMINI.md`, `.mcp.json`, `.gitnexusignore`, `.codex/hooks.json`, `.claude/settings.json`, `.agents/rules/agentic-knowledge.md`, `.agent/rules/agentic-knowledge.md`.
 - Local generated artifacts: `.gitnexus/`, `graphify-out/`, `semantic-vector-index/`, `scripts/node_modules/`, `.claude/skills/...`.
 
 The installer updates `.gitignore` so `.gitnexus/`, `graphify-out/`, `semantic-vector-index/`, and `scripts/node_modules/` stay local, while `.claude/skills/...` can be tracked.
@@ -58,6 +58,8 @@ graphify update .
 scripts/install-vector-deps.sh
 node scripts/build-semantic-vector-index.mjs
 node scripts/query-semantic-vector-index.mjs "recording transcription flow"
+node scripts/agentic-knowledge-context.mjs "recording transcription flow"
+node scripts/test-agentic-knowledge-context.mjs
 graphify query "recording transcription flow" --budget 800
 git diff --check
 ```
@@ -78,7 +80,18 @@ For multi-repo GitNexus registries, pass `repo` explicitly in MCP calls.
 
 GitNexus `--embeddings` can fail in the LadybugDB vector-index step on some versions/platforms. The generated post-commit hook defaults to the reliable non-embedding index, serializes GitNexus with a repo-local lock, and only attempts LadybugDB embeddings when `AGENTIC_KNOWLEDGE_ENABLE_EMBEDDINGS=1` or `--enable-embeddings` was used during install. If embeddings fail, it force-rebuilds without embeddings so MCP remains usable. Semantic vector search is handled separately by LanceDB under `semantic-vector-index/lancedb`, with metadata in `semantic-vector-index/manifest.json`; it uses GitNexus bundled transformers by default and stores vectors outside LadybugDB. Mention this caveat in the final report if LadybugDB embeddings stay at `0` in `~/.gitnexus/registry.json`.
 
-Vector index environment knobs: `AGENTIC_KNOWLEDGE_VECTOR_INDEX=0` disables hook rebuilds, `AGENTIC_KNOWLEDGE_VECTOR_MODEL=...` overrides the embedding model, `AGENTIC_KNOWLEDGE_VECTOR_PROVIDER=test` is only for deterministic smoke tests, and `AGENTIC_KNOWLEDGE_SKIP_VECTOR_DEPS=1` skips isolated LanceDB dependency installation.
+Vector index environment knobs: `AGENTIC_KNOWLEDGE_VECTOR_INDEX=0` disables hook rebuilds, `AGENTIC_KNOWLEDGE_VECTOR_MODEL=...` overrides the embedding model, `AGENTIC_KNOWLEDGE_VECTOR_PROVIDER=test` is only for deterministic smoke tests, and `AGENTIC_KNOWLEDGE_SKIP_VECTOR_DEPS=1` skips isolated LanceDB dependency installation. `AGENTIC_KNOWLEDGE_CONTEXT_LIMIT=5` controls how many semantic matches are injected into task-start context.
+
+The installer makes LanceDB part of the agent workflow, not only a synchronized
+artifact:
+
+- Claude Code: `.claude/settings.json` adds a `UserPromptSubmit` hook that runs
+  `scripts/agentic-knowledge-context.mjs` and injects its stdout as context.
+- Codex: `AGENTS.md` instructs agents to run the context broker before broad
+  raw-file search.
+- Antigravity: `GEMINI.md`, `.agents/rules/agentic-knowledge.md`, and
+  `.agent/rules/agentic-knowledge.md` instruct agents to use the broker at task
+  start while still verifying with GitNexus, graphify, and source files.
 
 ## Obsidian Memory
 
