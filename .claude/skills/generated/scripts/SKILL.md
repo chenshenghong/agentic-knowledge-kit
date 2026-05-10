@@ -5,21 +5,21 @@ description: "Skill for the Scripts area of agentic-knowledge-kit. 56 symbols ac
 
 # Scripts
 
-56 symbols | 5 files | Cohesion: 83%
+56 symbols | 5 files | Cohesion: 81%
 
 ## When to Use
 
 - Working with code in `scripts/`
-- Understanding how repoRelative, sha256File, ensureWikiLayout work
+- Understanding how resolveInside, ensureWikiLayout, walkFiles work
 - Modifying scripts-related functionality
 
 ## Key Files
 
 | File | Symbols |
 |------|---------|
-| `scripts/llm-wiki-lib.mjs` | repoRelative, sha256File, ensureWikiLayout, noteTarget, parseFrontmatter (+16) |
+| `scripts/llm-wiki-lib.mjs` | resolveInside, ensureWikiLayout, walkFiles, expandSourceInputs, extractWikiLinks (+16) |
 | `scripts/semantic-vector-lib.mjs` | sha256File, createEmbeddingProvider, openLanceDb, writeLanceTable, searchLanceTable (+11) |
-| `scripts/lint-llm-wiki.mjs` | firstHeading, issue, sourceNotes, validateSourceNote, validateLinks (+4) |
+| `scripts/lint-llm-wiki.mjs` | sourceNotes, wikiNotes, validateLinks, lint, firstHeading (+4) |
 | `scripts/ingest-llm-wiki.mjs` | sourceSlug, formatBulletList, upsertLinkedNote, sourceNoteBody, ingestSource |
 | `scripts/agentic-knowledge-context.mjs` | unavailableJson, buildContext, compactText, resultLocation, formatContext |
 
@@ -27,22 +27,26 @@ description: "Skill for the Scripts area of agentic-knowledge-kit. 56 symbols ac
 
 Start here when exploring this area:
 
-- **`repoRelative`** (Function) — `scripts/llm-wiki-lib.mjs:96`
-- **`sha256File`** (Function) — `scripts/llm-wiki-lib.mjs:107`
+- **`resolveInside`** (Function) — `scripts/llm-wiki-lib.mjs:100`
 - **`ensureWikiLayout`** (Function) — `scripts/llm-wiki-lib.mjs:111`
-- **`noteTarget`** (Function) — `scripts/llm-wiki-lib.mjs:143`
-- **`parseFrontmatter`** (Function) — `scripts/llm-wiki-lib.mjs:276`
+- **`walkFiles`** (Function) — `scripts/llm-wiki-lib.mjs:147`
+- **`expandSourceInputs`** (Function) — `scripts/llm-wiki-lib.mjs:162`
+- **`extractWikiLinks`** (Function) — `scripts/llm-wiki-lib.mjs:290`
 
 ## Key Symbols
 
 | Symbol | Type | File | Line |
 |--------|------|------|------|
+| `resolveInside` | Function | `scripts/llm-wiki-lib.mjs` | 100 |
+| `ensureWikiLayout` | Function | `scripts/llm-wiki-lib.mjs` | 111 |
+| `walkFiles` | Function | `scripts/llm-wiki-lib.mjs` | 147 |
+| `expandSourceInputs` | Function | `scripts/llm-wiki-lib.mjs` | 162 |
+| `extractWikiLinks` | Function | `scripts/llm-wiki-lib.mjs` | 290 |
+| `resolveWikiTarget` | Function | `scripts/llm-wiki-lib.mjs` | 300 |
 | `repoRelative` | Function | `scripts/llm-wiki-lib.mjs` | 96 |
 | `sha256File` | Function | `scripts/llm-wiki-lib.mjs` | 107 |
-| `ensureWikiLayout` | Function | `scripts/llm-wiki-lib.mjs` | 111 |
 | `noteTarget` | Function | `scripts/llm-wiki-lib.mjs` | 143 |
 | `parseFrontmatter` | Function | `scripts/llm-wiki-lib.mjs` | 276 |
-| `extractWikiLinks` | Function | `scripts/llm-wiki-lib.mjs` | 290 |
 | `slugify` | Function | `scripts/llm-wiki-lib.mjs` | 117 |
 | `titleFromSlug` | Function | `scripts/llm-wiki-lib.mjs` | 127 |
 | `extractTitle` | Function | `scripts/llm-wiki-lib.mjs` | 199 |
@@ -53,10 +57,6 @@ Start here when exploring this area:
 | `createEmbeddingProvider` | Function | `scripts/semantic-vector-lib.mjs` | 209 |
 | `openLanceDb` | Function | `scripts/semantic-vector-lib.mjs` | 290 |
 | `writeLanceTable` | Function | `scripts/semantic-vector-lib.mjs` | 296 |
-| `searchLanceTable` | Function | `scripts/semantic-vector-lib.mjs` | 315 |
-| `wikilink` | Function | `scripts/llm-wiki-lib.mjs` | 138 |
-| `readSourceText` | Function | `scripts/llm-wiki-lib.mjs` | 190 |
-| `writeTextFile` | Function | `scripts/llm-wiki-lib.mjs` | 319 |
 
 ## Execution Flows
 
@@ -69,12 +69,12 @@ Start here when exploring this area:
 | `IngestSource → Slugify` | cross_community | 3 |
 | `IngestSource → TitleFromSlug` | cross_community | 3 |
 | `ExtractConcepts → Slugify` | intra_community | 3 |
-| `Lint → WalkFiles` | cross_community | 3 |
-| `Lint → RepoRelative` | intra_community | 3 |
-| `Lint → ParseFrontmatter` | intra_community | 3 |
+| `Lint → WalkFiles` | intra_community | 3 |
+| `Lint → RepoRelative` | cross_community | 3 |
+| `Lint → ParseFrontmatter` | cross_community | 3 |
 
 ## How to Explore
 
-1. `gitnexus_context({name: "repoRelative"})` — see callers and callees
+1. `gitnexus_context({name: "resolveInside"})` — see callers and callees
 2. `gitnexus_query({query: "scripts"})` — find related execution flows
 3. Read key files listed above for implementation details
