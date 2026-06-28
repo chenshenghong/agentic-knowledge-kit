@@ -52,17 +52,18 @@ printf '%s\n' "$$" > "$LOCK/pid"
 trap 'rm -rf "$LOCK"' EXIT
 
 echo "[gitnexus-gate] index stale (${LAST:0:7} → HEAD ${HEAD:0:7}) — refreshing before edit-safety tool…" >&2
-# Refresh with the SAME gitnexus version the MCP server uses (read from .mcp.json),
-# so the rebuilt index is in a storage format the MCP can read. Otherwise a version
-# skew (e.g. CLI 1.6.8 writes v41, MCP pinned 1.6.4 reads v40) would make the refresh
-# BREAK the impact/rename/detect_changes tools this gate is meant to protect.
-# Non-force + --skip-agents-md: up-to-date-aware, no CLAUDE.md / skill-file churn.
-VER="$(python3 -c "import json;a=json.load(open('.mcp.json'))['mcpServers'].get('gitnexus',{}).get('args',[]);print(next((x.split('@',1)[1] for x in a if isinstance(x,str) and x.startswith('gitnexus@')),''))" 2>/dev/null || true)"
-if command -v npx >/dev/null 2>&1; then
-  npx -y "gitnexus${VER:+@$VER}" analyze --skip-agents-md >/dev/null 2>&1 || echo "[gitnexus-gate] refresh failed — proceeding on existing index" >&2
-elif command -v gitnexus >/dev/null 2>&1; then
-  gitnexus analyze --skip-agents-md >/dev/null 2>&1 || echo "[gitnexus-gate] refresh failed — proceeding on existing index" >&2
+# Refresh via the shared fail-closed helper, which runs gitnexus at the SAME
+# version the MCP server uses (.mcp.json) so the rebuilt index is in a storage
+# format the MCP can read. If the version can't be proven it REFUSES rather than
+# risk a skew that would BREAK the impact/rename/detect_changes tools this gate
+# protects. Non-force analyze inside the helper call is up-to-date-aware.
+# Either way the gate never blocks the tool (always exit 0).
+if [[ -f "$REPO_ROOT/scripts/gitnexus-cmd.sh" ]]; then
+  # shellcheck source=scripts/gitnexus-cmd.sh
+  . "$REPO_ROOT/scripts/gitnexus-cmd.sh"
+  gitnexus_aligned analyze --skip-agents-md >/dev/null 2>&1 \
+    || echo "[gitnexus-gate] 略過刷新（版本對不齊 MCP，或刷新失敗）— 用現有 index 繼續" >&2
 else
-  echo "[gitnexus-gate] npx/gitnexus not found — proceeding on existing index" >&2
+  echo "[gitnexus-gate] 找不到 scripts/gitnexus-cmd.sh — 略過刷新，用現有 index 繼續" >&2
 fi
 exit 0

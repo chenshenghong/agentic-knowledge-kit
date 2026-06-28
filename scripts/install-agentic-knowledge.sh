@@ -193,7 +193,8 @@ copy_helper_script install-vector-deps.sh
 copy_helper_script gitnexus-fresh.sh
 copy_helper_script install-cmm.sh
 copy_helper_script gitnexus-gate.sh
-chmod +x scripts/build-semantic-vector-index.mjs scripts/query-semantic-vector-index.mjs scripts/agentic-knowledge-context.mjs scripts/ingest-llm-wiki.mjs scripts/lint-llm-wiki.mjs scripts/test-semantic-vector-index.mjs scripts/test-llm-wiki-workflow.mjs scripts/install-vector-deps.sh scripts/gitnexus-fresh.sh scripts/install-cmm.sh scripts/gitnexus-gate.sh
+copy_helper_script gitnexus-cmd.sh
+chmod +x scripts/build-semantic-vector-index.mjs scripts/query-semantic-vector-index.mjs scripts/agentic-knowledge-context.mjs scripts/ingest-llm-wiki.mjs scripts/lint-llm-wiki.mjs scripts/test-semantic-vector-index.mjs scripts/test-llm-wiki-workflow.mjs scripts/install-vector-deps.sh scripts/gitnexus-fresh.sh scripts/install-cmm.sh scripts/gitnexus-gate.sh scripts/gitnexus-cmd.sh
 
 if [[ "$SKIP_VECTOR_DEPS" == "0" ]]; then
   scripts/install-vector-deps.sh || echo "LanceDB dependency install failed; semantic vector build will log a skip/failure until dependencies are installed." >&2
@@ -288,12 +289,22 @@ coverage/
 CBM
 fi
 
-write_text_file .mcp.json <<'JSON'
+# Pin an EXACT gitnexus version in .mcp.json so the long-lived MCP server and the
+# gate/fresh CLI always resolve to the SAME storage version. A mutable `latest`
+# resolved at different times can write/read different storage formats (skew).
+# Offline → fall back to latest: the MCP still runs, and gate/fresh then fail-closed
+# (refuse to refresh) rather than risk a skew.
+GX_PIN="$(npm view gitnexus version 2>/dev/null | tr -d '[:space:]')" || GX_PIN=""
+if [[ ! "$GX_PIN" =~ ^[0-9]+\.[0-9]+\.[0-9]+ ]]; then
+  GX_PIN="latest"
+  echo "[install] ⚠️ 無法解析 exact gitnexus 版本（離線？）→ .mcp.json 暫寫 gitnexus@latest；gate/fresh 會 fail-closed 不刷新，請連網後把 .mcp.json 的 gitnexus pin 成明確版本（如 gitnexus@1.6.8）。" >&2
+fi
+write_text_file .mcp.json <<JSON
 {
   "mcpServers": {
     "gitnexus": {
       "command": "npx",
-      "args": ["-y", "gitnexus@latest", "mcp"]
+      "args": ["-y", "gitnexus@${GX_PIN}", "mcp"]
     },
     "codebase-memory-mcp": {
       "command": "codebase-memory-mcp",
@@ -462,27 +473,25 @@ RULE
 fi
 
 if [[ "$SKIP_INITIAL_RUN" == "0" ]]; then
-  # Use the SAME gitnexus version as the MCP server (.mcp.json) for the initial
-  # index so its storage format matches what the MCP reads (avoids version skew,
-  # same single-source-of-truth rule as gitnexus-gate.sh / gitnexus-fresh.sh).
-  GX_VER="$(python3 -c "import json;a=json.load(open('.mcp.json'))['mcpServers'].get('gitnexus',{}).get('args',[]);print(next((x.split('@',1)[1] for x in a if isinstance(x,str) and x.startswith('gitnexus@')),''))" 2>/dev/null || true)"
-  if command -v npx >/dev/null 2>&1 || command -v gitnexus >/dev/null 2>&1; then
-    if command -v npx >/dev/null 2>&1; then
-      GITNEXUS_CMD=(npx -y "gitnexus${GX_VER:+@$GX_VER}")
-    else
-      GITNEXUS_CMD=(gitnexus)
-    fi
+  # Initial index at the MCP-aligned gitnexus version via the shared fail-closed
+  # helper (single source of truth for the version-skew invariant). If the version
+  # can't be proven it refuses, and we skip the initial index rather than write one
+  # the MCP can't read — gitnexus-fresh.sh / the PreToolUse gate handle it later.
+  if [[ -f scripts/gitnexus-cmd.sh ]]; then
+    # shellcheck source=scripts/gitnexus-cmd.sh
+    . scripts/gitnexus-cmd.sh
     if [[ "$GITNEXUS_SKILLS" == "1" ]]; then
-      "${GITNEXUS_CMD[@]}" analyze --skills || "${GITNEXUS_CMD[@]}" analyze
+      gitnexus_aligned analyze --skills || gitnexus_aligned analyze || true
     else
-      "${GITNEXUS_CMD[@]}" analyze
+      gitnexus_aligned analyze || true
     fi
-    "${GITNEXUS_CMD[@]}" analyze --force --skip-agents-md || true
-    if [[ "$ENABLE_EMBEDDINGS" == "1" ]]; then
-      "${GITNEXUS_CMD[@]}" analyze --embeddings --force --skip-agents-md || "${GITNEXUS_CMD[@]}" analyze --force --skip-agents-md || true
+    if ! gitnexus_aligned analyze --force --skip-agents-md; then
+      echo "[install] 初始 GitNexus index 略過（版本對不齊 .mcp.json，避免 storage skew）；之後 bash scripts/gitnexus-fresh.sh 或 PreToolUse gate 會處理。" >&2
+    elif [[ "$ENABLE_EMBEDDINGS" == "1" ]]; then
+      gitnexus_aligned analyze --embeddings --force --skip-agents-md || gitnexus_aligned analyze --force --skip-agents-md || true
     fi
   else
-    echo "GitNexus not found; install gitnexus or use npx before first indexing." >&2
+    echo "[install] 找不到 scripts/gitnexus-cmd.sh — 略過初始 GitNexus index" >&2
   fi
 
   if command -v graphify >/dev/null 2>&1; then
@@ -498,6 +507,26 @@ if [[ "$SKIP_INITIAL_RUN" == "0" ]]; then
     echo "graphify not found; install graphifyy/graphify before first graph build." >&2
   fi
 fi
+
+# gitnexus's `analyze --skills` writes its own "Index stale? Run npx gitnexus
+# analyze" hint into the <!-- gitnexus --> block of CLAUDE.md / AGENTS.md. That
+# bare command is UNPINNED and would write an index in a storage version the
+# pinned MCP can't read (skew). Rewrite it (idempotently, after every install/
+# regen) to route through the MCP-aligned gitnexus-fresh.sh / the PreToolUse gate.
+for _gx_doc in CLAUDE.md AGENTS.md; do
+  [[ -f "$_gx_doc" ]] || continue
+  python3 - "$_gx_doc" <<'PY' || true
+import re,sys
+p=sys.argv[1]; t=open(p).read()
+pat=re.compile(r'^> Index stale\? Run `node \.gitnexus/run\.cjs analyze`.*?#1939\)\.$', re.M)
+new=("> Index stale? impact/rename/detect_changes 由 PreToolUse gate 自動以 `.mcp.json` 對齊版本刷新；"
+     "手動用 `bash scripts/gitnexus-fresh.sh`。勿裸跑 `npx gitnexus analyze` 或 `node .gitnexus/run.cjs analyze`"
+     "（unpinned 會與 MCP storage 版本 skew，反而弄壞 impact/rename/detect_changes）。")
+t2,c=pat.subn(new,t)
+if c:
+    open(p,'w').write(t2); print(f"[install] patched gitnexus stale hint in {p}")
+PY
+done
 
 bash -n scripts/post-commit-hook.sh scripts/install-knowledge-hook.sh scripts/test-post-commit-hook.sh
 

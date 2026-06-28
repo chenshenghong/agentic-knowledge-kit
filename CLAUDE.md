@@ -16,7 +16,7 @@ Minimum operating loop:
 
 This project is indexed by GitNexus as **agentic-knowledge-kit** (416 symbols, 599 relationships, 18 execution flows). Use the GitNexus MCP tools to understand code, assess impact, and navigate safely.
 
-> If any GitNexus tool warns the index is stale, run `npx gitnexus analyze` in terminal first.
+> 索引過時時跑 `bash scripts/gitnexus-fresh.sh`（對齊 `.mcp.json` 的 gitnexus 版本、fail-closed）。impact/rename/detect_changes 由 PreToolUse gate 自動刷新，無需手動。勿裸跑 `npx gitnexus analyze`（unpinned 會寫出 MCP 讀不了的 storage 格式）。
 
 ## Always Do
 

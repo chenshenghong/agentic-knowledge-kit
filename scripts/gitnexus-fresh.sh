@@ -25,24 +25,22 @@ cd "$REPO_ROOT" || exit 1
 ENABLE_EMBEDDINGS="${AGENTIC_KNOWLEDGE_ENABLE_EMBEDDINGS:-0}"
 ENABLE_PDG="${AGENTIC_KNOWLEDGE_PDG:-0}"
 
-# Use the SAME gitnexus version as the MCP server (.mcp.json) so the rebuilt index is
-# in a storage format the MCP can read (avoids the CLI-vs-MCP storage-version skew).
-GX_VER="$(python3 -c "import json;a=json.load(open('.mcp.json'))['mcpServers'].get('gitnexus',{}).get('args',[]);print(next((x.split('@',1)[1] for x in a if isinstance(x,str) and x.startswith('gitnexus@')),''))" 2>/dev/null || true)"
+# Run gitnexus at the MCP-aligned version via the shared fail-closed helper
+# (single source of truth for the version-skew invariant). If the version can't
+# be proven, gitnexus_aligned refuses (non-zero) and we error out below rather
+# than write an index the MCP can't read.
+if [[ -f "$REPO_ROOT/scripts/gitnexus-cmd.sh" ]]; then
+  # shellcheck source=scripts/gitnexus-cmd.sh
+  . "$REPO_ROOT/scripts/gitnexus-cmd.sh"
+else
+  echo "[gitnexus-fresh] 找不到 scripts/gitnexus-cmd.sh（版本對齊 helper）— 中止" >&2
+  exit 1
+fi
 
-gx() {
-  if command -v npx >/dev/null 2>&1; then
-    npx -y "gitnexus${GX_VER:+@$GX_VER}" "$@"
-  elif command -v gitnexus >/dev/null 2>&1; then
-    gitnexus "$@"
-  else
-    echo "[gitnexus-fresh] npx/gitnexus not found" >&2
-    return 1
-  fi
-}
+gx() { gitnexus_aligned "$@"; }
 
 if [[ ! -d .gitnexus ]]; then
-  echo "[gitnexus-fresh] .gitnexus not initialized — run 'npx gitnexus analyze' once first" >&2
-  exit 1
+  echo "[gitnexus-fresh] .gitnexus 尚未初始化 — 本次以對齊版本進行首次 index（較久）" >&2
 fi
 
 PDG_FLAG=""
