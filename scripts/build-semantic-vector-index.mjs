@@ -4,11 +4,14 @@ import { dirname, resolve } from 'node:path';
 import {
   DEFAULT_MODEL,
   collectGraphItems,
+  collectObsidianItems,
   createEmbeddingProvider,
   embedInBatches,
   getCurrentCommit,
+  isDocItem,
   parseArgs,
   repoRelative,
+  resolveObsidianVault,
   roundVector,
   sha256File,
   withDirectoryLock,
@@ -41,15 +44,86 @@ const lockTimeoutSecs = Number.parseInt(
   String(options['lock-timeout'] ?? process.env.AGENTIC_KNOWLEDGE_VECTOR_LOCK_TIMEOUT_SECS ?? '600'),
   10,
 );
+const excludePrefixesRaw = String(
+  options['exclude-prefixes']
+  ?? options.exclude
+  ?? process.env.AGENTIC_KNOWLEDGE_EXCLUDE_PREFIXES
+  ?? 'legacy_reference,vendor',
+);
+const excludePrefixes = excludePrefixesRaw
+  .split(',')
+  .map((p) => p.trim())
+  .filter(Boolean);
 
-const { nodes, links, items } = collectGraphItems({
+const { nodes, links, items, skipped, excludePrefixes: actualExcludes } = collectGraphItems({
   repoRoot,
   graphPath,
   maxTextChars,
   maxItems,
+  excludePrefixes,
 });
 
-if (items.length === 0) {
+// Exclude test/spec/e2e/mock nodes — noise for "find the right feature/interface"
+// retrieval. These paths are scattered (nested __tests__, .spec.ts suffixes) so the
+// prefix-based excludePrefixes can't catch them. Toggle off with
+// AGENTIC_KNOWLEDGE_EXCLUDE_TESTS=0 or --exclude-tests=0.
+const excludeTests = String(
+  options['exclude-tests'] ?? process.env.AGENTIC_KNOWLEDGE_EXCLUDE_TESTS ?? '1',
+) !== '0';
+const TEST_FILE_RE = /(^|\/)(__tests__|__mocks__|e2e)\/|\.(spec|test)\.[cm]?[jt]sx?$/i;
+const testFiltered = excludeTests
+  ? items.filter((item) => !TEST_FILE_RE.test(String(item.sourceFile ?? '')))
+  : items;
+const testSkipped = items.length - testFiltered.length;
+if (excludeTests && testSkipped > 0) {
+  console.log(`Excluding ${testSkipped} test/spec/e2e node(s) — ${testFiltered.length} items remain`);
+}
+
+// docs-only: drop code nodes (code recall is served by the CMM code engine).
+// Opt-in via --docs-only or AGENTIC_KNOWLEDGE_DOCS_ONLY=1 so bare invocations
+// (and the existing test suite) keep the full-index behaviour.
+const docsOnly = String(
+  options['docs-only'] ?? process.env.AGENTIC_KNOWLEDGE_DOCS_ONLY ?? '0',
+) !== '0';
+const graphItems = docsOnly ? testFiltered.filter(isDocItem) : testFiltered;
+if (docsOnly) {
+  console.log(`docs-only: kept ${graphItems.length}/${testFiltered.length} graph doc node(s)`);
+}
+
+// Obsidian vault ingestion (opt-in): the vault lives outside the repo, so it is
+// invisible to graphify/CMM. Embedding it lets the broker surface past
+// decisions/root-causes/contracts at task start.
+const includeObsidian = String(
+  options.obsidian ?? process.env.AGENTIC_KNOWLEDGE_OBSIDIAN ?? '0',
+) !== '0';
+const projectName = (options.project ?? process.env.AGENTIC_KNOWLEDGE_PROJECT_NAME ?? '') || null;
+let obsidianItems = [];
+let obsidianVault = null;
+if (includeObsidian) {
+  obsidianVault = resolveObsidianVault({
+    repoRoot,
+    explicit: options['obsidian-vault'] ?? process.env.AGENTIC_KNOWLEDGE_OBSIDIAN_VAULT ?? null,
+    projectName,
+  });
+  if (obsidianVault) {
+    const res = collectObsidianItems({ vaultDir: obsidianVault, maxTextChars });
+    obsidianItems = res.items;
+    console.log(`Obsidian: embedded ${obsidianItems.length} section(s) from ${res.fileCount} note(s) in ${obsidianVault}`);
+  } else {
+    console.log('Obsidian: vault not found — skipping (set AGENTIC_KNOWLEDGE_OBSIDIAN_VAULT to override)');
+  }
+}
+
+const embedItems = [...graphItems, ...obsidianItems];
+
+if (actualExcludes.length > 0) {
+  console.log(
+    `Excluding ${skipped} graph node(s) matching prefixes [${actualExcludes.join(', ')}] — `
+    + `${items.length}/${nodes.length} items will be embedded`,
+  );
+}
+
+if (embedItems.length === 0) {
   throw new Error(`No embeddable graph nodes found in ${repoRelative(repoRoot, graphPath)}`);
 }
 
@@ -63,11 +137,11 @@ const provider = await createEmbeddingProvider({
 try {
   const vectors = await embedInBatches(
     provider,
-    items.map((item) => item.text),
+    embedItems.map((item) => item.text),
     batchSize,
   );
 
-  const rows = items.map((item, index) => ({
+  const rows = embedItems.map((item, index) => ({
     id: item.id,
     label: item.label,
     sourceFile: item.sourceFile ?? '',
@@ -105,7 +179,14 @@ try {
       graphHash: sha256File(graphPath),
       nodeCount: nodes.length,
       linkCount: links.length,
-      indexedItemCount: items.length,
+      indexedItemCount: embedItems.length,
+      docsOnly,
+      graphDocItemCount: graphItems.length,
+      obsidian: {
+        enabled: includeObsidian,
+        vault: obsidianVault,
+        itemCount: obsidianItems.length,
+      },
     },
   };
 
@@ -119,7 +200,7 @@ try {
   );
 
   console.log(
-    `Semantic vector index written: ${repoRelative(repoRoot, dbPath)} table=${tableName} (${items.length} items, ${manifest.provider.dimensions} dims, provider=${provider.name})`,
+    `Semantic vector index written: ${repoRelative(repoRoot, dbPath)} table=${tableName} (${embedItems.length} items, ${manifest.provider.dimensions} dims, provider=${provider.name})`,
   );
 } finally {
   await provider.dispose();

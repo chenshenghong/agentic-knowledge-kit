@@ -3,6 +3,7 @@ import { execFileSync } from 'node:child_process';
 import {
   existsSync,
   mkdirSync,
+  readdirSync,
   rmSync,
   readFileSync,
   realpathSync,
@@ -89,7 +90,13 @@ export function resolveInside(repoRoot, candidate) {
   return full;
 }
 
-export function collectGraphItems({ repoRoot, graphPath, maxTextChars = 6000, maxItems = 0 }) {
+export function collectGraphItems({
+  repoRoot,
+  graphPath,
+  maxTextChars = 6000,
+  maxItems = 0,
+  excludePrefixes = [],
+}) {
   const graph = readJson(graphPath);
   const nodes = Array.isArray(graph.nodes) ? graph.nodes : [];
   const links = Array.isArray(graph.links)
@@ -99,7 +106,21 @@ export function collectGraphItems({ repoRoot, graphPath, maxTextChars = 6000, ma
       : [];
   const selected = maxItems > 0 ? nodes.slice(0, maxItems) : nodes;
 
-  const items = selected
+  const normalisedExcludes = excludePrefixes
+    .map((p) => String(p).trim())
+    .filter(Boolean);
+
+  const isExcluded = (node) => {
+    if (normalisedExcludes.length === 0) return false;
+    const sourceFile = node.source_file ?? node.sourceFile ?? node.file ?? node.path ?? null;
+    if (!sourceFile) return false;
+    return normalisedExcludes.some((prefix) => String(sourceFile).startsWith(prefix));
+  };
+
+  const filtered = selected.filter((node) => !isExcluded(node));
+  const skipped = selected.length - filtered.length;
+
+  const items = filtered
     .map((node, index) => buildItem(repoRoot, node, index, maxTextChars))
     .filter((item) => item.text.trim().length > 0);
 
@@ -108,7 +129,132 @@ export function collectGraphItems({ repoRoot, graphPath, maxTextChars = 6000, ma
     nodes,
     links,
     items,
+    skipped,
+    excludePrefixes: normalisedExcludes,
   };
+}
+
+// Doc-only retrieval: the broker surfaces design docs / decisions / specs for
+// natural-language recall (incl. Chinese prose). Code structure/semantic recall
+// is served by the codebase-memory-mcp (CMM) code engine, so the vector index no
+// longer needs to embed code nodes. A node is a "doc" if graphify tagged it
+// file_type=document, or its source file has a prose extension.
+export const DOC_FILE_RE = /\.(md|markdown|mdx|txt|rst|adoc)$/i;
+
+export function isDocItem(item) {
+  if (!item) return false;
+  if (String(item.fileType ?? '') === 'document') return true;
+  if (String(item.fileType ?? '') === 'obsidian') return true;
+  return DOC_FILE_RE.test(String(item.sourceFile ?? ''));
+}
+
+// Locate the project's Obsidian vault (which lives OUTSIDE the repo, so neither
+// graphify nor CMM can index it). Cross-machine: Mac uses ~/Documents/Obsidian
+// Vault/<project>, the build server uses /home/tcfnet/... .
+export function resolveObsidianVault({ repoRoot = null, explicit = null, projectName = null } = {}) {
+  if (explicit) return existsSync(explicit) ? explicit : null;
+  const home = process.env.HOME || process.env.USERPROFILE || '';
+  const name = projectName
+    || (repoRoot ? repoRoot.split(/[\\/]/).filter(Boolean).pop() : null);
+  if (!name) return null;
+  const roots = [
+    process.env.OBSIDIAN_VAULT,
+    home ? join(home, 'Documents/Obsidian Vault') : null,
+    home ? join(home, 'Obsidian Vault') : null,
+    '/home/tcfnet/Documents/Obsidian Vault',
+    '/home/tcfnet/Obsidian Vault',
+  ].filter(Boolean);
+  for (const root of roots) {
+    const candidate = join(root, name);
+    if (existsSync(candidate)) return candidate;
+  }
+  return null;
+}
+
+// Walk the vault for markdown, split each note into heading-scoped sections, and
+// return items in the same shape as buildItem() so they embed alongside graph
+// doc nodes. One item per section keeps retrieval granular.
+export function collectObsidianItems({ vaultDir, maxTextChars = 6000 }) {
+  if (!vaultDir || !existsSync(vaultDir)) {
+    return { items: [], vaultDir: null, fileCount: 0 };
+  }
+  const files = walkMarkdownFiles(vaultDir);
+  const items = [];
+  for (const file of files) {
+    let content;
+    try {
+      const stat = statSync(file);
+      if (!stat.isFile() || stat.size > 1024 * 1024) continue;
+      content = readFileSync(file, 'utf8');
+    } catch {
+      continue;
+    }
+    const rel = relative(vaultDir, file).split('\\').join('/');
+    for (const section of splitMarkdownSections(content)) {
+      const body = section.body.trim();
+      if (!body) continue;
+      const heading = section.heading || rel.replace(/\.md$/i, '');
+      const text = [
+        `source: Obsidian/${rel}`,
+        `heading: ${heading}`,
+        '',
+        body,
+      ].join('\n').slice(0, maxTextChars);
+      items.push({
+        id: `obsidian:${rel}#L${section.startLine}`,
+        label: `${rel} :: ${heading}`,
+        sourceFile: `Obsidian/${rel}`,
+        sourceLocation: `L${section.startLine}`,
+        fileType: 'obsidian',
+        community: null,
+        text,
+        textHash: sha256(text),
+      });
+    }
+  }
+  return { items, vaultDir, fileCount: files.length };
+}
+
+function walkMarkdownFiles(dir, acc = []) {
+  let entries;
+  try {
+    entries = readdirSync(dir, { withFileTypes: true });
+  } catch {
+    return acc;
+  }
+  for (const entry of entries) {
+    const name = entry.name;
+    if (name.startsWith('.')) continue; // skip .obsidian, .trash, etc.
+    const full = join(dir, name);
+    if (entry.isDirectory()) {
+      walkMarkdownFiles(full, acc);
+    } else if (entry.isFile() && /\.(md|markdown)$/i.test(name)) {
+      acc.push(full);
+    }
+  }
+  return acc;
+}
+
+function splitMarkdownSections(content) {
+  const lines = content.split(/\r?\n/);
+  const sections = [];
+  let current = { heading: '', startLine: 1, lines: [] };
+  for (let i = 0; i < lines.length; i += 1) {
+    const line = lines[i];
+    const headingMatch = /^#{1,6}\s+(.*)$/.exec(line);
+    if (headingMatch) {
+      if (current.lines.join('\n').trim() || current.heading) {
+        sections.push({ heading: current.heading, startLine: current.startLine, body: current.lines.join('\n') });
+      }
+      current = { heading: headingMatch[1].trim(), startLine: i + 1, lines: [] };
+    } else {
+      current.lines.push(line);
+    }
+  }
+  if (current.lines.join('\n').trim() || current.heading) {
+    sections.push({ heading: current.heading, startLine: current.startLine, body: current.lines.join('\n') });
+  }
+  return sections;
 }
 
 function buildItem(repoRoot, node, index, maxTextChars) {

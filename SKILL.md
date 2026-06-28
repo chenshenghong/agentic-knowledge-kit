@@ -33,8 +33,8 @@ Useful flags:
 
 - `--vault-root "$HOME/Documents/Obsidian Vault"` writes project logs under that vault.
 - `--obsidian-project-dir /path/to/vault/Project` writes directly to a project folder.
-- `--skip-initial-run` installs files/hooks without running GitNexus or graphify.
-- `--enable-embeddings` opts in to GitNexus embeddings during install and in the generated hook.
+- `--skip-initial-run` installs files/hooks without running the initial index.
+- `--enable-embeddings` opts in to GitNexus embeddings during the initial index (GitNexus is no longer in the post-commit hook).
 - `--skip-vector-deps` skips isolated LanceDB dependency installation under `scripts/node_modules`.
 - `--no-claude`, `--no-codex`, `--no-antigravity`, `--no-gitnexus-skills` for narrower installs.
 
@@ -57,7 +57,7 @@ bash scripts/test-post-commit-hook.sh
 gitnexus status
 graphify update .
 scripts/install-vector-deps.sh
-node scripts/build-semantic-vector-index.mjs
+node scripts/build-semantic-vector-index.mjs --docs-only --obsidian
 node scripts/query-semantic-vector-index.mjs "recording transcription flow"
 node scripts/agentic-knowledge-context.mjs "recording transcription flow"
 node scripts/ingest-llm-wiki.mjs raw/<document>
@@ -82,7 +82,7 @@ For multi-repo GitNexus registries, pass `repo` explicitly in MCP calls.
 
 ## Known Caveat
 
-GitNexus `--embeddings` can fail in the LadybugDB vector-index step on some versions/platforms. The generated post-commit hook defaults to the reliable non-embedding index, serializes GitNexus with a repo-local lock, and only attempts LadybugDB embeddings when `AGENTIC_KNOWLEDGE_ENABLE_EMBEDDINGS=1` or `--enable-embeddings` was used during install. If embeddings fail, it force-rebuilds without embeddings so MCP remains usable. Semantic vector search is handled separately by LanceDB under `semantic-vector-index/lancedb`, with metadata in `semantic-vector-index/manifest.json`; it uses GitNexus bundled transformers by default and stores vectors outside LadybugDB. Mention this caveat in the final report if LadybugDB embeddings stay at `0` in `~/.gitnexus/registry.json`.
+The generated post-commit hook (2026-06 CMM redesign) runs: (1) the **codebase-memory-mcp (CMM)** code engine incrementally (~0.5s, self-contained binary, no native crashes), (2) `graphify update .`, (3) the LanceDB vector index **docs-only + Obsidian vault** (`--docs-only --obsidian`; code recall is served by CMM), (4) the Obsidian commit log. **GitNexus is NOT in the hook** — it is refreshed on-demand via `scripts/gitnexus-fresh.sh` before risky edits/rename/PR review, because it is the slowest step and its LadybugDB `--embeddings` can fail on some versions/platforms. The vector index uses GitNexus's bundled transformer to embed (multilingual). Per machine, run `scripts/install-cmm.sh` once to install the CMM binary + register the MCP server; per repo, `.cbmignore` excludes vendored/build noise. If GitNexus embeddings stay at `0` in `~/.gitnexus/registry.json`, that only affects the on-demand GitNexus path, not the hook.
 
 Vector index environment knobs: `AGENTIC_KNOWLEDGE_VECTOR_INDEX=0` disables hook rebuilds, `AGENTIC_KNOWLEDGE_VECTOR_MODEL=...` overrides the embedding model, `AGENTIC_KNOWLEDGE_VECTOR_PROVIDER=test` is only for deterministic smoke tests, and `AGENTIC_KNOWLEDGE_SKIP_VECTOR_DEPS=1` skips isolated LanceDB dependency installation. `AGENTIC_KNOWLEDGE_CONTEXT_LIMIT=5` controls how many semantic matches are injected into task-start context.
 
