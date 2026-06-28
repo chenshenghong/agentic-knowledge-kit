@@ -462,11 +462,15 @@ RULE
 fi
 
 if [[ "$SKIP_INITIAL_RUN" == "0" ]]; then
-  if command -v gitnexus >/dev/null 2>&1 || command -v npx >/dev/null 2>&1; then
-    if command -v gitnexus >/dev/null 2>&1; then
-      GITNEXUS_CMD=(gitnexus)
+  # Use the SAME gitnexus version as the MCP server (.mcp.json) for the initial
+  # index so its storage format matches what the MCP reads (avoids version skew,
+  # same single-source-of-truth rule as gitnexus-gate.sh / gitnexus-fresh.sh).
+  GX_VER="$(python3 -c "import json;a=json.load(open('.mcp.json'))['mcpServers'].get('gitnexus',{}).get('args',[]);print(next((x.split('@',1)[1] for x in a if isinstance(x,str) and x.startswith('gitnexus@')),''))" 2>/dev/null || true)"
+  if command -v npx >/dev/null 2>&1 || command -v gitnexus >/dev/null 2>&1; then
+    if command -v npx >/dev/null 2>&1; then
+      GITNEXUS_CMD=(npx -y "gitnexus${GX_VER:+@$GX_VER}")
     else
-      GITNEXUS_CMD=(npx gitnexus)
+      GITNEXUS_CMD=(gitnexus)
     fi
     if [[ "$GITNEXUS_SKILLS" == "1" ]]; then
       "${GITNEXUS_CMD[@]}" analyze --skills || "${GITNEXUS_CMD[@]}" analyze
