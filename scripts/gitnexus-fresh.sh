@@ -25,13 +25,17 @@ cd "$REPO_ROOT" || exit 1
 ENABLE_EMBEDDINGS="${AGENTIC_KNOWLEDGE_ENABLE_EMBEDDINGS:-0}"
 ENABLE_PDG="${AGENTIC_KNOWLEDGE_PDG:-0}"
 
+# Use the SAME gitnexus version as the MCP server (.mcp.json) so the rebuilt index is
+# in a storage format the MCP can read (avoids the CLI-vs-MCP storage-version skew).
+GX_VER="$(python3 -c "import json;a=json.load(open('.mcp.json'))['mcpServers'].get('gitnexus',{}).get('args',[]);print(next((x.split('@',1)[1] for x in a if isinstance(x,str) and x.startswith('gitnexus@')),''))" 2>/dev/null || true)"
+
 gx() {
-  if command -v gitnexus >/dev/null 2>&1; then
+  if command -v npx >/dev/null 2>&1; then
+    npx -y "gitnexus${GX_VER:+@$GX_VER}" "$@"
+  elif command -v gitnexus >/dev/null 2>&1; then
     gitnexus "$@"
-  elif command -v npx >/dev/null 2>&1; then
-    npx gitnexus "$@"
   else
-    echo "[gitnexus-fresh] gitnexus/npx not found" >&2
+    echo "[gitnexus-fresh] npx/gitnexus not found" >&2
     return 1
   fi
 }

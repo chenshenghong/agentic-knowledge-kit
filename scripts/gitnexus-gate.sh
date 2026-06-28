@@ -36,7 +36,12 @@ LAST="$(python3 -c "import json,sys;print(json.load(open(sys.argv[1])).get('last
 # agents on a shared worktree) with a pid-stamped mkdir lock + dead-pid reclaim.
 LOCK="$REPO_ROOT/.gitnexus/gate-refresh.lock"
 if ! mkdir "$LOCK" 2>/dev/null; then
-  if [[ -f "$LOCK/pid" ]] && ! kill -0 "$(cat "$LOCK/pid" 2>/dev/null || echo -1)" 2>/dev/null; then
+  # Reclaim a stranded lock: no pid file, dead owner, or older than 10 minutes.
+  reclaim=0
+  [[ ! -f "$LOCK/pid" ]] && reclaim=1
+  [[ -f "$LOCK/pid" ]] && ! kill -0 "$(cat "$LOCK/pid" 2>/dev/null || echo -1)" 2>/dev/null && reclaim=1
+  [[ -n "$(find "$LOCK" -maxdepth 0 -mmin +10 2>/dev/null)" ]] && reclaim=1
+  if [[ "$reclaim" == "1" ]]; then
     rm -rf "$LOCK"; mkdir "$LOCK" 2>/dev/null || exit 0
   else
     echo "[gitnexus-gate] a refresh is already running — proceeding (results may lag one refresh)" >&2
@@ -47,12 +52,17 @@ printf '%s\n' "$$" > "$LOCK/pid"
 trap 'rm -rf "$LOCK"' EXIT
 
 echo "[gitnexus-gate] index stale (${LAST:0:7} → HEAD ${HEAD:0:7}) — refreshing before edit-safety tool…" >&2
-# Non-force, --skip-agents-md: up-to-date-aware, no CLAUDE.md / skill-file churn.
-if command -v gitnexus >/dev/null 2>&1; then
+# Refresh with the SAME gitnexus version the MCP server uses (read from .mcp.json),
+# so the rebuilt index is in a storage format the MCP can read. Otherwise a version
+# skew (e.g. CLI 1.6.8 writes v41, MCP pinned 1.6.4 reads v40) would make the refresh
+# BREAK the impact/rename/detect_changes tools this gate is meant to protect.
+# Non-force + --skip-agents-md: up-to-date-aware, no CLAUDE.md / skill-file churn.
+VER="$(python3 -c "import json;a=json.load(open('.mcp.json'))['mcpServers'].get('gitnexus',{}).get('args',[]);print(next((x.split('@',1)[1] for x in a if isinstance(x,str) and x.startswith('gitnexus@')),''))" 2>/dev/null || true)"
+if command -v npx >/dev/null 2>&1; then
+  npx -y "gitnexus${VER:+@$VER}" analyze --skip-agents-md >/dev/null 2>&1 || echo "[gitnexus-gate] refresh failed — proceeding on existing index" >&2
+elif command -v gitnexus >/dev/null 2>&1; then
   gitnexus analyze --skip-agents-md >/dev/null 2>&1 || echo "[gitnexus-gate] refresh failed — proceeding on existing index" >&2
-elif command -v npx >/dev/null 2>&1; then
-  npx gitnexus analyze --skip-agents-md >/dev/null 2>&1 || echo "[gitnexus-gate] refresh failed — proceeding on existing index" >&2
 else
-  echo "[gitnexus-gate] gitnexus/npx not found — proceeding on existing index" >&2
+  echo "[gitnexus-gate] npx/gitnexus not found — proceeding on existing index" >&2
 fi
 exit 0
