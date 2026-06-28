@@ -3,6 +3,9 @@ name: gitnexus-exploring
 description: "Use when the user asks how code works, wants to understand architecture, trace execution flows, or explore unfamiliar parts of the codebase. Examples: \"How does X work?\", \"What calls this function?\", \"Show me the auth flow\""
 ---
 
+<!-- ak-gitnexus-fresh-contract -->
+> ⚠️ **本 repo 契約**：刷新 GitNexus index 一律 `bash scripts/gitnexus-fresh.sh`（或改碼前由 PreToolUse gate 自動）——它用 `.mcp.json` 釘的 **exact** 版本寫 index，避免 CLI-vs-MCP storage-version skew。**勿裸跑** `npx gitnexus analyze` / `node .gitnexus/run.cjs analyze` / `gitnexus@latest`（unpinned 會寫出 MCP 讀不了的格式，弄壞 impact/rename/detect_changes）。下方為 GitNexus 通用 CLI 參考。
+
 # Exploring Codebases with GitNexus
 
 ## When to Use
@@ -23,7 +26,7 @@ description: "Use when the user asks how code works, wants to understand archite
 5. READ gitnexus://repo/{name}/process/{name}      → Trace full execution flow
 ```
 
-> If step 2 says "Index is stale" → run `npx gitnexus analyze` in terminal.
+> If step 2 says "Index is stale" → run `bash scripts/gitnexus-fresh.sh` in terminal.
 
 ## Checklist
 
