@@ -9,14 +9,18 @@ fi
 
 cd "$REPO_ROOT" || exit 0
 
-PROJECT_NAME="${AGENTIC_KNOWLEDGE_PROJECT_NAME:-agentic-knowledge-kit}"
+PROJECT_NAME="${AGENTIC_KNOWLEDGE_PROJECT_NAME:-$(basename "$REPO_ROOT")}"
 ASYNC_MODE="${AGENTIC_KNOWLEDGE_HOOK_ASYNC:-1}"
 HOOK_LOG_DIR="${AGENTIC_KNOWLEDGE_HOOK_LOG_DIR:-/tmp}"
-ENABLE_EMBEDDINGS="${AGENTIC_KNOWLEDGE_ENABLE_EMBEDDINGS:-0}"
 LOCK_TIMEOUT_SECS="${AGENTIC_KNOWLEDGE_LOCK_TIMEOUT_SECS:-600}"
 VECTOR_INDEX_ENABLED="${AGENTIC_KNOWLEDGE_VECTOR_INDEX:-1}"
 VECTOR_PROVIDER="${AGENTIC_KNOWLEDGE_VECTOR_PROVIDER:-gitnexus}"
 VECTOR_MODEL="${AGENTIC_KNOWLEDGE_VECTOR_MODEL:-Snowflake/snowflake-arctic-embed-xs}"
+# Code-graph engine (codebase-memory-mcp). Fast (~5s incremental, self-contained
+# binary) so it runs on every commit. GitNexus is NO LONGER in the hot path — it
+# is refreshed on-demand before risky edits via scripts/gitnexus-fresh.sh.
+CMM_ENABLED="${AGENTIC_KNOWLEDGE_CMM_INDEX:-1}"
+CMM_BIN="${AGENTIC_KNOWLEDGE_CMM_BIN:-codebase-memory-mcp}"
 mkdir -p "$HOOK_LOG_DIR" 2>/dev/null || HOOK_LOG_DIR="/tmp"
 
 COMMIT_HASH="$(git rev-parse --short HEAD 2>/dev/null || echo unknown)"
@@ -24,53 +28,45 @@ COMMIT_MSG="$(git log -1 --pretty=%s 2>/dev/null || echo 'unknown commit')"
 COMMIT_DATE="$(git log -1 --pretty=%ad --date=format:'%Y-%m-%d %H:%M' 2>/dev/null || date +'%Y-%m-%d %H:%M')"
 MONTH_TAG="$(date +'%Y-%m')"
 
-run_gitnexus_command() {
-  if command -v gitnexus >/dev/null 2>&1; then
-    gitnexus "$@"
-    return $?
+run_cmm() {
+  if [[ "$CMM_ENABLED" == "0" || "$CMM_ENABLED" == "false" ]]; then
+    echo "[post-commit] CMM index skipped: AGENTIC_KNOWLEDGE_CMM_INDEX=0"
+    return 0
   fi
-  if command -v npx >/dev/null 2>&1; then
-    npx gitnexus "$@"
-    return $?
+  if ! command -v "$CMM_BIN" >/dev/null 2>&1; then
+    echo "[post-commit] CMM index skipped: '$CMM_BIN' not found (install codebase-memory-mcp)"
+    return 0
   fi
-  echo "[post-commit] GitNexus skipped: gitnexus/npx not found"
-  return 0
+  # git-aware incremental index of the working tree; self-contained, no native
+  # embedding crashes, ~5s. Honors .cbmignore (excludes legacy_reference/ etc).
+  "$CMM_BIN" cli index_repository "{\"repo_path\":\"$REPO_ROOT\"}" >/dev/null \
+    && echo "[post-commit] CMM index updated" \
+    || echo "[post-commit] CMM index failed (non-fatal)"
 }
 
-run_gitnexus() {
-  if [[ ! -d .gitnexus ]]; then
-    echo "[post-commit] GitNexus skipped: .gitnexus is not initialized"
-    return 0
-  fi
-  if ! run_gitnexus_command analyze --force --skip-agents-md; then
-    echo "[post-commit] GitNexus non-embedding rebuild failed"
-    return 0
-  fi
-  if [[ "$ENABLE_EMBEDDINGS" != "1" && "$ENABLE_EMBEDDINGS" != "true" ]]; then
-    echo "[post-commit] GitNexus embeddings skipped: set AGENTIC_KNOWLEDGE_ENABLE_EMBEDDINGS=1 to opt in"
-    return 0
-  fi
-  if ! run_gitnexus_command analyze --embeddings --force --skip-agents-md; then
-    echo "[post-commit] GitNexus embeddings failed; rebuilding without embeddings to keep the index usable"
-    run_gitnexus_command analyze --force --skip-agents-md || true
-  fi
-}
-
-acquire_gitnexus_lock() {
-  local lock_dir=".gitnexus/post-commit.lock"
+# Generic mkdir-based mutex with PID-stamped pidfile and stale-lock
+# reclaim. Used by the semantic-vector-index step to keep multiple
+# post-commit invocations (rapid commits, M2-x phase pushes) from
+# racing each other.
+#
+# Args: $1=lock dir path, $2=human label used in skip/stale log lines.
+acquire_lock() {
+  local lock_dir="$1"
+  local label="$2"
   local waited=0
+  mkdir -p "$(dirname "$lock_dir")" 2>/dev/null || true
   while ! mkdir "$lock_dir" 2>/dev/null; do
     if [[ -f "$lock_dir/pid" ]]; then
       local lock_pid
       lock_pid="$(cat "$lock_dir/pid" 2>/dev/null || true)"
       if [[ -n "$lock_pid" ]] && ! kill -0 "$lock_pid" 2>/dev/null; then
-        echo "[post-commit] Removing stale GitNexus lock held by pid $lock_pid"
+        echo "[post-commit] Removing stale $label lock held by pid $lock_pid"
         rm -rf "$lock_dir"
         continue
       fi
     fi
     if (( waited >= LOCK_TIMEOUT_SECS )); then
-      echo "[post-commit] GitNexus skipped: lock wait timed out after ${LOCK_TIMEOUT_SECS}s"
+      echo "[post-commit] $label skipped: lock wait timed out after ${LOCK_TIMEOUT_SECS}s"
       return 1
     fi
     sleep 1
@@ -79,18 +75,8 @@ acquire_gitnexus_lock() {
   printf '%s\n' "$$" > "$lock_dir/pid"
 }
 
-release_gitnexus_lock() {
-  rm -rf .gitnexus/post-commit.lock
-}
-
-run_gitnexus_locked() {
-  if [[ ! -d .gitnexus ]]; then
-    echo "[post-commit] GitNexus skipped: .gitnexus is not initialized"
-    return 0
-  fi
-  acquire_gitnexus_lock || return 0
-  run_gitnexus
-  release_gitnexus_lock
+release_lock() {
+  rm -rf "$1"
 }
 
 run_graphify() {
@@ -122,9 +108,28 @@ run_semantic_vector_index() {
     echo "[post-commit] Semantic vector index skipped: node not found"
     return 0
   fi
+  # docs-only: the vector index now serves natural-language doc/decision recall
+  # (incl. Obsidian vault, which lives outside the repo). Code recall is served
+  # by CMM. Both default on; override with AGENTIC_KNOWLEDGE_DOCS_ONLY=0 /
+  # AGENTIC_KNOWLEDGE_OBSIDIAN=0.
+  local docs_flag="" obs_flag=""
+  [[ "${AGENTIC_KNOWLEDGE_DOCS_ONLY:-1}" != "0" ]] && docs_flag="--docs-only"
+  [[ "${AGENTIC_KNOWLEDGE_OBSIDIAN:-1}" != "0" ]] && obs_flag="--obsidian"
   node scripts/build-semantic-vector-index.mjs \
     --provider "$VECTOR_PROVIDER" \
-    --model "$VECTOR_MODEL"
+    --model "$VECTOR_MODEL" \
+    --project "$PROJECT_NAME" \
+    $docs_flag $obs_flag
+}
+
+run_semantic_vector_index_locked() {
+  if [[ "$VECTOR_INDEX_ENABLED" == "0" || "$VECTOR_INDEX_ENABLED" == "false" ]]; then
+    echo "[post-commit] Semantic vector index skipped: AGENTIC_KNOWLEDGE_VECTOR_INDEX=0"
+    return 0
+  fi
+  acquire_lock "semantic-vector-index/post-commit.lock" "Semantic vector index" || return 0
+  run_semantic_vector_index
+  release_lock "semantic-vector-index/post-commit.lock"
 }
 
 write_obsidian_log() {
@@ -176,17 +181,17 @@ EOF
 }
 
 if [[ "$ASYNC_MODE" == "0" || "$ASYNC_MODE" == "false" ]]; then
-  run_gitnexus_locked > "$HOOK_LOG_DIR/gitnexus-post-commit.log" 2>&1 || true
+  run_cmm > "$HOOK_LOG_DIR/cmm-post-commit.log" 2>&1 || true
 else
-  (run_gitnexus_locked > "$HOOK_LOG_DIR/gitnexus-post-commit.log" 2>&1 &)
-  echo "[post-commit] GitNexus analyze running in background"
+  (run_cmm > "$HOOK_LOG_DIR/cmm-post-commit.log" 2>&1 &)
+  echo "[post-commit] CMM index running in background"
 fi
 
 run_graphify > "$HOOK_LOG_DIR/graphify-post-commit.log" 2>&1 || true
 if [[ "$ASYNC_MODE" == "0" || "$ASYNC_MODE" == "false" ]]; then
-  run_semantic_vector_index > "$HOOK_LOG_DIR/semantic-vector-index-post-commit.log" 2>&1 || true
+  run_semantic_vector_index_locked > "$HOOK_LOG_DIR/semantic-vector-index-post-commit.log" 2>&1 || true
 else
-  (run_semantic_vector_index > "$HOOK_LOG_DIR/semantic-vector-index-post-commit.log" 2>&1 &)
+  (run_semantic_vector_index_locked > "$HOOK_LOG_DIR/semantic-vector-index-post-commit.log" 2>&1 &)
   echo "[post-commit] Semantic vector index running in background"
 fi
 write_obsidian_log || true
