@@ -192,7 +192,8 @@ copy_helper_script test-llm-wiki-workflow.mjs
 copy_helper_script install-vector-deps.sh
 copy_helper_script gitnexus-fresh.sh
 copy_helper_script install-cmm.sh
-chmod +x scripts/build-semantic-vector-index.mjs scripts/query-semantic-vector-index.mjs scripts/agentic-knowledge-context.mjs scripts/ingest-llm-wiki.mjs scripts/lint-llm-wiki.mjs scripts/test-semantic-vector-index.mjs scripts/test-llm-wiki-workflow.mjs scripts/install-vector-deps.sh scripts/gitnexus-fresh.sh scripts/install-cmm.sh
+copy_helper_script gitnexus-gate.sh
+chmod +x scripts/build-semantic-vector-index.mjs scripts/query-semantic-vector-index.mjs scripts/agentic-knowledge-context.mjs scripts/ingest-llm-wiki.mjs scripts/lint-llm-wiki.mjs scripts/test-semantic-vector-index.mjs scripts/test-llm-wiki-workflow.mjs scripts/install-vector-deps.sh scripts/gitnexus-fresh.sh scripts/install-cmm.sh scripts/gitnexus-gate.sh
 
 if [[ "$SKIP_VECTOR_DEPS" == "0" ]]; then
   scripts/install-vector-deps.sh || echo "LanceDB dependency install failed; semantic vector build will log a skip/failure until dependencies are installed." >&2
@@ -383,6 +384,21 @@ if [[ "$INSTALL_CLAUDE" == "1" ]]; then
   }
 }
 JSON
+  # Merge the GitNexus staleness-gate PreToolUse hook (idempotent): impact/rename/
+  # detect_changes auto-refresh a stale index at point-of-use (no one must remember).
+  python3 - <<'PY'
+import json
+p='.claude/settings.json'
+try:
+    d=json.load(open(p))
+except Exception:
+    raise SystemExit(0)
+arr=d.setdefault('hooks',{}).setdefault('PreToolUse',[])
+m='mcp__gitnexus__(impact|rename|detect_changes)'
+if not any(x.get('matcher')==m for x in arr):
+    arr.append({'matcher':m,'hooks':[{'type':'command','command':'bash scripts/gitnexus-gate.sh','timeout':120}]})
+    json.dump(d, open(p,'w'), indent=2); open(p,'a').write('\n')
+PY
 fi
 
 scripts/install-knowledge-hook.sh
@@ -396,7 +412,7 @@ This repo is wired for codebase-memory-mcp (CMM, code engine), GitNexus
 
 **知識系統分層（按資料型態切 4 個鬆耦合引擎）：**
 - **程式碼導航/搜尋 → CMM**（`codebase-memory-mcp` MCP，每 commit ~0.5s 增量；`.cbmignore` 排噪音）。每日程式碼主引擎。
-- **改碼安全（impact 風險/PDG taint/rename/detect_changes vs base）→ GitNexus**，但**改碼/rename/PR 前先 `bash scripts/gitnexus-fresh.sh`**（已退出 commit 熱路徑、不自動新鮮）。
+- **改碼安全（impact 風險/PDG taint/rename/detect_changes vs base）→ GitNexus**：`impact`/`rename`/`detect_changes`（MCP）前由 PreToolUse gate `scripts/gitnexus-gate.sh` **自動刷新**過時索引（fresh 時 ~30ms no-op，不靠記憶）；`explain` PDG taint 需手動 `AGENTIC_KNOWLEDGE_PDG=1 bash scripts/gitnexus-fresh.sh`。
 - **文件/決策/根因召回 → broker（docs-only LanceDB ＋ Obsidian vault，含中文）**，每次提問自動注入。
 - **跨域/多模態 → graphify**；人類記憶 → Obsidian。CMM 不吃文件/中文、無 rename、無 risk 分級。
 
@@ -415,7 +431,7 @@ At task start, consume the broker (auto-injected for Claude via UserPromptSubmit
 node scripts/agentic-knowledge-context.mjs "<task summary>" --limit "${AGENTIC_KNOWLEDGE_CONTEXT_LIMIT:-5}"
 ```
 
-The broker returns doc/decision/root-cause matches (repo docs + Obsidian vault, incl. Chinese) — not code. Then: code structure/search → **CMM**; edit-safety (impact/taint/rename/detect_changes) → **GitNexus** after `bash scripts/gitnexus-fresh.sh`; cross-module relations → **graphify**. Verify exact behavior in source/tests before editing.
+The broker returns doc/decision/root-cause matches (repo docs + Obsidian vault, incl. Chinese) — not code. Then: code structure/search → **CMM**; edit-safety → **GitNexus** (a PreToolUse gate auto-refreshes a stale index before impact/rename/detect_changes; explain/PDG taint needs manual `AGENTIC_KNOWLEDGE_PDG=1`); cross-module relations → **graphify**. Verify exact behavior in source/tests before editing.
 EOF
 update_block AGENTS.md "<!-- agentic-knowledge:start -->" "<!-- agentic-knowledge:end -->" "$tmp_block"
 update_block CLAUDE.md "<!-- agentic-knowledge:start -->" "<!-- agentic-knowledge:end -->" "$tmp_block"
@@ -431,7 +447,7 @@ if [[ "$INSTALL_ANTIGRAVITY" == "1" ]]; then
 
 知識系統分層（按資料型態切）：
 - 程式碼導航/搜尋 → **CMM**（codebase-memory-mcp MCP）。每日程式碼主引擎。
-- 改碼安全（impact 風險/taint/rename/detect_changes vs base）→ **GitNexus**，改碼/rename/PR 前先 `bash scripts/gitnexus-fresh.sh`（不在 commit hook、不自動新鮮）。
+- 改碼安全 → **GitNexus**：impact/rename/detect_changes 前由 PreToolUse gate 自動刷新過時索引；explain/PDG taint 手動 `AGENTIC_KNOWLEDGE_PDG=1`。
 - 文件/決策/根因召回 → broker（docs-only + Obsidian vault，含中文），task 開始時查：
 
 ```bash
