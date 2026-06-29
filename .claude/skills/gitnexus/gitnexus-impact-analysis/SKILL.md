@@ -3,6 +3,9 @@ name: gitnexus-impact-analysis
 description: "Use when the user wants to know what will break if they change something, or needs safety analysis before editing code. Examples: \"Is it safe to change X?\", \"What depends on this?\", \"What will break?\""
 ---
 
+<!-- ak-gitnexus-fresh-contract -->
+> ⚠️ **本 repo 契約**：刷新 GitNexus index 一律 `bash scripts/gitnexus-fresh.sh`（或改碼前由 PreToolUse gate 自動）——它用 `.mcp.json` 釘的 **exact** 版本寫 index，避免 CLI-vs-MCP storage-version skew。**勿裸跑** `npx gitnexus analyze` / `node .gitnexus/run.cjs analyze` / `gitnexus@latest`（unpinned 會寫出 MCP 讀不了的格式，弄壞 impact/rename/detect_changes）。下方為 GitNexus 通用 CLI 參考。
+
 # Impact Analysis with GitNexus
 
 ## When to Use
@@ -23,7 +26,7 @@ description: "Use when the user wants to know what will break if they change som
 4. Assess risk and report to user
 ```
 
-> If "Index is stale" → run `npx gitnexus analyze` in terminal.
+> If "Index is stale" → run `bash scripts/gitnexus-fresh.sh` in terminal.
 
 ## Checklist
 

@@ -3,6 +3,9 @@ name: gitnexus-cli
 description: "Use when the user needs to run GitNexus CLI commands like analyze/index a repo, check status, clean the index, generate a wiki, or list indexed repos. Examples: \"Index this repo\", \"Reanalyze the codebase\", \"Generate a wiki\""
 ---
 
+<!-- ak-gitnexus-fresh-contract -->
+> ⚠️ **本 repo 契約**：刷新 GitNexus index 一律 `bash scripts/gitnexus-fresh.sh`（或改碼前由 PreToolUse gate 自動）——它用 `.mcp.json` 釘的 **exact** 版本寫 index，避免 CLI-vs-MCP storage-version skew。**勿裸跑** `npx gitnexus analyze` / `node .gitnexus/run.cjs analyze` / `gitnexus@latest`（unpinned 會寫出 MCP 讀不了的格式，弄壞 impact/rename/detect_changes）。下方為 GitNexus 通用 CLI 參考。
+
 # GitNexus CLI Commands
 
 All commands work via `npx` — no global install required.

@@ -3,6 +3,9 @@ name: gitnexus-guide
 description: "Use when the user asks about GitNexus itself — available tools, how to query the knowledge graph, MCP resources, graph schema, or workflow reference. Examples: \"What GitNexus tools are available?\", \"How do I use GitNexus?\""
 ---
 
+<!-- ak-gitnexus-fresh-contract -->
+> ⚠️ **本 repo 契約**：刷新 GitNexus index 一律 `bash scripts/gitnexus-fresh.sh`（或改碼前由 PreToolUse gate 自動）——它用 `.mcp.json` 釘的 **exact** 版本寫 index，避免 CLI-vs-MCP storage-version skew。**勿裸跑** `npx gitnexus analyze` / `node .gitnexus/run.cjs analyze` / `gitnexus@latest`（unpinned 會寫出 MCP 讀不了的格式，弄壞 impact/rename/detect_changes）。下方為 GitNexus 通用 CLI 參考。
+
 # GitNexus Guide
 
 Quick reference for all GitNexus MCP tools, resources, and the knowledge graph schema.
@@ -15,7 +18,7 @@ For any task involving code understanding, debugging, impact analysis, or refact
 2. **Match your task to a skill below** and **read that skill file**
 3. **Follow the skill's workflow and checklist**
 
-> If step 1 warns the index is stale, run `npx gitnexus analyze` in the terminal first.
+> If step 1 warns the index is stale, run `bash scripts/gitnexus-fresh.sh` in the terminal first.
 
 ## Skills
 

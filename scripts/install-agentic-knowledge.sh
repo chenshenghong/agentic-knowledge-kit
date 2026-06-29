@@ -194,6 +194,7 @@ copy_helper_script gitnexus-fresh.sh
 copy_helper_script install-cmm.sh
 copy_helper_script gitnexus-gate.sh
 copy_helper_script gitnexus-cmd.sh
+copy_helper_script patch-gitnexus-skill-docs.py
 chmod +x scripts/build-semantic-vector-index.mjs scripts/query-semantic-vector-index.mjs scripts/agentic-knowledge-context.mjs scripts/ingest-llm-wiki.mjs scripts/lint-llm-wiki.mjs scripts/test-semantic-vector-index.mjs scripts/test-llm-wiki-workflow.mjs scripts/install-vector-deps.sh scripts/gitnexus-fresh.sh scripts/install-cmm.sh scripts/gitnexus-gate.sh scripts/gitnexus-cmd.sh
 
 if [[ "$SKIP_VECTOR_DEPS" == "0" ]]; then
@@ -527,6 +528,20 @@ if c:
     open(p,'w').write(t2); print(f"[install] patched gitnexus stale hint in {p}")
 PY
 done
+
+# gitnexus's `analyze --skills` also (re)writes its GitNexus skill docs under
+# .claude/skills/gitnexus and .agents/skills/gitnexus, which teach bare
+# `npx gitnexus analyze` / `node .gitnexus/run.cjs analyze` — a path that bypasses
+# the exact-pin helper and skews storage. Patch them idempotently: inject the
+# fresh.sh contract banner + rewrite stale-hint lines. (Re-runs after every regen.)
+if [[ -f scripts/patch-gitnexus-skill-docs.py ]] && command -v python3 >/dev/null 2>&1; then
+  # Per-dir guard so a missing dir is skipped quietly, but the patch script's own
+  # stderr is NOT swallowed (so a broken patch surfaces). `|| true` keeps install going.
+  for _gx_skill_dir in .claude/skills/gitnexus .agents/skills/gitnexus; do
+    [[ -d "$_gx_skill_dir" ]] || continue
+    find "$_gx_skill_dir" -name '*.md' -exec python3 scripts/patch-gitnexus-skill-docs.py {} + || true
+  done
+fi
 
 bash -n scripts/post-commit-hook.sh scripts/install-knowledge-hook.sh scripts/test-post-commit-hook.sh
 

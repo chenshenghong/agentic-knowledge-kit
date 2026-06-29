@@ -3,6 +3,9 @@ name: gitnexus-refactoring
 description: "Use when the user wants to rename, extract, split, move, or restructure code safely. Examples: \"Rename this function\", \"Extract this into a module\", \"Refactor this class\", \"Move this to a separate file\""
 ---
 
+<!-- ak-gitnexus-fresh-contract -->
+> ⚠️ **本 repo 契約**：刷新 GitNexus index 一律 `bash scripts/gitnexus-fresh.sh`（或改碼前由 PreToolUse gate 自動）——它用 `.mcp.json` 釘的 **exact** 版本寫 index，避免 CLI-vs-MCP storage-version skew。**勿裸跑** `npx gitnexus analyze` / `node .gitnexus/run.cjs analyze` / `gitnexus@latest`（unpinned 會寫出 MCP 讀不了的格式，弄壞 impact/rename/detect_changes）。下方為 GitNexus 通用 CLI 參考。
+
 # Refactoring with GitNexus
 
 ## When to Use
@@ -22,7 +25,7 @@ description: "Use when the user wants to rename, extract, split, move, or restru
 4. Plan update order: interfaces → implementations → callers → tests
 ```
 
-> If "Index is stale" → run `npx gitnexus analyze` in terminal.
+> If "Index is stale" → run `bash scripts/gitnexus-fresh.sh` in terminal.
 
 ## Checklists
 
