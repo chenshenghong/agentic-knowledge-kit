@@ -109,7 +109,14 @@ fi
 cd "$REPO_ROOT"
 
 if [[ -z "$PROJECT_NAME" ]]; then
-  PROJECT_NAME="$(basename "$REPO_ROOT")"
+  # Same rule as the hook's default_project_name: name after the main checkout
+  # so running the installer from a linked worktree doesn't bake the worktree dir.
+  COMMON_GIT_DIR_ABS="$(git rev-parse --path-format=absolute --git-common-dir 2>/dev/null || true)"
+  if [[ "$(basename "$COMMON_GIT_DIR_ABS")" == ".git" ]]; then
+    PROJECT_NAME="$(basename "$(dirname "$COMMON_GIT_DIR_ABS")")"
+  else
+    PROJECT_NAME="$(basename "$REPO_ROOT")"
+  fi
 fi
 
 mkdir -p scripts
@@ -203,9 +210,9 @@ fi
 
 copy_helper_script post-commit-hook.sh
 
-# The copied hook ships with a repo-basename PROJECT_NAME fallback; bake the
-# chosen --project-name in so the Obsidian vault path / vector --project match.
-replace_token scripts/post-commit-hook.sh '$(basename "$REPO_ROOT")' "$PROJECT_NAME"
+# The copied hook ships with a $(default_project_name) PROJECT_NAME fallback; bake
+# the chosen --project-name in so the Obsidian vault path / vector --project match.
+replace_token scripts/post-commit-hook.sh '$(default_project_name)' "$PROJECT_NAME"
 chmod +x scripts/post-commit-hook.sh
 
 write_text_file scripts/install-knowledge-hook.sh <<'HOOK'

@@ -157,4 +157,51 @@ if [[ -s "$LOG_DIR/cmm.log" ]]; then
   exit 1
 fi
 
+# Linked worktree fixture for (8)/(9).
+WT_DIR="$TMP_DIR/feature-wt"
+git -C "$WORK_DIR" worktree add -q -b wt-test "$WT_DIR"
+echo "from worktree" >> "$WT_DIR/README.md"
+git -C "$WT_DIR" commit -q -am "Worktree commit"
+
+# (9) Explicit AGENTIC_KNOWLEDGE_PROJECT_NAME still wins inside a worktree
+(cd "$WT_DIR" && env PATH="$BIN_DIR:$PATH" STUB_LOG_DIR="$LOG_DIR" OBSIDIAN_VAULT="$VAULT_DIR" \
+  AGENTIC_KNOWLEDGE_PROJECT_NAME=override-name \
+  AGENTIC_KNOWLEDGE_VECTOR_INDEX=0 AGENTIC_KNOWLEDGE_HOOK_ASYNC=0 \
+  AGENTIC_KNOWLEDGE_HOOK_LOG_DIR="$LOG_DIR" \
+  "$WORK_DIR/scripts/post-commit-hook.sh" >/dev/null)
+grep -F "Worktree commit" "$VAULT_DIR/override-name/Development Logs/${MONTH_TAG} commit log.md" >/dev/null || {
+  echo "AGENTIC_KNOWLEDGE_PROJECT_NAME must override the derived name" >&2; exit 1; }
+
+# (8) and (10) apply to the kit's unbaked hook (the kit ships the installer, so a
+# missing token there is a failure, not a skip). Installed copies have
+# --project-name baked in (a constant, so worktree-safe by construction).
+if [[ -f "$REPO_ROOT/scripts/install-agentic-knowledge.sh" ]] \
+  || grep -qF '$(default_project_name)' "$SCRIPT_UNDER_TEST"; then
+  # (8) Linked worktree: with no explicit project name, the commit log must land in
+  # the MAIN repo's vault folder (basename of WORK_DIR = "work"), not the worktree's.
+  (cd "$WT_DIR" && env -u AGENTIC_KNOWLEDGE_PROJECT_NAME \
+    PATH="$BIN_DIR:$PATH" STUB_LOG_DIR="$LOG_DIR" OBSIDIAN_VAULT="$VAULT_DIR" \
+    AGENTIC_KNOWLEDGE_VECTOR_INDEX=0 AGENTIC_KNOWLEDGE_HOOK_ASYNC=0 \
+    AGENTIC_KNOWLEDGE_HOOK_LOG_DIR="$LOG_DIR" \
+    "$WORK_DIR/scripts/post-commit-hook.sh" >/dev/null)
+  grep -F "Worktree commit" "$VAULT_DIR/work/Development Logs/${MONTH_TAG} commit log.md" >/dev/null || {
+    echo "worktree commit should be logged under the main repo name (vault/work)" >&2; exit 1; }
+  if [[ -e "$VAULT_DIR/feature-wt" ]]; then
+    echo "worktree commit leaked into a stray vault folder named after the worktree" >&2; exit 1
+  fi
+
+  # (10) Generator contract: the installer bakes --project-name by replacing this
+  # exact token; if it drifts, replace_token silently no-ops.
+  if [[ "$(grep -cF '$(default_project_name)' "$SCRIPT_UNDER_TEST")" != "1" ]]; then
+    echo "post-commit-hook.sh must contain the \$(default_project_name) token exactly once" >&2; exit 1
+  fi
+  if [[ -f "$REPO_ROOT/scripts/install-agentic-knowledge.sh" ]]; then
+    grep -F "replace_token scripts/post-commit-hook.sh '\$(default_project_name)'" \
+      "$REPO_ROOT/scripts/install-agentic-knowledge.sh" >/dev/null || {
+      echo "installer replace_token must target the \$(default_project_name) token" >&2; exit 1; }
+  fi
+else
+  echo "[test] hook has a baked project name; skipping worktree-derivation checks"
+fi
+
 echo "post-commit hook smoke test passed"
