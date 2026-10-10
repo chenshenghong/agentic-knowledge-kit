@@ -9,7 +9,22 @@ fi
 
 cd "$REPO_ROOT" || exit 0
 
-PROJECT_NAME="${AGENTIC_KNOWLEDGE_PROJECT_NAME:-$(basename "$REPO_ROOT")}"
+# Name the project after the MAIN checkout, not the current worktree: in a linked
+# worktree --show-toplevel is the worktree dir (e.g. kit-skill-wt/), which would
+# scatter commit logs into stray vault folders. --git-common-dir is shared by all
+# worktrees; its parent is the main repo. Only trusted when it ends in ".git"
+# (bare repos / submodules fall back to the toplevel basename).
+default_project_name() {
+  local common_dir
+  common_dir="$(git rev-parse --path-format=absolute --git-common-dir 2>/dev/null || true)"
+  if [[ "$(basename "$common_dir")" == ".git" ]]; then
+    basename "$(dirname "$common_dir")"
+  else
+    basename "$REPO_ROOT"
+  fi
+}
+
+PROJECT_NAME="${AGENTIC_KNOWLEDGE_PROJECT_NAME:-$(default_project_name)}"
 ASYNC_MODE="${AGENTIC_KNOWLEDGE_HOOK_ASYNC:-1}"
 HOOK_LOG_DIR="${AGENTIC_KNOWLEDGE_HOOK_LOG_DIR:-/tmp}"
 LOCK_TIMEOUT_SECS="${AGENTIC_KNOWLEDGE_LOCK_TIMEOUT_SECS:-600}"

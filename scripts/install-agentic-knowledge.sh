@@ -109,7 +109,14 @@ fi
 cd "$REPO_ROOT"
 
 if [[ -z "$PROJECT_NAME" ]]; then
-  PROJECT_NAME="$(basename "$REPO_ROOT")"
+  # Same rule as the hook's default_project_name: name after the main checkout
+  # so running the installer from a linked worktree doesn't bake the worktree dir.
+  COMMON_GIT_DIR_ABS="$(git rev-parse --path-format=absolute --git-common-dir 2>/dev/null || true)"
+  if [[ "$(basename "$COMMON_GIT_DIR_ABS")" == ".git" ]]; then
+    PROJECT_NAME="$(basename "$(dirname "$COMMON_GIT_DIR_ABS")")"
+  else
+    PROJECT_NAME="$(basename "$REPO_ROOT")"
+  fi
 fi
 
 mkdir -p scripts
@@ -174,10 +181,24 @@ p.write_text(text)
 PY
 }
 
-ensure_gitignore_line() {
-  local line="$1"
+# Append only the missing entries; never rewrite or remove existing lines. The
+# section header is written only when something is actually appended, so a
+# .gitignore that already covers every entry is left byte-for-byte untouched.
+ensure_gitignore_entries() {
+  local header="# Local code intelligence artifacts"
+  local missing=() entry
   touch .gitignore
-  grep -Fxq "$line" .gitignore || printf '%s\n' "$line" >> .gitignore
+  for entry in "$@"; do
+    grep -Fxq "$entry" .gitignore || missing+=("$entry")
+  done
+  [[ ${#missing[@]} -eq 0 ]] && return 0
+  # Terminate a final line that lacks a trailing newline before appending.
+  [[ -s .gitignore && -n "$(tail -c1 .gitignore)" ]] && printf '\n' >> .gitignore
+  if ! grep -Fxq "$header" .gitignore; then
+    [[ -s .gitignore ]] && printf '\n' >> .gitignore
+    printf '%s\n' "$header" >> .gitignore
+  fi
+  printf '%s\n' "${missing[@]}" >> .gitignore
 }
 
 copy_helper_script semantic-vector-lib.mjs
@@ -203,9 +224,9 @@ fi
 
 copy_helper_script post-commit-hook.sh
 
-# The copied hook ships with a repo-basename PROJECT_NAME fallback; bake the
-# chosen --project-name in so the Obsidian vault path / vector --project match.
-replace_token scripts/post-commit-hook.sh '$(basename "$REPO_ROOT")' "$PROJECT_NAME"
+# The copied hook ships with a $(default_project_name) PROJECT_NAME fallback; bake
+# the chosen --project-name in so the Obsidian vault path / vector --project match.
+replace_token scripts/post-commit-hook.sh '$(default_project_name)' "$PROJECT_NAME"
 chmod +x scripts/post-commit-hook.sh
 
 write_text_file scripts/install-knowledge-hook.sh <<'HOOK'
@@ -245,7 +266,10 @@ chmod +x scripts/install-knowledge-hook.sh
 copy_helper_script test-post-commit-hook.sh
 chmod +x scripts/test-post-commit-hook.sh
 
-write_text_file .gitnexusignore <<'IGNORE'
+if [[ -f .gitnexusignore ]]; then
+  echo "[install] .gitnexusignore exists — keeping project-custom excludes"
+else
+  write_text_file .gitnexusignore <<'IGNORE'
 .worktrees/
 notebooklm-mcp-setup/
 node_modules/
@@ -270,6 +294,7 @@ docker-data/
 *.min.js
 *.bundle.js
 IGNORE
+fi
 
 if [[ -f .cbmignore ]]; then
   echo "[install] .cbmignore exists — keeping project-custom excludes"
@@ -315,12 +340,7 @@ write_text_file .mcp.json <<JSON
 }
 JSON
 
-ensure_gitignore_line ""
-ensure_gitignore_line "# Local code intelligence artifacts"
-ensure_gitignore_line ".gitnexus/"
-ensure_gitignore_line "graphify-out/"
-ensure_gitignore_line "semantic-vector-index/"
-ensure_gitignore_line "scripts/node_modules/"
+ensure_gitignore_entries ".gitnexus/" "graphify-out/" "semantic-vector-index/" "scripts/node_modules/"
 
 # Ensure the codebase-memory-mcp (CMM) code engine is installed + MCP-registered on this machine.
 if [[ "${SKIP_CMM:-0}" != "1" ]]; then

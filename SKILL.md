@@ -14,7 +14,7 @@ Use the bundled installer first; patch generated files only when the target repo
 ## Workflow
 
 1. Inspect repo state: `git status --short --branch`, existing `AGENTS.md`, `CLAUDE.md`, `.mcp.json`, `.gitnexusignore`, `.git/hooks/post-commit`.
-2. Pick a project name. Default to `basename "$(git rev-parse --show-toplevel)"`.
+2. Pick a project name. Default to the main checkout name, `basename "$(dirname "$(git rev-parse --path-format=absolute --git-common-dir)")"` (worktree-safe; `--show-toplevel` would give the worktree dir).
 3. Run `scripts/install-agentic-knowledge.sh` from this skill directory against the target repo.
 4. Run verification commands listed below.
 5. If Obsidian memory MCP is available, capture the setup result and any caveats.
@@ -26,7 +26,7 @@ From any target repo:
 ```bash
 ./scripts/install-agentic-knowledge.sh \
   --repo . \
-  --project-name "$(basename "$(git rev-parse --show-toplevel)")"
+  --project-name "$(basename "$(dirname "$(git rev-parse --path-format=absolute --git-common-dir)")")"
 ```
 
 Useful flags:
