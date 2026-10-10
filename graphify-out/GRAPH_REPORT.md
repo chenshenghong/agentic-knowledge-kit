@@ -1,16 +1,16 @@
-# Graph Report - agentic-knowledge-kit  (2026-05-10)
+# Graph Report - agentic-knowledge-kit  (2026-10-10)
 
 ## Corpus Check
-- 21 files · ~8,671 words
+- 22 files · ~9,844 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 284 nodes · 432 edges · 22 communities (15 shown, 7 thin omitted)
+- 297 nodes · 450 edges · 23 communities (16 shown, 7 thin omitted)
 - Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `555deab9`
+- Built from commit: `8a59fa19`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -29,13 +29,13 @@
 - [[_COMMUNITY_Community 11|Community 11]]
 - [[_COMMUNITY_Community 12|Community 12]]
 - [[_COMMUNITY_Community 13|Community 13]]
-- [[_COMMUNITY_Community 14|Community 14]]
 - [[_COMMUNITY_Community 15|Community 15]]
 - [[_COMMUNITY_Community 16|Community 16]]
 - [[_COMMUNITY_Community 17|Community 17]]
 - [[_COMMUNITY_Community 18|Community 18]]
 - [[_COMMUNITY_Community 19|Community 19]]
 - [[_COMMUNITY_Community 20|Community 20]]
+- [[_COMMUNITY_Community 21|Community 21]]
 
 ## God Nodes (most connected - your core abstractions)
 1. `ingestSource()` - 10 edges
@@ -61,19 +61,19 @@
 - `wikiNotes()` --calls--> `walkFiles()`  [EXTRACTED]
   scripts/lint-llm-wiki.mjs → scripts/llm-wiki-lib.mjs
 
-## Communities (22 total, 7 thin omitted)
+## Communities (23 total, 7 thin omitted)
 
 ### Community 0 - "Community 0"
+Cohesion: 0.07
+Nodes (53): buildContext(), batchSize, dbPath, device, dimensions, embedItems, excludePrefixes, excludePrefixesRaw (+45 more)
+
+### Community 1 - "Community 1"
 Cohesion: 0.05
 Nodes (53): graphify, Agentic Knowledge Kit Agent Rules, Strict Operation Rules, Operational Notes, GitNexus — Code Intelligence, Always Do, Knowledge Layout, Never Do (+45 more)
 
-### Community 1 - "Community 1"
+### Community 2 - "Community 2"
 Cohesion: 0.09
 Nodes (46): formatBulletList(), ingested, ingestSource(), options, repoRoot, sourceNoteBody(), sources, sourceSlug() (+38 more)
-
-### Community 2 - "Community 2"
-Cohesion: 0.1
-Nodes (42): buildContext(), batchSize, dbPath, device, dimensions, graphPath, lockTimeoutSecs, manifest (+34 more)
 
 ### Community 3 - "Community 3"
 Cohesion: 0.12
@@ -120,24 +120,24 @@ Cohesion: 0.5
 Nodes (3): Current Build, Graphify Knowledge Graph, Tracked Artifacts
 
 ## Knowledge Gaps
-- **146 isolated node(s):** `require`, `repoFileCache`, `repoRoot`, `tmp`, `buildOut` (+141 more)
+- **152 isolated node(s):** `require`, `repoFileCache`, `repoRoot`, `tmp`, `buildOut` (+147 more)
   These have ≤1 connection - possible missing edges or undocumented components.
 - **7 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `createEmbeddingProvider()` connect `Community 2` to `Community 8`, `Community 3`?**
+- **Why does `createEmbeddingProvider()` connect `Community 0` to `Community 8`, `Community 3`?**
   _High betweenness centrality (0.006) - this node is a cross-community bridge._
-- **Why does `sha256File()` connect `Community 2` to `Community 8`, `Community 3`?**
+- **Why does `sha256File()` connect `Community 0` to `Community 8`, `Community 3`?**
+  _High betweenness centrality (0.006) - this node is a cross-community bridge._
+- **Why does `parseArgs()` connect `Community 0` to `Community 8`, `Community 3`?**
   _High betweenness centrality (0.005) - this node is a cross-community bridge._
-- **Why does `parseArgs()` connect `Community 2` to `Community 8`, `Community 3`?**
-  _High betweenness centrality (0.004) - this node is a cross-community bridge._
 - **What connects `require`, `repoFileCache`, `repoRoot` to the rest of the system?**
-  _146 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _152 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Community 0` be split into smaller, more focused modules?**
-  _Cohesion score 0.05 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.07 - nodes in this community are weakly interconnected._
 - **Should `Community 1` be split into smaller, more focused modules?**
-  _Cohesion score 0.09 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.05 - nodes in this community are weakly interconnected._
 - **Should `Community 2` be split into smaller, more focused modules?**
-  _Cohesion score 0.1 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.09 - nodes in this community are weakly interconnected._

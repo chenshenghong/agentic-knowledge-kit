@@ -1,11 +1,15 @@
 {
   "/Users/shenghongchen/Documents/Projects/agentic-knowledge-kit/scripts/semantic-vector-lib.mjs": {
-    "mtime": 1778157624.6226597,
-    "hash": "5a03efd0ed3f83aedbcd012ab42fa767"
+    "mtime": 1791611420.499587,
+    "hash": "8606b899a95aeb13afd23468ba366330"
   },
   "/Users/shenghongchen/Documents/Projects/agentic-knowledge-kit/scripts/test-semantic-vector-index.mjs": {
     "mtime": 1778157624.6227412,
     "hash": "d0cdc3bcf301799bd01e640b4157623f"
+  },
+  "/Users/shenghongchen/Documents/Projects/agentic-knowledge-kit/scripts/patch-gitnexus-skill-docs.py": {
+    "mtime": 1791611420.4990377,
+    "hash": "76943cc4fa932e71841a429bad286e06"
   },
   "/Users/shenghongchen/Documents/Projects/agentic-knowledge-kit/scripts/lint-llm-wiki.mjs": {
     "mtime": 1778419516.6120405,
@@ -20,8 +24,8 @@
     "hash": "b4d232a4e22aec481cf31b276edff0a4"
   },
   "/Users/shenghongchen/Documents/Projects/agentic-knowledge-kit/scripts/build-semantic-vector-index.mjs": {
-    "mtime": 1778157624.6220908,
-    "hash": "5492b038eff2b2b867e4ff3e7b9c9606"
+    "mtime": 1791611420.4976003,
+    "hash": "dbfb0c46ae239b0f7cc39b760cde778b"
   },
   "/Users/shenghongchen/Documents/Projects/agentic-knowledge-kit/scripts/ingest-llm-wiki.mjs": {
     "mtime": 1778419516.6117444,
@@ -44,20 +48,20 @@
     "hash": "d7408c2ddcccef70f327b35bb194e4de"
   },
   "/Users/shenghongchen/Documents/Projects/agentic-knowledge-kit/SKILL.md": {
-    "mtime": 1778419516.610427,
-    "hash": "c44f5d4b88e68f35be25280ad393e63c"
+    "mtime": 1791611420.4968226,
+    "hash": "bebedb8aad7255c66a0688485ead49c0"
   },
   "/Users/shenghongchen/Documents/Projects/agentic-knowledge-kit/GEMINI.md": {
     "mtime": 1778419516.610162,
     "hash": "4799584e037335a0c09a4192383c8374"
   },
   "/Users/shenghongchen/Documents/Projects/agentic-knowledge-kit/AGENTS.md": {
-    "mtime": 1778421282.4021933,
-    "hash": "0257c7d4c468bcd9f242490b67a53e8e"
+    "mtime": 1791611420.4962175,
+    "hash": "ef9ccf23c5c4337338dcc703e1626f74"
   },
   "/Users/shenghongchen/Documents/Projects/agentic-knowledge-kit/CLAUDE.md": {
-    "mtime": 1778421282.4024186,
-    "hash": "0fb38aca0264cdc57b967596e8c3fe41"
+    "mtime": 1791611420.4964824,
+    "hash": "7bb2a2b8464b8edc65b672a76f125e62"
   },
   "/Users/shenghongchen/Documents/Projects/agentic-knowledge-kit/agents/openai.yaml": {
     "mtime": 1778419516.6105444,
