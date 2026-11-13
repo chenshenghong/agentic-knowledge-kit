@@ -1,3 +1,4 @@
+run-name: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository && github.event.pull_request.head.repo.id == github.repository_id && github.actor == 'chenshenghong' && github.triggering_actor == 'chenshenghong' && github.run_attempt == 1 && vars.CI_LOCAL_ENABLED == 'true' && format('AI PR {0} {1} {2}', github.event.pull_request.number, github.event.pull_request.head.sha, github.event.pull_request.base.sha) || format('Hosted CI {0} {1}', github.event_name, github.run_id) }}
 name: CI
 
 on:
@@ -15,15 +16,92 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  ci_local_source:
+    name: Local CI Source
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: read
+    outputs:
+      sha: ${{ steps.ci_local_binding.outputs.sha }}
+    steps:
+      - name: 取得原始碼
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          persist-credentials: false
+      - name: Bind local CI source
+        id: ci_local_binding
+        shell: bash
+        working-directory: ${{ github.workspace }}
+        env:
+          EXPECTED_BASE: ${{ github.event.pull_request.base.sha }}
+          EXPECTED_HEAD: ${{ github.event.pull_request.head.sha }}
+        run: |
+          set -euo pipefail
+          sha=$(git rev-parse --verify HEAD)
+          [[ "$sha" =~ ^[0-9a-f]{40}$ ]]
+          test "$sha" = "$GITHUB_SHA"
+          if [ "$GITHUB_EVENT_NAME" = pull_request ]; then
+            [[ "$EXPECTED_BASE" =~ ^[0-9a-f]{40}$ ]]
+            [[ "$EXPECTED_HEAD" =~ ^[0-9a-f]{40}$ ]]
+            parents=$(git cat-file -p HEAD | awk '/^$/{exit} /^parent /{print $2}' | paste -sd ' ' -)
+            test "$parents" = "$EXPECTED_BASE $EXPECTED_HEAD"
+          fi
+          printf 'sha=%s\n' "$sha" >> "$GITHUB_OUTPUT"
+
+  ci_local_gate:
+    name: Local CI Gate
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: read
+    if: ${{ always() }}
+    needs: [ci_local_source, verify]
+    steps:
+      - name: Require local CI results
+        shell: bash
+        working-directory: ${{ github.workspace }}
+        env:
+          SOURCE_RESULT: ${{ needs.ci_local_source.result }}
+          TARGET_RESULT: ${{ needs.verify.result }}
+        run: |
+          set -euo pipefail
+          test "$SOURCE_RESULT" = success
+          test "$TARGET_RESULT" = success
+
   verify:
+    needs: [ci_local_source]
     name: Verify
-    runs-on: ubuntu-24.04
+    runs-on: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository && github.event.pull_request.head.repo.id == github.repository_id && github.actor == 'chenshenghong' && github.triggering_actor == 'chenshenghong' && github.run_attempt == 1 && vars.CI_LOCAL_ENABLED == 'true' && format('ci-ai-r{0}-{1}-{2}-scripts', github.repository_id, github.run_id, github.run_attempt) || 'ubuntu-24.04' }}
     timeout-minutes: 20
     steps:
       - name: 取得原始碼
         uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
         with:
           persist-credentials: false
+      - name: Bind local CI source
+        id: ci_local_binding
+        shell: bash
+        working-directory: ${{ github.workspace }}
+        env:
+          EXPECTED_BASE: ${{ github.event.pull_request.base.sha }}
+          EXPECTED_HEAD: ${{ github.event.pull_request.head.sha }}
+          DETECT_SHA: ${{ needs.ci_local_source.outputs.sha }}
+        run: |
+          set -euo pipefail
+          sha=$(git rev-parse --verify HEAD)
+          [[ "$sha" =~ ^[0-9a-f]{40}$ ]]
+          test "$sha" = "$GITHUB_SHA"
+          if [ "$GITHUB_EVENT_NAME" = pull_request ]; then
+            [[ "$EXPECTED_BASE" =~ ^[0-9a-f]{40}$ ]]
+            [[ "$EXPECTED_HEAD" =~ ^[0-9a-f]{40}$ ]]
+            parents=$(git cat-file -p HEAD | awk '/^$/{exit} /^parent /{print $2}' | paste -sd ' ' -)
+            test "$parents" = "$EXPECTED_BASE $EXPECTED_HEAD"
+          fi
+          [[ "$DETECT_SHA" =~ ^[0-9a-f]{40}$ ]]
+          test "$sha" = "$DETECT_SHA"
+          printf 'sha=%s\n' "$sha" >> "$GITHUB_OUTPUT"
+
       - name: 準備 Node.js
         uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
         with:
